@@ -13,19 +13,14 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout x:Name="StkAccoutInfo" Grid.Row="2" Orientation="Vertical" HorizontalOptions="Center">
+            <StackLayout x:Name="StkLoginInfo" Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center" WidthRequest="250">
                 <Entry x:Name="txtUsername" Placeholder="Username"/>
                 <Entry x:Name="txtPassword" Placeholder="Password"/>
-                <Button x:Name="btnLogin" Text="Login"/>
-                <Button x:Name="btnRegister" Text="Register"/>
+                <StackLayout x:Name="StckLoginBtns" Orientation="Horizontal" HorizontalOptions="Center" Margin="0">
+                    <Button x:Name="btnLogin" Text="Login" CornerRadius="20"/>
+                    <Button x:Name="btnRegister" Text="Register"/>
+                </StackLayout>
             </StackLayout>
-            
-            
-            
-            
-            
-            
-            
         </Grid>
     </ContentPage.Content>
 </ContentPage>
