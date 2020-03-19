@@ -10,7 +10,7 @@ namespace MyStudyHelper
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new XAML_Pages.LoginPage();
         }
 
         protected override void OnStart()

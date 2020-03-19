@@ -16,5 +16,20 @@ namespace MyStudyHelper.XAML_Pages
         {
             InitializeComponent();
         }
+
+        private void btnSignin_Clicked(object sender, EventArgs e)
+        {
+            //if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
+            //    DisplayAlert("Login", "SUCCESSFUL!", "OK");
+            //else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            //{
+            //    DisplayAlert("Login", "FAILED!", "OK");
+            //}
+        }
+
+        private void btnSignup_Clicked(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

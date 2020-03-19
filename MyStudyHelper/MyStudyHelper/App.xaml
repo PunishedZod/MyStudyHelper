@@ -6,6 +6,42 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.App">
     <Application.Resources>
+        <ResourceDictionary>
+            
+            <!--Main background colour for app-->
+            <Color x:Key="bckgroundColor">#4040ff</Color>
+            
+            <!--Main Title Style-->
+            <Style x:Key="lblMainTitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="40"/>
+            </Style>
 
+            <!--Main Subtitle Style-->
+            <Style x:Key="lblMainSubtitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
+
+            <!--Entry Style v1-->
+            <Style x:Key="txtStyle1" TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="White"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            
+            <!--Button style v1-->
+            <Style x:Key="btnStyle1" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
