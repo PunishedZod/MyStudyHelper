@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,8 +16,9 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
-        private void btnSignin_Clicked(object sender, EventArgs e)
+        private async void btnSignin_Clicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new MainPage());
             //if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             //    DisplayAlert("Login", "SUCCESSFUL!", "OK");
             //else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
@@ -27,9 +27,9 @@ namespace MyStudyHelper.XAML_Pages
             //}
         }
 
-        private void btnSignup_Clicked(object sender, EventArgs e)
+        private async void btnSignup_Clicked(object sender, EventArgs e)
         {
-            
+            await Navigation.PushAsync(new RegisterPage());
         }
     }
 }
