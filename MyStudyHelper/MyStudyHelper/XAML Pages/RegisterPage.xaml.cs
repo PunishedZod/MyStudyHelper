@@ -14,6 +14,7 @@ namespace MyStudyHelper.XAML_Pages
         public RegisterPage()
         {
             InitializeComponent();
+            lblError.IsVisible = false;
         }
 
         private async void btnCancel_Clicked(object sender, EventArgs e)
@@ -23,12 +24,18 @@ namespace MyStudyHelper.XAML_Pages
 
         private async void btnSignup_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LoginPage());
-            if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword1.Text))
-                DisplayAlert("Login", "SUCCESSFUL!", "OK");
-            else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword1.Text))
+            if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtEmail.Text)
+                && !string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtPassword1.Text)
+                && !string.IsNullOrEmpty(txtPassword2.Text) && txtPassword1.Text == txtPassword2.Text)
             {
-                DisplayAlert("Login", "FAILED!", "OK");
+                await DisplayAlert("Registration Successful", "You have successfully registered! Please sign in with your account.", "Sign In");
+                await Navigation.PushAsync(new LoginPage());
+            }     
+            else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtEmail.Text)
+                || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPassword1.Text)
+                || string.IsNullOrEmpty(txtPassword2.Text) || txtPassword1.Text != txtPassword2.Text)
+            {
+                lblError.IsVisible = true;
             }
         }
     }

@@ -24,6 +24,13 @@
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="30"/>
             </Style>
+            
+            <!--Error Style v1-->
+            <Style x:Key="lblErrorMsg" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="OrangeRed"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
 
             <!--Entry Style v1-->
             <Style x:Key="txtStyle1" TargetType="Entry">

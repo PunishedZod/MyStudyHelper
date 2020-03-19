@@ -7,24 +7,26 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.RegisterPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Register">
     
+    <!--Register XAML page frontend-->
     <ContentPage.Content>
 
         <StackLayout x:Name="StkLoginInfo" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="250">
             <Label x:Name="lblTitle" Style="{StaticResource lblMainTitle}" Text="MyStudy Helper" VerticalOptions="Center" HorizontalOptions="Center"/>
             <Label x:Name="lblSubtitle" Style="{StaticResource lblMainSubtitle}" Text="Register" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,15"/>
+            <Label x:Name="lblError" Style="{StaticResource lblErrorMsg}" Text="* Invalid or Empty Field(s)"/>
             <Entry x:Name="txtUsername" Style="{StaticResource txtStyle1}" Placeholder="Username *"/>
             <Entry x:Name="txtEmail" Style="{StaticResource txtStyle1}" Placeholder="Email Address *" Margin="0,-5,0,0"/>
             <Entry x:Name="txtName" Style="{StaticResource txtStyle1}" Placeholder="Name (Optional)" Margin="0,-5,0,0"/>
             <Entry x:Name="txtPassword1" Style="{StaticResource txtStyle1}" Placeholder="Password *" Margin="0,-5,0,0" IsPassword="True"/>
             <Entry x:Name="txtPassword2" Style="{StaticResource txtStyle1}" Placeholder="Re-Enter Password *" Margin="0,-5,0,0" IsPassword="True"/>
-
+            
             <StackLayout x:Name="StckLoginBtn" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">
                 <Button x:Name="btnCancel" Style="{StaticResource btnStyle1}" Text="Back" Clicked="btnCancel_Clicked"/>
                 <Button x:Name="btnSignup" Style="{StaticResource btnStyle1}" Text="Sign Up" Clicked="btnSignup_Clicked"/>
             </StackLayout>
 
         </StackLayout>
-
+    
     </ContentPage.Content>
     
 </ContentPage>

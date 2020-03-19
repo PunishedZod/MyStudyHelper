@@ -14,17 +14,20 @@ namespace MyStudyHelper.XAML_Pages
         public LoginPage()
         {
             InitializeComponent();
+            lblError.IsVisible = false;
         }
 
         private async void btnSignin_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new MainPage());
-            //if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
-            //    DisplayAlert("Login", "SUCCESSFUL!", "OK");
-            //else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
-            //{
-            //    DisplayAlert("Login", "FAILED!", "OK");
-            //}
+            if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
+            {
+                await DisplayAlert("Login", "SUCCESSFUL!", "OK");
+            } 
+            else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            {
+                lblError.IsVisible = true;
+            }
         }
 
         private async void btnSignup_Clicked(object sender, EventArgs e)
