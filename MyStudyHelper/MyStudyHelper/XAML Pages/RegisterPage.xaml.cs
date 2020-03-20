@@ -17,7 +17,7 @@ namespace MyStudyHelper.XAML_Pages
             lblError.IsVisible = false;
         }
 
-        private async void btnCancel_Clicked(object sender, EventArgs e)
+        private async void btnBack_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new LoginPage());
         }

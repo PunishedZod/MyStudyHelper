@@ -5,6 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MyStudyHelper.App">
+    
+    <!--This is where I keep most of my styles for all XAML/frontend pages of the app, here I can set the properties of various things globally instead of locally for every page-->
     <Application.Resources>
         <ResourceDictionary>
             
@@ -34,7 +36,8 @@
 
             <!--Entry Style v1-->
             <Style x:Key="txtStyle1" TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="White"/>
+                <Setter Property="PlaceholderColor" Value="LightGray"/>
+                <Setter Property="FontAttributes" Value="Italic"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
@@ -47,6 +50,20 @@
                 <Setter Property="WidthRequest" Value="100"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <!--Title Style-->
+            <Style x:Key="lblTitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="35"/>
+            </Style>
+
+            <!--Subtitle Style-->
+            <Style x:Key="lblSubtitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
             </Style>
 
         </ResourceDictionary>

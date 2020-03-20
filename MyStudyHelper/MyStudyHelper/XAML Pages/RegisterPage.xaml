@@ -21,7 +21,7 @@
             <Entry x:Name="txtPassword2" Style="{StaticResource txtStyle1}" Placeholder="Re-Enter Password *" Margin="0,-5,0,0" IsPassword="True"/>
             
             <StackLayout x:Name="StckLoginBtn" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">
-                <Button x:Name="btnCancel" Style="{StaticResource btnStyle1}" Text="Back" Clicked="btnCancel_Clicked"/>
+                <Button x:Name="btnBack" Style="{StaticResource btnStyle1}" Text="Back" Clicked="btnBack_Clicked"/>
                 <Button x:Name="btnSignup" Style="{StaticResource btnStyle1}" Text="Sign Up" Clicked="btnSignup_Clicked"/>
             </StackLayout>
 
