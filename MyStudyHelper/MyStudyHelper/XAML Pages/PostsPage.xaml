@@ -5,9 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              NavigationPage.HasNavigationBar="False"
              mc:Ignorable="d"
-             x:Class="MyStudyHelper.XAML_Pages.HomePage" BackgroundColor="{StaticResource bckgroundColor}" Title="Home">
-
-    <!--Home XAML page frontend-->
+             x:Class="MyStudyHelper.XAML_Pages.PostsPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Posts">
+    
+    <!--Posts XAML page frontend-->
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
