@@ -9,9 +9,9 @@
     <!--This is where I keep most of my styles for all XAML/frontend pages of the app, here I can set the properties of various things globally instead of locally for every page-->
     <Application.Resources>
         <ResourceDictionary>
-            
+
             <!--Main background colour for app-->
-            <Color x:Key="bckgroundColor">#4040ff</Color>
+            <Color x:Key="bckgroundColor">#bd9313</Color>
             
             <!--Main Title Style-->
             <Style x:Key="lblMainTitle" TargetType="Label">
@@ -30,7 +30,7 @@
             <!--Error Style v1-->
             <Style x:Key="lblErrorMsg" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="TextColor" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="DarkRed"/>
                 <Setter Property="FontSize" Value="15"/>
             </Style>
 
@@ -41,7 +41,15 @@
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
-            
+
+            <!--Entry Style v2-->
+            <Style x:Key="txtStyle2" TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="DarkSlateGray"/>
+                <Setter Property="FontAttributes" Value="Italic"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+
             <!--Button style v1-->
             <Style x:Key="btnStyle1" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
@@ -64,6 +72,13 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
+            </Style>
+            
+            <!--Content Container Style-->
+            <Style x:Key="FrmeMainContainer" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="0"/>
             </Style>
 
         </ResourceDictionary>

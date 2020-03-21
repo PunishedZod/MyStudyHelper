@@ -21,7 +21,6 @@
                 <Button x:Name="btnSignin" Style="{StaticResource btnStyle1}" Text="Sign In" Clicked="btnSignin_Clicked"/>
                 <Button x:Name="btnSignup" Style="{StaticResource btnStyle1}" Text="Sign Up" Clicked="btnSignup_Clicked"/>
             </StackLayout>
-            
         </StackLayout>
         
     </ContentPage.Content>

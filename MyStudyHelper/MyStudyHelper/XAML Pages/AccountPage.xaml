@@ -6,44 +6,46 @@
              NavigationPage.HasNavigationBar="False"
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.AccountPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Account">
+    
+    <!--Account XAML page frontend-->
     <ContentPage.Content>
+        
         <Grid Margin="15">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout Grid.Row="0" VerticalOptions="Center">
-                <Label x:Name="lblTitle" Style="{StaticResource lblTitle}" Text="User Details"/>
-                <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Change and Update Details"/>
+            <StackLayout x:Name="stckTopContainer" VerticalOptions="CenterAndExpand" Grid.Row="0">
+                <Label x:Name="lblTitle" Style="{StaticResource lblTitle}" Text="Account Details"/>
+                <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Change and Update Your Details"/>
             </StackLayout>
 
-            <Frame Grid.Row="1" BackgroundColor="White" CornerRadius="20" Padding="0">
-                <StackLayout Orientation="Vertical">
+            <Frame x:Name="FrmeMainContainer" Style="{StaticResource FrmeMainContainer}" Grid.Row="1">
 
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="250">
-                        <Entry x:Name="txtUsername" Style="{StaticResource txtStyle1}" Placeholder="Username *" PlaceholderColor="DarkSlateGray"/>
-                        <Entry x:Name="txtEmail" Style="{StaticResource txtStyle1}" Placeholder="Email Address *" PlaceholderColor="DarkSlateGray"/>
-                        <Entry x:Name="txtName" Style="{StaticResource txtStyle1}" Placeholder="Name (Optional)" PlaceholderColor="DarkSlateGray"/>
-                        <Entry x:Name="txtOldPassword" Style="{StaticResource txtStyle1}" Placeholder="Old Password *" PlaceholderColor="DarkSlateGray"/>
-                        <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle1}" Placeholder="New Password *" PlaceholderColor="DarkSlateGray"/>
+                <StackLayout x:Name="stckContentContainer" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="250">
+                        <Entry x:Name="txtUsername" Style="{StaticResource txtStyle2}" Placeholder="Username *"/>
+                        <Entry x:Name="txtEmail" Style="{StaticResource txtStyle2}" Placeholder="Email Address *"/>
+                        <Entry x:Name="txtName" Style="{StaticResource txtStyle2}" Placeholder="Name (Optional)"/>
+                        <Entry x:Name="txtOldPassword" Style="{StaticResource txtStyle2}" Placeholder="Old Password *"/>
+                        <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password *"/>
 
-                        <StackLayout x:Name="StckLoginBtn" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">
-                            <Button x:Name="btnBack" Style="{StaticResource btnStyle1}" Text="Back" TextColor="Black"/>
-                            <Button x:Name="btnSignup" Style="{StaticResource btnStyle1}" Text="Change" TextColor="Red"/>
-                        </StackLayout>
-
+                    <StackLayout x:Name="stckBtnContainer" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">
+                        <Button x:Name="btnBack" Style="{StaticResource btnStyle1}" Text="Back" TextColor="Black"/>
+                        <Button x:Name="btnSignup" Style="{StaticResource btnStyle1}" Text="Change" TextColor="Red"/>
                     </StackLayout>
-
                 </StackLayout>
+                    
             </Frame>
-           
 
-            <StackLayout Grid.Row="2" VerticalOptions="CenterAndExpand">
-                <Button x:Name="btnLogout" Style="{StaticResource btnStyle1}" Text="Logout" TextColor="White"/>
+            <StackLayout x:Name="stckBottomContainer" VerticalOptions="CenterAndExpand" Grid.Row="2">
+                <Button x:Name="btnLogout" Style="{StaticResource btnStyle1}" Text="Logout"/>
             </StackLayout>
 
         </Grid>
+        
     </ContentPage.Content>
+    
 </ContentPage>
