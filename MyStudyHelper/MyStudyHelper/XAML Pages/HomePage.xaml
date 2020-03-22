@@ -9,10 +9,36 @@
 
     <!--Home XAML page frontend-->
     <ContentPage.Content>
+        
         <ScrollView>
-            <StackLayout>
 
-            </StackLayout>
+            <Grid Margin="15">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout x:Name="stckTopContainer" VerticalOptions="CenterAndExpand" Grid.Row="0">
+                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Popular Posts"/>
+                </StackLayout>
+
+                <Frame x:Name="frmePostContainer" Style="{StaticResource frmePostContainer}" Padding="15" HorizontalOptions="CenterAndExpand" Grid.Row="1" VerticalOptions="StartAndExpand">
+                    <StackLayout>
+                        <Label Text="Title of Post" FontAttributes="Bold" FontSize="15"/>
+                        <Label FontSize="15" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum ac urna et aliquet. Ut eget egestas quam. Donec purus lacus, viverra a diam et, interdum porta mauris. Vivamus volutpat magna ut metus porttitor, a rhoncus purus sodales. Duis porttitor, diam non lobortis tempor, purus diam mattis risus, ac lacinia est sem ac ligula. Duis pulvinar enim accumsan tempus laoreet."/>
+                    </StackLayout>
+                </Frame>
+
+                <StackLayout x:Name="stckBottomContainer" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2">
+                    <Label Text="User ID" Style="{StaticResource lblSubtitle}"/>
+                </StackLayout>
+
+            </Grid>
+            
         </ScrollView>
+        
     </ContentPage.Content>
+    
 </ContentPage>

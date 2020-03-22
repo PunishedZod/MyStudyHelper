@@ -23,7 +23,7 @@
                 <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Change and Update Your Details"/>
             </StackLayout>
 
-            <Frame x:Name="FrmeMainContainer" Style="{StaticResource FrmeMainContainer}" Grid.Row="1">
+            <Frame x:Name="frmeMainContainer" Style="{StaticResource frmeMainContainer}" Grid.Row="1">
 
                 <StackLayout x:Name="stckContentContainer" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="250">
                         <Entry x:Name="txtUsername" Style="{StaticResource txtStyle2}" Placeholder="Username *"/>

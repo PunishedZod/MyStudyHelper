@@ -74,8 +74,15 @@
                 <Setter Property="FontSize" Value="20"/>
             </Style>
             
-            <!--Content Container Style-->
-            <Style x:Key="FrmeMainContainer" TargetType="Frame">
+            <!--Frame Content Container Style-->
+            <Style x:Key="frmeMainContainer" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <!--Post Container Style-->
+            <Style x:Key="frmePostContainer" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="Padding" Value="0"/>
