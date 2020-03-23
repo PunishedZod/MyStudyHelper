@@ -3,6 +3,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local1="clr-namespace:MyStudyHelper.XAML_Pages"
             NavigationPage.HasNavigationBar="False"
+            BarBackgroundColor="{StaticResource bckgroundColor}"
             x:Class="MyStudyHelper.MainPage">
 
     <!--The MainPage acts as a navigator which holds multiple pages in one TabbedPage. This allows the user to easily switch between pages whenever-->   

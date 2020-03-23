@@ -16,5 +16,10 @@ namespace MyStudyHelper.XAML_Pages
         {
             InitializeComponent();
         }
+
+        private async void btnAccount_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AccountPage());
+        }
     }
 }

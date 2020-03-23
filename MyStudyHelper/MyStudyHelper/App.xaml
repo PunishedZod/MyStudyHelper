@@ -11,8 +11,8 @@
         <ResourceDictionary>
 
             <!--Main background colour for app-->
-            <Color x:Key="bckgroundColor">#bd9313</Color>
-            
+            <Color x:Key="bckgroundColor">#D96C06</Color>
+
             <!--Main Title Style-->
             <Style x:Key="lblMainTitle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold"/>
