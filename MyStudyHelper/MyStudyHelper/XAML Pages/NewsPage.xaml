@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              NavigationPage.HasNavigationBar="False"
              mc:Ignorable="d"
-             x:Class="MyStudyHelper.XAML_Pages.NewsPage" BackgroundColor="{StaticResource bckgroundColor}" Title="News">
+             x:Class="MyStudyHelper.XAML_Pages.NewsPage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="Info_Icon.xml" Title="News">
     
     <!--News & Info XAML page frontend-->
     <ContentPage.Content>

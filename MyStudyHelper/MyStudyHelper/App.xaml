@@ -44,9 +44,8 @@
 
             <!--Entry Style v2-->
             <Style x:Key="txtStyle2" TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="DarkSlateGray"/>
                 <Setter Property="FontAttributes" Value="Italic"/>
-                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
 
@@ -57,6 +56,16 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="WidthRequest" Value="100"/>
                 <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <!--Button style v1-->
+            <Style x:Key="btnStyle2" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="TextColor" Value="Gray"/>
                 <Setter Property="FontSize" Value="15"/>
             </Style>
 

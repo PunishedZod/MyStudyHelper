@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              NavigationPage.HasNavigationBar="False"
              mc:Ignorable="d"
-             x:Class="MyStudyHelper.XAML_Pages.HomePage" BackgroundColor="{StaticResource bckgroundColor}" Title="Home">
+             x:Class="MyStudyHelper.XAML_Pages.HomePage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="Home_Icon.xml" Title="Home">
 
     <!--Home XAML page frontend-->
     <ContentPage.Content>
