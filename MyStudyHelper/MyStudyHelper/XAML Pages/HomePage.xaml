@@ -24,11 +24,19 @@
                     <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Popular Posts"/>
                 </StackLayout>
 
-                <Frame x:Name="frmePostContainer" Style="{StaticResource frmePostContainer}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Padding="15" Grid.Row="1">
-                    <StackLayout>
-                        <Label x:Name="txtPostTitle" Text="Title of Post" FontAttributes="Bold" FontSize="15"/>
-                        <Label x:Name="txtPostContent" FontSize="15" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum ac urna et aliquet. Ut eget egestas quam. Donec purus lacus, viverra a diam et, interdum porta mauris. Vivamus volutpat magna ut metus porttitor, a rhoncus purus sodales. Duis porttitor, diam non lobortis tempor, purus diam mattis risus, ac lacinia est sem ac ligula. Duis pulvinar enim accumsan tempus laoreet."/>
-                    </StackLayout>
+                <Frame x:Name="frmePostContainer" Style="{StaticResource frmePostContainer}" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Padding="15" Margin="0" HasShadow="True" Grid.Row="1" MinimumHeightRequest="50">
+                    <ListView x:Name="lstPopularPosts" ItemsSource="{Binding PostMod}" HasUnevenRows="True" VerticalOptions="Start" MinimumHeightRequest="50">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout VerticalOptions="CenterAndExpand">
+                                        <Label x:Name="txtPostTitle" Text="{Binding Title}" FontAttributes="Bold" FontSize="15"/>
+                                        <Label x:Name="txtPostContent" FontSize="15" Text="{Binding Content}"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Frame>
 
                 <StackLayout x:Name="stckBottomContainer" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2">

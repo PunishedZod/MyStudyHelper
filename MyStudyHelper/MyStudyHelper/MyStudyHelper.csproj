@@ -11,14 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <Compile Remove="API Classes\**" />
+    <Compile Remove="Model Classes\**" />
+    <EmbeddedResource Remove="API Classes\**" />
+    <EmbeddedResource Remove="Model Classes\**" />
+    <None Remove="API Classes\**" />
+    <None Remove="Model Classes\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model Classes\" />
-    <Folder Include="Classes\" />
-    <Folder Include="API Classes\" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup>
