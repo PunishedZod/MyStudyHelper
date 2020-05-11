@@ -1,52 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local1="clr-namespace:MyStudyHelper.XAML_Pages"
              NavigationPage.HasNavigationBar="False"
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.HomePage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="Home_Icon.xml" Title="Home">
 
-    <!--Home XAML page frontend-->
-    <ContentPage.Content>
-        
-        <ScrollView>
+    <!--Home XAML page frontend, This is a CarouselPage to enable other page(s) to be nested inside of it-->
+    <ContentPage>
+        <ContentPage.Content>
 
-            <Grid Margin="15">
-
+            <Grid x:Name="grdMain" RowSpacing="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackLayout x:Name="stckTopContainer" VerticalOptions="CenterAndExpand" Grid.Row="0">
-                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Popular Posts"/>
-                </StackLayout>
+                <StackLayout x:Name="stckMainContainer" Spacing="0">
+                    <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
+                        <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Popular Posts" Margin="15"/>
+                    </StackLayout>
 
-                <Frame x:Name="frmePostContainer" Style="{StaticResource frmePostContainer}" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Padding="15" Margin="0" HasShadow="True" Grid.Row="1" MinimumHeightRequest="50">
-                    <ListView x:Name="lstPopularPosts" ItemsSource="{Binding PostMod}" HasUnevenRows="True" VerticalOptions="Start" MinimumHeightRequest="50">
+                    <ListView x:Name="lstPopularPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <StackLayout VerticalOptions="CenterAndExpand">
-                                        <Label x:Name="txtPostTitle" Text="{Binding Title}" FontAttributes="Bold" FontSize="15"/>
-                                        <Label x:Name="txtPostContent" FontSize="15" Text="{Binding Content}"/>
-                                    </StackLayout>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0">
+                                            <StackLayout>
+                                                <Label x:Name="txtPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
+                                                <Label x:Name="txtPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                    
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </Frame>
-
-                <StackLayout x:Name="stckBottomContainer" HorizontalOptions="End" VerticalOptions="End" Grid.Row="2">
-                    <Button x:Name="btnAccount" Text="User ID" Style="{StaticResource btnStyle1}" Clicked="btnAccount_Clicked"/>
                 </StackLayout>
 
+                <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Style="{StaticResource stckBottomContainer}" Grid.Column="1">
+                        <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White"/>
+                        <StackLayout Style="{StaticResource stckPageIcon}" Margin="0"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Grid.Column="2">
+                        <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"/>
+                    </StackLayout>
+                </Grid>
             </Grid>
-            
-        </ScrollView>
-        
-    </ContentPage.Content>
+
+        </ContentPage.Content>
+    </ContentPage>
     
-</ContentPage>
+    <!--These pages below are nested in the carousel page to enable swiping between pages-->
+    <local1:RecentPosts>
+    </local1:RecentPosts>
+    
+</CarouselPage>

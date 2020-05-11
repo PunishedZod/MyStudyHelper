@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MyStudyHelper.XAML_Pages.RecentPosts">
+    <ContentPage.Content>
+
+        <Grid x:Name="grdMain" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout x:Name="stckMainContainer" Spacing="0">
+                <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
+                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Recent Posts" Margin="15"/>
+                </StackLayout>
+
+                <ListView x:Name="lstPopularPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0">
+                                        <StackLayout>
+                                            <Label x:Name="txtPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
+                                            <Label x:Name="txtPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Style="{StaticResource stckBottomContainer}" Grid.Column="1">
+                    <StackLayout Style="{StaticResource stckPageIcon}"/>
+                    <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White" Margin="0"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Grid.Column="2">
+                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

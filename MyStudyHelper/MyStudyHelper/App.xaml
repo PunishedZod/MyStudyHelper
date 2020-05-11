@@ -6,12 +6,15 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.App">
     
-    <!--This is where I keep most of my styles for all XAML/frontend pages of the app, here I can set the properties of various things globally instead of locally for every page-->
+    <!--This is where most styles are kept for all XAML/frontend pages of the app, here it's possible to set the properties of various things globally instead of locally for every page-->
     <Application.Resources>
         <ResourceDictionary>
 
             <!--Main background colour for app-->
-            <Color x:Key="bckgroundColor">#D96C06</Color>
+            <Color x:Key="bckgroundColor">#2292A4</Color>
+
+            <!--Secondary background colour for app-->
+            <Color x:Key="bckgroundColor2">#19323C</Color>
 
             <!--Main Title Style-->
             <Style x:Key="lblMainTitle" TargetType="Label">
@@ -59,7 +62,7 @@
                 <Setter Property="FontSize" Value="15"/>
             </Style>
 
-            <!--Button style v1-->
+            <!--Button style v2-->
             <Style x:Key="btnStyle2" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="BorderColor" Value="Transparent"/>
@@ -92,11 +95,65 @@
 
             <!--Post Container Style-->
             <Style x:Key="frmePostContainer" TargetType="Frame">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
                 <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="0,10,0,10"/>
                 <Setter Property="CornerRadius" Value="20"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="10"/>
             </Style>
 
+            <!--Listview Style-->
+            <Style x:Key="lstStyle1" TargetType="ListView">
+                <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="HasUnevenRows" Value="True"/>
+                <Setter Property="Margin" Value="25,0,25,0"/>
+            </Style>
+            
+            <!--Post Title Style-->
+            <Style x:Key="lblPostTitle" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+            
+            <!--Post Title Style-->
+            <Style x:Key="lblPostContent" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <!--Bottom Tab Style-->
+            <Style x:Key="stckBottomContainer" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Orientation" Value="Horizontal"/>
+            </Style>
+
+            <!--Bottom Page Icon Style-->
+            <Style x:Key="stckPageIcon" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource bckgroundColor}"/>
+                <Setter Property="HeightRequest" Value="5"/>
+                <Setter Property="WidthRequest" Value="5"/>
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+            
+            <!--Profile Button Style-->
+            <Style x:Key="btnProfile22" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
