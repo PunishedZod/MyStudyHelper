@@ -16,6 +16,7 @@ namespace MyStudyHelper
         public MainPage()
         {
             InitializeComponent();
+            Xamarin.Forms.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false);
         }
     }
 }

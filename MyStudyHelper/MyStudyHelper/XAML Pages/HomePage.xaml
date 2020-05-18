@@ -70,7 +70,8 @@
     </ContentPage>
     
     <!--These pages below are nested in the carousel page to enable swiping between pages-->
-    <local1:RecentPosts>
-    </local1:RecentPosts>
+    
+    <local1:RecentPostsPage>
+    </local1:RecentPostsPage>
     
 </CarouselPage>

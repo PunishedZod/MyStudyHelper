@@ -4,11 +4,11 @@ using System.Text;
 
 namespace MyStudyHelper.Classes.API.Models
 {
-    public class PostsModel
+    public class CommentsModel
     {
         public int Id { get; set; }
-        public string Topic { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string Username { get; set; }
+        public string Comment { get; set; }
+        public int PostId { get; set; }
     }
 }

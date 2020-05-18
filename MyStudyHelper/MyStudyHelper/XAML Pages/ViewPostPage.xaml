@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             NavigationPage.HasNavigationBar="False"
+             mc:Ignorable="d"
+             x:Class="MyStudyHelper.XAML_Pages.ViewPostPage" BackgroundColor="{StaticResource bckgroundColor}">
+    <ContentPage.Content>
+
+        <Grid x:Name="grdMain" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout x:Name="stckMainContainer" Spacing="0">
+
+                <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
+                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Post By: Kawhina Hohepa" Margin="15"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="StartAndExpand" Margin="10,10,10,0">
+                    
+                    <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0" Margin="0,0,0,0" HorizontalOptions="FillAndExpand">
+                        <StackLayout>
+                            <Frame Padding="5" HorizontalOptions="StartAndExpand" BackgroundColor="Red" HasShadow="True" CornerRadius="5" Margin="0,0,0,5">
+                                <Label x:Name="lblTopic" Style="{StaticResource lblPostTitle}" Text="{Binding Topic}" TextColor="White"  HorizontalOptions="StartAndExpand"/>
+                            </Frame>
+                            <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" Color="{StaticResource bckgroundColor2}"/>
+                            <Label x:Name="lblPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}" FontSize="18"/>
+                            <Label x:Name="lblPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <Label x:Name="lblCommentCounter" FontAttributes="Bold, Italic" HorizontalOptions="Center" FontSize="15" Margin="0,15,0,0"/>
+                    <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" Color="{StaticResource bckgroundColor2}" Margin="0,0,0,-6"/>
+
+                    <ListView x:Name="lstComments" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1" SelectionMode="None" BackgroundColor="Transparent" Margin="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0" Margin="25,5,25,5">
+                                            <StackLayout>
+                                                <Label x:Name="txtUsername" Style="{StaticResource lblPostTitle}" Text="{Binding Username}" FontAttributes="Bold, Italic" TextColor="Red"/>
+                                                <Label x:Name="txtComment" Style="{StaticResource lblPostContent}" Text="{Binding Comment}"/>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+
+            </StackLayout>
+
+
+
+            <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2" VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal" BackgroundColor="Transparent" HorizontalOptions="StartAndExpand">
+
+                    <Frame BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Grid.Column="0" Grid.ColumnSpan="3" Padding="0" Margin="10" WidthRequest="275" CornerRadius="10">
+                        <Editor x:Name="txtComment" Placeholder="Send Message (Max 300 Characters)" TextColor="Black" HeightRequest="60" FontSize="15"/>
+                    </Frame>
+
+                    <Button x:Name="btnSend" Style="{StaticResource btnStyle1}" Text="Send"  WidthRequest="72"/>
+                    
+                </StackLayout>
+      
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

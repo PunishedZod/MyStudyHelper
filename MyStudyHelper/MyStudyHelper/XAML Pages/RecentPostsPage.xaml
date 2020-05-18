@@ -4,7 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="MyStudyHelper.XAML_Pages.RecentPosts">
+             x:Class="MyStudyHelper.XAML_Pages.RecentPostsPage">
+    
+    <!--Recent Posts XAML page frontend-->
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">
@@ -19,7 +21,7 @@
                     <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Recent Posts" Margin="15"/>
                 </StackLayout>
 
-                <ListView x:Name="lstPopularPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1">
+                <ListView x:Name="lstRecentPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

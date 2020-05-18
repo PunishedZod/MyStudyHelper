@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             NavigationPage.HasNavigationBar="False"
+             mc:Ignorable="d"
+             x:Class="MyStudyHelper.XAML_Pages.CreatePostPage" BackgroundColor="{StaticResource bckgroundColor}">
+    <ContentPage.Content>
+
+        <Grid x:Name="grdMain" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <StackLayout x:Name="stckMainContainer" Spacing="0">
+                
+                <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
+                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="Create A Post" Margin="15"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="StartAndExpand">
+
+                    <Frame Style="{StaticResource frmeMainContainer}" Padding="15" Margin="15">
+                        <StackLayout>
+                            <Picker Title="Choose Topic *" FontSize="15" TextColor="Black" TitleColor="Default">
+                                <Picker.Items>
+                                    <x:String>Technology</x:String>
+                                    <x:String>Art</x:String>
+                                </Picker.Items>
+                            </Picker>
+
+                            <Entry x:Name="txtTitle" Style="{StaticResource txtStyle1}" FontAttributes="None" TextColor="Black" Placeholder="Title *" FontSize="15" PlaceholderColor="Default"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame Style="{StaticResource frmeMainContainer}" Padding="15" Margin="15,0,15,0">
+                        <Editor MaxLength="300" AutoSize="TextChanges" x:Name="txtMessage" Placeholder="Message Body (Max 300 Characters) *" VerticalOptions="StartAndExpand" FontSize="15" HeightRequest="200"/>
+                    </Frame>
+
+                    <StackLayout x:Name="stckBtnContainer" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">
+                        <Button x:Name="btnBack" Style="{StaticResource btnStyle2}" Text="Cancel" TextColor="White"/>
+                        <Button x:Name="btnSignup" Style="{StaticResource btnStyle2}" Text="Post" TextColor="White"/>
+                    </StackLayout>
+                </StackLayout>
+                
+            </StackLayout>
+            
+            
+            
+            <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal" Grid.Column="2">
+                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"  WidthRequest="75"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

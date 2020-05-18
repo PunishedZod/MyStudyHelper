@@ -9,7 +9,9 @@
     <!--This is where most styles are kept for all XAML/frontend pages of the app, here it's possible to set the properties of various things globally instead of locally for every page-->
     <Application.Resources>
         <ResourceDictionary>
-
+            
+            <!--GENERAL STYLES FOR ENTIRE APP - START-->
+            
             <!--Main background colour for app-->
             <Color x:Key="bckgroundColor">#2292A4</Color>
 
@@ -92,39 +94,7 @@
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
-
-            <!--Post Container Style-->
-            <Style x:Key="frmePostContainer" TargetType="Frame">
-                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
-                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="Margin" Value="0,10,0,10"/>
-                <Setter Property="CornerRadius" Value="20"/>
-                <Setter Property="HasShadow" Value="True"/>
-                <Setter Property="Padding" Value="10"/>
-            </Style>
-
-            <!--Listview Style-->
-            <Style x:Key="lstStyle1" TargetType="ListView">
-                <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
-                <Setter Property="VerticalOptions" Value="Start"/>
-                <Setter Property="HasUnevenRows" Value="True"/>
-                <Setter Property="Margin" Value="25,0,25,0"/>
-            </Style>
-            
-            <!--Post Title Style-->
-            <Style x:Key="lblPostTitle" TargetType="Label">
-                <Setter Property="VerticalTextAlignment" Value="Start"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="FontSize" Value="15"/>
-            </Style>
-            
-            <!--Post Title Style-->
-            <Style x:Key="lblPostContent" TargetType="Label">
-                <Setter Property="VerticalTextAlignment" Value="Start"/>
-                <Setter Property="FontSize" Value="15"/>
-            </Style>
-
+                        
             <!--Bottom Tab Style-->
             <Style x:Key="stckBottomContainer" TargetType="StackLayout">
                 <Setter Property="HorizontalOptions" Value="Center"/>
@@ -154,6 +124,47 @@
                 <Setter Property="FontSize" Value="15"/>
             </Style>
             
+            <!--GENERAL STYLES FOR ENTIRE APP - END-->
+            
+            
+            
+            <!--POST RELATED STYLES - START-->
+
+            <!--Post Container Style-->
+            <Style x:Key="frmePostContainer" TargetType="Frame">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="0,10,0,10"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+
+            <!--Listview Style-->
+            <Style x:Key="lstStyle1" TargetType="ListView">
+                <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+                <Setter Property="SeparatorVisibility" Value="None"/>
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="HasUnevenRows" Value="True"/>
+                <Setter Property="Margin" Value="25,0,25,0"/>
+            </Style>
+
+            <!--Post Title Style-->
+            <Style x:Key="lblPostTitle" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <!--Post Content Style-->
+            <Style x:Key="lblPostContent" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <!--POST RELATED STYLES - END-->
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

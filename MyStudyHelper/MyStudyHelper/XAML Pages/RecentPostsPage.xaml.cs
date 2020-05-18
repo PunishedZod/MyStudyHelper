@@ -5,14 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RecentPosts : ContentPage
+    public partial class RecentPostsPage : ContentPage
     {
         public ObservableCollection<PostsModel> PostMod = new ObservableCollection<PostsModel>
         {
@@ -22,16 +21,15 @@ namespace MyStudyHelper.XAML_Pages
             new PostsModel {Title="A Question About Studies", Content="Cras nibh arcu, sagittis ac sollicitudin et, porttitor a velit. Suspendisse." },
         };
 
-        public RecentPosts()
+        public RecentPostsPage()
         {
             InitializeComponent();
             BindingContext = this;
             Test();
         }
-
         public void Test()
         {
-            lstPopularPosts.ItemsSource = PostMod;
+            lstRecentPosts.ItemsSource = PostMod;
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
