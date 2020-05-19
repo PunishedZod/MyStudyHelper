@@ -10,6 +10,7 @@
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="Auto"/>
@@ -18,27 +19,27 @@
 
             <StackLayout x:Name="stckMainContainer" Spacing="0">
                 <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
-                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="All Posts - Last 30 Days" Margin="15"/>
+                    <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="All Posts - Last 30 Days" Margin="15"/>
                 </StackLayout>
 
-                <ListView x:Name="lstAllPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" Grid.Row="1" SelectionMode="None" ItemTapped="lstAllPosts_ItemTapped" BackgroundColor="Transparent">
+                <ListView x:Name="lstAllPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemTapped="lstAllPosts_ItemTapped" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-
                                 <Grid>
+                                    
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
                                     <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0">
                                         <StackLayout>
-                                            <Label x:Name="txtPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
-                                            <Label x:Name="txtPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
+                                            <Label x:Name="lblTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
+                                            <Label x:Name="lblContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
                                         </StackLayout>
                                     </Frame>
+                                    
                                 </Grid>
-
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -46,15 +47,16 @@
             </StackLayout>
 
             <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" BackgroundColor="Transparent">
-                    <Button x:Name="btnCreatePost" Style="{StaticResource btnStyle1}" Text="Post" Clicked="btnCreatePost_Clicked" TextColor="Red" BackgroundColor="Transparent" WidthRequest="70"/>
-                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked" WidthRequest="75"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2">
+                    <Button x:Name="btnCreatePost" Style="{StaticResource btnStyle1}" Text="Post" TextColor="Red" WidthRequest="55" Clicked="btnCreatePost_Clicked" />
+                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"/>
                 </StackLayout>
             </Grid>
         </Grid>

@@ -10,7 +10,11 @@
     <Application.Resources>
         <ResourceDictionary>
             
+            
+            
             <!--GENERAL STYLES FOR ENTIRE APP - START-->
+            
+            
             
             <!--Main background colour for app-->
             <Color x:Key="bckgroundColor">#2292A4</Color>
@@ -92,6 +96,7 @@
             <Style x:Key="frmeMainContainer" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="HasShadow" Value="False"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
                         
@@ -104,9 +109,9 @@
 
             <!--Bottom Page Icon Style-->
             <Style x:Key="stckPageIcon" TargetType="StackLayout">
+                <Setter Property="BackgroundColor" Value="{StaticResource bckgroundColor}"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="BackgroundColor" Value="{StaticResource bckgroundColor}"/>
                 <Setter Property="HeightRequest" Value="5"/>
                 <Setter Property="WidthRequest" Value="5"/>
                 <Setter Property="Margin" Value="0"/>
@@ -124,12 +129,19 @@
                 <Setter Property="FontSize" Value="15"/>
             </Style>
             
+            
+            
             <!--GENERAL STYLES FOR ENTIRE APP - END-->
+            
+            
+            
             
             
             
             <!--POST RELATED STYLES - START-->
 
+            
+            
             <!--Post Container Style-->
             <Style x:Key="frmePostContainer" TargetType="Frame">
                 <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
@@ -137,7 +149,7 @@
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="Margin" Value="0,10,0,10"/>
                 <Setter Property="CornerRadius" Value="20"/>
-                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="HasShadow" Value="False"/>
                 <Setter Property="Padding" Value="10"/>
             </Style>
 
@@ -146,6 +158,7 @@
                 <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
                 <Setter Property="SeparatorVisibility" Value="None"/>
                 <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="SelectionMode" Value="None"/>
                 <Setter Property="HasUnevenRows" Value="True"/>
                 <Setter Property="Margin" Value="25,0,25,0"/>
             </Style>
@@ -162,7 +175,9 @@
                 <Setter Property="VerticalTextAlignment" Value="Start"/>
                 <Setter Property="FontSize" Value="15"/>
             </Style>
-
+            
+            
+            
             <!--POST RELATED STYLES - END-->
 
         </ResourceDictionary>
