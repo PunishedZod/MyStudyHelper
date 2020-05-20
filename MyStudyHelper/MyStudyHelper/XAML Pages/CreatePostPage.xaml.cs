@@ -17,9 +17,17 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
-        private async void btnAccount_Clicked(object sender, EventArgs e)
+        //Method to be created here which validates info and sends it to database
+
+        private async void btnCancel_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AccountPage());
+            await Navigation.PopAsync();
+        }
+
+        private async void btnPost_Clicked(object sender, EventArgs e)
+        {
+            //Method insert here
+            await Navigation.PushAsync(new ViewPostPage());
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MyStudyHelper.XAML_Pages
         private async void btnSignin_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new MainPage());
+
             if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             {
                 await DisplayAlert("Login", "SUCCESSFUL!", "OK");

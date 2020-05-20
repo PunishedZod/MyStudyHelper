@@ -53,8 +53,8 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackLayout Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnCancel" Style="{StaticResource btnStyle1}" Text="Cancel" TextColor="Red"/>
-                    <Button x:Name="btnPost" Style="{StaticResource btnStyle1}" Text="Post"/>
+                    <Button x:Name="btnCancel" Style="{StaticResource btnStyle1}" Text="Cancel" TextColor="Red" Clicked="btnCancel_Clicked"/>
+                    <Button x:Name="btnPost" Style="{StaticResource btnStyle1}" Text="Post" Clicked="btnPost_Clicked"/>
                 </StackLayout>
             </Grid>
         </Grid>

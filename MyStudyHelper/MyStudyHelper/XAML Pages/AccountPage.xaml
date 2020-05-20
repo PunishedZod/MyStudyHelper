@@ -35,8 +35,8 @@
                             <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password *"/>
 
                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                <Button x:Name="btnBack" Style="{StaticResource btnStyle2}" Text="Back"/>
-                                <Button x:Name="btnChange" Style="{StaticResource btnStyle2}" Text="Change" TextColor="Red"/>
+                                <Button x:Name="btnBack" Style="{StaticResource btnStyle2}" Text="Back" Clicked="btnBack_Clicked"/>
+                                <Button x:Name="btnChange" Style="{StaticResource btnStyle2}" Text="Change" TextColor="Red" Clicked="btnChange_Clicked"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>
@@ -52,7 +52,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2">
-                    <Button x:Name="btnLogout" Style="{StaticResource btnStyle1}" Text="Logout" TextColor="Red"/>
+                    <Button x:Name="btnLogout" Style="{StaticResource btnStyle1}" Text="Logout" TextColor="Red" Clicked="btnLogout_Clicked"/>
                 </StackLayout>
             </Grid>
         </Grid>
