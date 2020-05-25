@@ -158,7 +158,7 @@
                 <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
                 <Setter Property="SeparatorVisibility" Value="None"/>
                 <Setter Property="VerticalOptions" Value="Start"/>
-                <Setter Property="SelectionMode" Value="None"/>
+                <Setter Property="SelectionMode" Value="Single"/>
                 <Setter Property="HasUnevenRows" Value="True"/>
                 <Setter Property="Margin" Value="25,0,25,0"/>
             </Style>

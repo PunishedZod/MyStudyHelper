@@ -1,0 +1,12 @@
+﻿using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using System.Threading.Tasks;
+
+namespace MyStudyHelper.Classes.API.Proxys.Interfaces
+{
+    public interface IUserProxy
+    {
+        Task<IUser> GetUserInfo(string uname, string pword);
+        Task<IUser> PostUserInfo(User user);
+    }
+}

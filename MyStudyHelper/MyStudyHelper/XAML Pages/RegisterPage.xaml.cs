@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Autofac;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using MyStudyHelper.Classes.Backend;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +15,13 @@ namespace MyStudyHelper.XAML_Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
+        private IContainer container;
+
         public RegisterPage()
         {
             InitializeComponent();
             lblError.IsVisible = false;
         }
-
-        //More work to be done here, ALOT
 
         private async void btnBack_Clicked(object sender, EventArgs e)
         {
@@ -26,18 +30,38 @@ namespace MyStudyHelper.XAML_Pages
 
         private async void btnSignup_Clicked(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtEmail.Text)
-                && !string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtPassword1.Text)
-                && !string.IsNullOrEmpty(txtPassword2.Text) && txtPassword1.Text == txtPassword2.Text)
+
+        }
+
+        public async void BeginRegistration()
+        {
+            try
             {
-                await DisplayAlert("Registration Successful", "You have successfully registered! Please sign in with your account.", "Sign In");
-                await Navigation.PushAsync(new LoginPage());
-            }     
-            else if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtEmail.Text)
-                || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPassword1.Text)
-                || string.IsNullOrEmpty(txtPassword2.Text) || txtPassword1.Text != txtPassword2.Text)
+                container = DependancyInjection.Configure();
+
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<RegisterBackend>();
+                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text);
+
+                    if (validation == null)
+                    {
+                        var user = await app.Register(); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        if (user != null)
+                        {
+                            MainPage.user = (User)user;
+                            await Navigation.PopModalAsync();
+                        }
+                        else
+                            await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");
+                    }
+                    else
+                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                }
+            }
+            catch
             {
-                lblError.IsVisible = true;
+                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
             }
         }
     }

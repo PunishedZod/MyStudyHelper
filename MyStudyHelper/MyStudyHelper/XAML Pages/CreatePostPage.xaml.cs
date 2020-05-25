@@ -24,10 +24,10 @@ namespace MyStudyHelper.XAML_Pages
             await Navigation.PopAsync();
         }
 
-        private async void btnPost_Clicked(object sender, EventArgs e)
+        private void btnPost_Clicked(object sender, EventArgs e)
         {
             //Method insert here
-            await Navigation.PushAsync(new ViewPostPage());
+            //await Navigation.PushAsync(new ViewPostPage());
         }
     }
 }

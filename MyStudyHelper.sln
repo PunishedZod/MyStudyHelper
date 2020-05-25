@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStudyHelper.Android", "My
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStudyHelper.iOS", "MyStudyHelper\MyStudyHelper.iOS\MyStudyHelper.iOS.csproj", "{D1385177-8A86-4FC5-AB7E-84C0EBEAD463}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStudyHelper", "MyStudyHelper\MyStudyHelper\MyStudyHelper.csproj", "{8C139F6D-7B3C-4270-86E9-5DCD92035DFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyStudyHelper", "MyStudyHelper\MyStudyHelper\MyStudyHelper.csproj", "{8C139F6D-7B3C-4270-86E9-5DCD92035DFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

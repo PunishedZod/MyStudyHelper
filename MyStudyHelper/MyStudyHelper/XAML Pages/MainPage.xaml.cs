@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyStudyHelper.Classes.API.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace MyStudyHelper
     [DesignTimeVisible(false)]
     public partial class MainPage : TabbedPage
     {
+        public static User user = new User();
+
         public MainPage()
         {
             InitializeComponent();

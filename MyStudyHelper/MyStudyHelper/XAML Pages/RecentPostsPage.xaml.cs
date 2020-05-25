@@ -13,12 +13,12 @@ namespace MyStudyHelper.XAML_Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecentPostsPage : ContentPage
     {
-        public ObservableCollection<PostsModel> PostMod = new ObservableCollection<PostsModel>
+        public ObservableCollection<Posts> PostMod = new ObservableCollection<Posts>
         {
-            new PostsModel { Title = "Help! Please!", Content = "Quisque a nisl fermentum, fringilla ligula a, lobortis risus." },
-            new PostsModel { Title = "Need Assistance", Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada erat ac sapien porta aliquet. Nam finibus eros eu nisi consequat, et accumsan dui porttitor." },
-            new PostsModel { Title = "A Question About Studies", Content = "Cras nibh arcu, sagittis ac sollicitudin et, porttitor a velit. Suspendisse dignissim eu turpis vel porta. Vivamus tincidunt eleifend augue non egestas. Morbi accumsan nisl ut risus pretium imperdiet. Cras posuere nisl auctor dolor convallis, non condimentum purus pellentesque. Praesent vel viverra urna. Pellentesque ac risus mauris." },
-            new PostsModel { Title = "Studying Inquries?", Content = "Cras nibh arcu, sagittis ac sollicitudin et, porttitor a velit. Suspendisse." },
+            new Posts { Title = "Help! Please!", Content = "Quisque a nisl fermentum, fringilla ligula a, lobortis risus." },
+            new Posts { Title = "Need Assistance", Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada erat ac sapien porta aliquet. Nam finibus eros eu nisi consequat, et accumsan dui porttitor." },
+            new Posts { Title = "A Question About Studies", Content = "Cras nibh arcu, sagittis ac sollicitudin et, porttitor a velit. Suspendisse dignissim eu turpis vel porta. Vivamus tincidunt eleifend augue non egestas. Morbi accumsan nisl ut risus pretium imperdiet. Cras posuere nisl auctor dolor convallis, non condimentum purus pellentesque. Praesent vel viverra urna. Pellentesque ac risus mauris." },
+            new Posts { Title = "Studying Inquries?", Content = "Cras nibh arcu, sagittis ac sollicitudin et, porttitor a velit. Suspendisse." },
         };
 
         public RecentPostsPage()
