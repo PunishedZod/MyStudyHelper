@@ -1,6 +1,7 @@
 ﻿using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MyStudyHelper.Classes.Backend
 {
-    class RegisterBackend
+    public class RegisterBackend : IRegisterBackend
     {
-        private IUserProxy _userProxy;
-
+        private readonly IUserProxy _userProxy;
+        
         public RegisterBackend(IUserProxy userProxy)
         {
             _userProxy = userProxy;
@@ -19,16 +20,22 @@ namespace MyStudyHelper.Classes.Backend
 
         public string CheckInfo(string uname, string email, string name, string pword1, string pword2)
         {
-            if (String.IsNullOrWhiteSpace(uname) && String.IsNullOrWhiteSpace(email)
-                && String.IsNullOrWhiteSpace(pword1) && String.IsNullOrWhiteSpace(pword2))
-                return "Please fill in all required field(s) with valid info";
+            var MinLength = 12;
+
+            if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email)
+                || String.IsNullOrWhiteSpace(pword1) || String.IsNullOrWhiteSpace(pword2))
+                return "Please fill in all required field(s) with valid information, cannot be left empty";
+            else if (pword1.Length < MinLength)
+                return "Password length must be a minimum of 12 characters long";
+            else if (pword1 != pword2)
+                return "Both passwords must be matching each other";
             else
                 return null;
         }
 
-        public async Task<IUser> Register(User user)
+        public async Task<string> Register(string uname, string email, string name, string pword)
         {
-            return await _userProxy.PostUserInfo(user);
+            return await _userProxy.PostUserInfo(new User { Uname = uname, Email = email, Name = name, Pword = pword });
         }
     }
 }

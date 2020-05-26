@@ -97,11 +97,11 @@ namespace MyStudyHelper.Classes.API.Proxys
 
         //Call when posting a post, Takes in a Post class item
         //Returns a string detailing if it was a success or failure
-        public async Task<string> PostPosts(Posts post)
+        public async Task<Posts> PostPost(Posts post)
         {
             HttpClient http = new HttpClient();
             var response = await http.PostAsJsonAsync($"{_baseAddress}api/Posts", post);
-            return await response.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsAsync<Posts>();
         }
 
         //Call when deleting a post, takes the postID

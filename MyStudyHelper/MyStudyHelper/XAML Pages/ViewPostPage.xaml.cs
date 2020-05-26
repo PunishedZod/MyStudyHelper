@@ -3,12 +3,8 @@ using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

@@ -1,7 +1,7 @@
 ﻿using MyStudyHelper.Classes.API.Models.Interfaces;
 using System.Threading.Tasks;
 
-namespace MyStudyHelper.Classes.Backend
+namespace MyStudyHelper.Classes.Backend.Interfaces
 {
     public interface ILoginBackend
     {

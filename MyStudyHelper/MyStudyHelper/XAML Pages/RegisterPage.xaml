@@ -17,7 +17,7 @@
             <Entry x:Name="txtUsername" Style="{StaticResource txtStyle1}" Placeholder="Username *"/>
             <Entry x:Name="txtEmail" Style="{StaticResource txtStyle1}" Placeholder="Email Address *" Margin="0,-5,0,0"/>
             <Entry x:Name="txtName" Style="{StaticResource txtStyle1}" Placeholder="Name (Optional)" Margin="0,-5,0,0"/>
-            <Entry x:Name="txtPassword1" Style="{StaticResource txtStyle1}" Placeholder="Password *" Margin="0,-5,0,0" IsPassword="True"/>
+            <Entry x:Name="txtPassword1" Style="{StaticResource txtStyle1}" Placeholder="Password (Min 10 Characters) *" Margin="0,-5,0,0" IsPassword="True"/>
             <Entry x:Name="txtPassword2" Style="{StaticResource txtStyle1}" Placeholder="Re-Enter Password *" Margin="0,-5,0,0" IsPassword="True"/>
             
             <StackLayout x:Name="StckLoginBtn" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,25,0,0">

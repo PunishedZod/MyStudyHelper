@@ -1,11 +1,10 @@
-﻿using Autofac;
+﻿using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
 using MyStudyHelper.Classes.Backend;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using Autofac;
 
 namespace MyStudyHelper
 {
@@ -14,12 +13,22 @@ namespace MyStudyHelper
         public static Autofac.IContainer Configure()
         {
             var builder = new ContainerBuilder();
+
+            builder.RegisterType<User>().As<IUser>();
+            builder.RegisterType<Posts>().As<IPosts>();
+            builder.RegisterType<Comments>().As<IComments>();
+            builder.RegisterType<HomeBackend>().As<IHomeBackend>();
+            builder.RegisterType<PostsBackend>().As<IPostsBackend>();
             builder.RegisterType<LoginBackend>().As<ILoginBackend>();
-            builder.RegisterType<RegisterBackend>().As<RegisterBackend>();
+            builder.RegisterType<AccountBackend>().As<AccountBackend>();
+            builder.RegisterType<ViewPostBackend>().As<ViewPostBackend>();
+            builder.RegisterType<RegisterBackend>().As<IRegisterBackend>();
+            builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();
+            builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();
+            
+            string baseAddress = "https://localhost:44323/"; //Injects the base address into the proxies
 
             //START OF API PROXIES
-
-            string baseAddress = "https://localhost:44323/"; //Injects the base address into the proxys
 
             builder.Register<PostsProxy>((c, p) =>
             {
@@ -29,7 +38,7 @@ namespace MyStudyHelper
             builder.Register<UserProxy>((c, p) =>
             {
                 return new UserProxy(baseAddress);
-            }).As<UserProxy>();
+            }).As<IUserProxy>();
 
             //END OF API PROXIES
 

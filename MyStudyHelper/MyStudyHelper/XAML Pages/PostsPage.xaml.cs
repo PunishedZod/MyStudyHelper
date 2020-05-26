@@ -1,15 +1,9 @@
 ﻿using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.Backend;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace MyStudyHelper.XAML_Pages
@@ -33,6 +27,7 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
             BindingContext = this;
             GetPostInfo();
+            //DisplayList();
         }
 
         //Method to get all posts in descending order and display them in a list
@@ -63,7 +58,6 @@ namespace MyStudyHelper.XAML_Pages
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
         {
-            //NOTE: TEMPORARY, PLEASE CHANGE BACK TO "ACCOUNT PAGE" NAVIGATION
             await Navigation.PushAsync(new AccountPage());
         }
 
@@ -73,6 +67,13 @@ namespace MyStudyHelper.XAML_Pages
             var itemSelected = (IPosts)e.SelectedItem;
             ((ListView)sender).SelectedItem = null;
             await Navigation.PushAsync(new ViewPostPage(itemSelected));
+        }
+
+        public void DisplayList() //Method to get all posts in most recent order from the backend class
+        {
+            PostsBackend post = new PostsBackend();
+            post.GetPostInfo();
+            lstAllPosts.ItemsSource = post.PostsMod;
         }
     }
 }

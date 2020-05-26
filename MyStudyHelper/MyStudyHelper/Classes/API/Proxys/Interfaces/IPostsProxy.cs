@@ -10,6 +10,6 @@ namespace MyStudyHelper.Classes.API.Proxys.Interfaces
         Task<List<Posts>> GetAllPosts();
         Task<List<Posts>> GetPopularPosts();
         Task<List<Posts>> GetRecentPosts();
-        Task<string> PostPosts(Posts post);
+        Task<Posts> PostPost(Posts post);
     }
 }

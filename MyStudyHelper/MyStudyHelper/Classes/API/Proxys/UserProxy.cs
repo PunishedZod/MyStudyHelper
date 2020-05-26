@@ -18,8 +18,8 @@ namespace MyStudyHelper.Classes.API.Proxys
             _baseAddress = baseAddress;
         }
 
-        // Call when getting user info, takes the username and the password for a user
-        // CAN RETURN NULL IF THE USER DOESNT EXIST OR THERE IS AN ERROR
+        //Call when getting user info, takes the username and the password for a user
+        //CAN RETURN NULL IF THE USER DOESNT EXIST OR THERE IS AN ERROR
         public async Task<IUser> GetUserInfo(string uname, string pword)
         {
             var http = new HttpClient
@@ -44,14 +44,23 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        // Call when creating a user
-        // Returns a string detailing if it was a success or failure
-        public async Task<IUser> PostUserInfo(User user) //NOTE: UNSURE IF THIS FUNCTION WORKS FULLY OR AT ALL !!!
+        //Call when creating a user
+        //Returns a string detailing if it was a success or failure
+        public async Task<string> PostUserInfo(User user) //NOTE: UNSURE IF THIS FUNCTION WORKS FULLY OR AT ALL !!!
         {
             HttpClient http = new HttpClient();
-
             var response = await http.PostAsJsonAsync($"{_baseAddress}api/User", user);
-            return await response.Content.ReadAsAsync<IUser>();
+            return await response.Content.ReadAsStringAsync();
         }
+
+        //NOTE: DOES NOT WORK NEEDS PROPER WORK DONE !!!
+        //Call when updating a user
+        //Returns a string detailing if it was a success or failure
+        //public async Task<string> UpdateUserInfo(User user) //NOTE: UNSURE IF THIS FUNCTION WORKS FULLY OR AT ALL !!!
+        //{
+        //    HttpClient http = new HttpClient();
+        //    var response = await http.PutAsJsonAsync($"{_baseAddress}api/User", user);
+        //    return await response.Content.ReadAsStringAsync();
+        //}
     }
 }

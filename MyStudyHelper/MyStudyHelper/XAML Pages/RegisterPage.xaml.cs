@@ -2,6 +2,7 @@
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.Backend;
+using MyStudyHelper.Classes.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace MyStudyHelper.XAML_Pages
             await Navigation.PushAsync(new LoginPage());
         }
 
-        private async void btnSignup_Clicked(object sender, EventArgs e)
+        private void btnSignup_Clicked(object sender, EventArgs e)
         {
-
+            BeginRegistration();
         }
 
         public async void BeginRegistration()
@@ -41,15 +42,14 @@ namespace MyStudyHelper.XAML_Pages
 
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var app = scope.Resolve<RegisterBackend>();
+                    var app = scope.Resolve<IRegisterBackend>();
                     var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text);
 
                     if (validation == null)
                     {
-                        var user = await app.Register(); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        var user = await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
                         if (user != null)
                         {
-                            MainPage.user = (User)user;
                             await Navigation.PopModalAsync();
                         }
                         else

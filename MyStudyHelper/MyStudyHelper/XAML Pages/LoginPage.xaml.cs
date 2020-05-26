@@ -2,7 +2,7 @@
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.Backend;
+using MyStudyHelper.Classes.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
