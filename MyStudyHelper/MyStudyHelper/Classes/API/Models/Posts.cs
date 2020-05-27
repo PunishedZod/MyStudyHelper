@@ -1,7 +1,4 @@
 ﻿using MyStudyHelper.Classes.API.Models.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyStudyHelper.Classes.API.Models
 {
@@ -9,11 +6,12 @@ namespace MyStudyHelper.Classes.API.Models
     public class Posts : IPosts
     {
         public string Id { get; set; }
-        public string Uname { get; set; }
         public string Topic { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public int UpVote { get; set; }
-        public int DownVote { get; set; }
+        public string[] UpVoteId { get; set; }
+        public string[] DownVoteId { get; set; }
+        public string UId { get; set; }
+        public string Uname { get; set; }
     }
 }

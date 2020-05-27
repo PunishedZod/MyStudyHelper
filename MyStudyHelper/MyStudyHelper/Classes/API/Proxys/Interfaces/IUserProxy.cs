@@ -6,7 +6,7 @@ namespace MyStudyHelper.Classes.API.Proxys.Interfaces
 {
     public interface IUserProxy
     {
-        Task<IUser> GetUserInfo(string uname, string pword);
+        Task<User> GetUserInfo(string uname, string pword);
         Task<string> PostUserInfo(User user);
         //Task<string> UpdateUserInfo(User user);
     }

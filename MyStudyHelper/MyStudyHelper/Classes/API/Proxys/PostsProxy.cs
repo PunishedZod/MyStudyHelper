@@ -3,7 +3,6 @@ using MyStudyHelper.Classes.API.Proxys.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyStudyHelper.Classes.API.Proxys
@@ -104,9 +103,18 @@ namespace MyStudyHelper.Classes.API.Proxys
             return await response.Content.ReadAsAsync<Posts>();
         }
 
+        //Call when updating a post, Takes in a Post class item
+        //Returns a string detailing if it was a success or failure
+        public async Task<Posts> UpdatePost(string id, Posts post)
+        {
+            HttpClient http = new HttpClient();
+            var response = await http.PutAsJsonAsync($"{_baseAddress}api/Posts/{id}", post);
+            return await response.Content.ReadAsAsync<Posts>();
+        }
+
         //Call when deleting a post, takes the postID
         //Returns a string detailing if it was a success or failure
-        public async Task<string> DeletePost(int id)
+        public async Task<string> DeletePost(string id)
         {
             HttpClient http = new HttpClient();
             var response = await http.DeleteAsync($"{_baseAddress}api/Posts/{id}");

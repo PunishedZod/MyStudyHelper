@@ -1,7 +1,7 @@
-﻿using MyStudyHelper.Classes.API.Models;
+﻿using Autofac;
+using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.Backend;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,82 +13,107 @@ namespace MyStudyHelper.XAML_Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPostPage : ContentPage
     {
-        public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        readonly IPostsProxy postsProxy = new PostsProxy("https://localhost:44323/");
+        readonly Posts _postInfo;
+        private IContainer container;
+        public ObservableCollection<IUser> Test = new ObservableCollection<IUser>();
 
-        public ObservableCollection<Comments> CommentsMod = new ObservableCollection<Comments>
-        {
-            new Comments { Uname = "(P) The Punished", Comment = "Hey, I can help you with any study questions that you have. If you ever need help I'm here." },
-            new Comments { Uname = "(Z) The Zinc", Comment = "Hello, I can also assist you with any problems or questions related to studies." },
-            new Comments { Uname = "(A) The Almighty", Comment = "No one can help you, give up and embrace death." },
-            new Comments { Uname = "(N) The Negligible", Comment = "Yes! I am!" },
-            new Comments { Uname = "ZodHD", Comment = "Hello, I can't help you right now, sorry. :/" },
-            new Comments { Uname = "Zincoro", Comment = "Hey, could you give me more details on your problem please? Thanks! :)" },
-            new Comments { Uname = "SolarGambit52", Comment = "Hey there! I don't exactly know if I can help but i can certainly try my best too! If you ever need help with your studies or any questions related, feel free to hit me up!" },
-            new Comments { Uname = "PunishedZod", Comment = "Sorry, I really don't think you need help tbh, It seems as if your question is too vague, try to write better..." },
-        };
-
-        public ViewPostPage(IPosts postData)
+        public ViewPostPage(Posts postInfo)
         {
             InitializeComponent();
             BindingContext = this;
-            Post(postData);
-            CommentsList();
-        }
-
-        //Method created to bind the post info to frontend labels for display
-        public void Post(IPosts postData)
-        {
-            var PostInfo = postData;
-            lblPageTitle.Text = "Post By: " + PostInfo.Uname;
-            lblTopic.Text = PostInfo.Topic;
-            lblPostTitle.Text = PostInfo.Title;
-            lblPostContent.Text = PostInfo.Content;
-        }
-
-        public void CommentsList()
-        {
-            //If statement is created to count the amount of comments currently made on the post and displays it to the user
-            if(CommentsMod.Count == 0)
-            {
-                lblCommentCounter.Text = "No Comments on Post";
-            }
-            else if(CommentsMod.Count != 0)
-            {
-                lblCommentCounter.Text = CommentsMod.Count().ToString() + " Comment(s) Posted";
-            }
-
-            lstComments.ItemsSource = CommentsMod;
-        }
-
-        public void ButtonUpdate()
-        {
-            //Insert upvote and downvote code here
+            Post(postInfo);
+            GetComments();
+            _postInfo = postInfo;
         }
 
         private void btnUpVote_Clicked(object sender, EventArgs e)
         {
-            ButtonUpdate();
+            UpdateUpVote();
         }
 
         private void btnDownVote_Clicked(object sender, EventArgs e)
         {
-            ButtonUpdate();
+            UpdateDownVote();
         }
 
         private void btnSend_Clicked(object sender, EventArgs e)
         {
-            //Send text from Editor into the model
+            CreateComment();
         }
 
+        public void Post(IPosts post) //Method created to bind the post info to frontend labels for display
+        {
+            lblPageTitle.Text = "Post By: " + post.Uname;
+            lblTopic.Text = post.Topic;
+            lblPostTitle.Text = post.Title;
+            lblPostContent.Text = post.Content;
+            btnUpVote.Text = post.UpVoteId.Count().ToString();
+            btnDownVote.Text = post.DownVoteId.Count().ToString();
+        }
 
+        public async void UpdateUpVote() //Method which begins the updating process of the upvotes then returns the updated result
+        {
+            var postInfo = _postInfo;
+            container = DependancyInjection.Configure();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IViewPostBackend>();
+                if (postInfo.UpVoteId.Contains(MainPage.user.Id)) //If upvote array contains the logged in user's id, disable the button
+                {
+                    btnUpVote.IsEnabled = false;
+                }
+                else if (!postInfo.UpVoteId.Contains(MainPage.user.Id)) //else if upvote array doesn't contain the logged in user's id, send the user's id through to the upvote array then refresh page
+                {
+                    var updatedPost = await app.UpdateUpVote(postInfo);
+                    Posts post = (Posts)updatedPost;
+                    await Navigation.PopModalAsync();
+                    await Navigation.PushAsync(new ViewPostPage(post));
+                }
+            }
+        }
 
+        public async void UpdateDownVote() //Method which begins the updating process of the downvotes then returns the updated result
+        {
+            var postInfo = _postInfo;
+            container = DependancyInjection.Configure();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IViewPostBackend>();
+                if (postInfo.DownVoteId.Contains(MainPage.user.Id))
+                {
+                    btnUpVote.IsEnabled = false;
+                }
+                else if (!postInfo.DownVoteId.Contains(MainPage.user.Id))
+                {
+                    var updatedPost = await app.UpdateDownVote(postInfo);
+                    Posts post = (Posts)updatedPost;
+                    await Navigation.PopModalAsync();
+                    await Navigation.PushAsync(new ViewPostPage(post));
+                }
+            }
+        }
 
+        public void GetComments() //Method to get the comments for the post via the post id
+        {
+            var postInfo = _postInfo;
+            container = DependancyInjection.Configure();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IViewPostBackend>();
+                app.GetCommentsInfo(postInfo.Id);
+                lstComments.ItemsSource = app.CommentsList; //Sets the commentslist as the listview's (frontend display) itemsource
+            }
+        }
 
-
-        //public ObservableCollection<Posts> PostMod = new ObservableCollection<Posts>
-        //{
-        //    new Posts { Title = "Help! Please!", Topic = "Technology", Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet nulla quis est faucibus euismod a at magna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin mollis urna non malesuada vestibulum. Nulla ex risus, consequat sit amet tempor vel, accumsan non elit." },
-        //};
+        public void CreateComment() //Method which begins the process of sending the comment to the database through the API, (NEEDS WORK TO UPDATE THE LISTVIEW AT THE END !!!)
+        {
+            var postInfo = _postInfo;
+            container = DependancyInjection.Configure();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IViewPostBackend>();
+                app.SendComment(txtComment.Text, postInfo.Id);
+            }
+        }
     }
 }

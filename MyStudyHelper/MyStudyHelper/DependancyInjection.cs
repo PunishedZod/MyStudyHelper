@@ -21,7 +21,7 @@ namespace MyStudyHelper
             builder.RegisterType<PostsBackend>().As<IPostsBackend>();
             builder.RegisterType<LoginBackend>().As<ILoginBackend>();
             builder.RegisterType<AccountBackend>().As<AccountBackend>();
-            builder.RegisterType<ViewPostBackend>().As<ViewPostBackend>();
+            builder.RegisterType<ViewPostBackend>().As<IViewPostBackend>();
             builder.RegisterType<RegisterBackend>().As<IRegisterBackend>();
             builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();
             builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();
@@ -34,6 +34,11 @@ namespace MyStudyHelper
             {
                 return new PostsProxy(baseAddress);
             }).As<IPostsProxy>();
+
+            builder.Register<CommentsProxy>((c, p) =>
+            {
+                return new CommentsProxy(baseAddress);
+            }).As<ICommentsProxy>();
 
             builder.Register<UserProxy>((c, p) =>
             {

@@ -20,7 +20,7 @@ namespace MyStudyHelper.Classes.API.Proxys
 
         //Call when getting user info, takes the username and the password for a user
         //CAN RETURN NULL IF THE USER DOESNT EXIST OR THERE IS AN ERROR
-        public async Task<IUser> GetUserInfo(string uname, string pword)
+        public async Task<User> GetUserInfo(string uname, string pword)
         {
             var http = new HttpClient
             {

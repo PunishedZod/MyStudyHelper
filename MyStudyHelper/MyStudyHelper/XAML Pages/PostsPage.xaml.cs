@@ -64,7 +64,7 @@ namespace MyStudyHelper.XAML_Pages
         private async void lstAllPosts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) return;
-            var itemSelected = (IPosts)e.SelectedItem;
+            var itemSelected = (Posts)e.SelectedItem;
             ((ListView)sender).SelectedItem = null;
             await Navigation.PushAsync(new ViewPostPage(itemSelected));
         }

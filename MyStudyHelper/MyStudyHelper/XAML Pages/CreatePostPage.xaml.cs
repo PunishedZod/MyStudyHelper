@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Autofac;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MyStudyHelper.Classes.Backend;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
