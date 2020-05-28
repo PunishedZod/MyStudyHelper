@@ -70,29 +70,29 @@ namespace MyStudyHelper.Classes.API.Proxys
 
         //Gets popular posts, Returns a list
         //CAN RETURN NULL IF THERE ARE NO POSTS
-        public async Task<List<Posts>> GetPopularPosts()
-        {
-            var http = new HttpClient
-            {
-                BaseAddress = new Uri(_baseAddress)
-            };
+        //public async Task<List<Posts>> GetPopularPosts()
+        //{
+        //    var http = new HttpClient
+        //    {
+        //        BaseAddress = new Uri(_baseAddress)
+        //    };
 
-            var url = String.Format($"api/Posts/PopularPosts");
-            HttpResponseMessage response = http.GetAsync(url).Result;
+        //    var url = String.Format($"api/Posts/PopularPosts");
+        //    HttpResponseMessage response = http.GetAsync(url).Result;
 
-            if (response.IsSuccessStatusCode)
-            {
-                var posts = await response.Content.ReadAsAsync<List<Posts>>();
-                if (posts != null)
-                {
-                    return posts;
-                }
-                else
-                    return null;
-            }
-            else
-                return null;
-        }
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var posts = await response.Content.ReadAsAsync<List<Posts>>();
+        //        if (posts != null)
+        //        {
+        //            return posts;
+        //        }
+        //        else
+        //            return null;
+        //    }
+        //    else
+        //        return null;
+        //}
 
         //Call when posting a post, Takes in a Post class item
         //Returns a string detailing if it was a success or failure
@@ -105,10 +105,10 @@ namespace MyStudyHelper.Classes.API.Proxys
 
         //Call when updating a post, Takes in a Post class item
         //Returns a string detailing if it was a success or failure
-        public async Task<Posts> UpdatePost(string id, Posts post)
+        public async Task<Posts> UpdatePost(Posts post)
         {
             HttpClient http = new HttpClient();
-            var response = await http.PutAsJsonAsync($"{_baseAddress}api/Posts/{id}", post);
+            var response = await http.PutAsJsonAsync($"{_baseAddress}api/Posts", post);
             return await response.Content.ReadAsAsync<Posts>();
         }
 

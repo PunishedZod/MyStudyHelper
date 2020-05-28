@@ -41,7 +41,8 @@ namespace MyStudyHelper.XAML_Pages
             CreateComment();
         }
 
-        public void Post(IPosts post) //Method created to bind the post info to frontend labels for display
+        //Method created to bind the post info to frontend labels for display
+        public void Post(IPosts post) 
         {
             lblPageTitle.Text = "Post By: " + post.Uname;
             lblTopic.Text = post.Topic;
@@ -51,7 +52,8 @@ namespace MyStudyHelper.XAML_Pages
             btnDownVote.Text = post.DownVoteId.Count().ToString();
         }
 
-        public async void UpdateUpVote() //Method which begins the updating process of the upvotes then returns the updated result
+        //Method which begins the updating process of the upvotes then returns the updated result
+        public async void UpdateUpVote() 
         {
             var postInfo = _postInfo;
             container = DependancyInjection.Configure();
@@ -72,7 +74,8 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        public async void UpdateDownVote() //Method which begins the updating process of the downvotes then returns the updated result
+        //Method which begins the updating process of the downvotes then returns the updated result
+        public async void UpdateDownVote() 
         {
             var postInfo = _postInfo;
             container = DependancyInjection.Configure();
@@ -93,7 +96,8 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        public void GetComments() //Method to get the comments for the post via the post id
+        //Method to get the comments for the post via the post id
+        public void GetComments() 
         {
             var postInfo = _postInfo;
             container = DependancyInjection.Configure();
@@ -105,7 +109,8 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        public void CreateComment() //Method which begins the process of sending the comment to the database through the API, (NEEDS WORK TO UPDATE THE LISTVIEW AT THE END !!!)
+        //Method which begins the process of sending the comment to the database through the API, (NEEDS WORK TO UPDATE THE LISTVIEW AT THE END !!!)
+        public void CreateComment() 
         {
             var postInfo = _postInfo;
             container = DependancyInjection.Configure();

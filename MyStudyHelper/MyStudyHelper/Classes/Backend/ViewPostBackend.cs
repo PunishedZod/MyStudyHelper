@@ -24,29 +24,31 @@ namespace MyStudyHelper.Classes.Backend
             _commentsProxy = commentsProxy;
         }
 
-        public async Task<IPosts> UpdateUpVote(Posts post) //Takes in a Post, adds the users id to the upvoteid, returns post id and post to post proxy
+        //Takes in a Post, adds the users id to the upvoteid, returns post id and post to post proxy
+        public async Task<IPosts> UpdateUpVote(Posts post) 
         {
-            var id = post.Id;
             var info = post.UpVoteId.ToList();
             info.Add(MainPage.user.Id);
             post.UpVoteId = info.ToArray();
 
-            return await _postsProxy.UpdatePost(id, post);
+            return await _postsProxy.UpdatePost(post);
         }
 
-        public async Task<IPosts> UpdateDownVote(Posts post) //Takes in a Post, adds the users id to the downvoteid, returns post id and post to post proxy
+        //Takes in a Post, adds the users id to the downvoteid, returns post id and post to post proxy
+        public async Task<IPosts> UpdateDownVote(Posts post) 
         {
-            var id = post.Id;
             var info = post.DownVoteId.ToList();
             info.Add(MainPage.user.Id);
             post.DownVoteId = info.ToArray();
 
-            return await _postsProxy.UpdatePost(id, post);
+            return await _postsProxy.UpdatePost(post);
         }
 
-        public async void GetCommentsInfo(string id) //This is where the data will be added from the API to the list
+        //This is where the data will be added from the API to the list
+        public async void GetCommentsInfo(string id) 
         {
             var temp = await _commentsProxy.GetCommentsByPost(id);
+
             if (temp != null)
             {
                 if (temp.Count > 1)
@@ -61,7 +63,8 @@ namespace MyStudyHelper.Classes.Backend
             }
         }
 
-        public async Task<Comments> SendComment(string comment, string postId) //Takes in the users comment and the postid, returns the comment info including the users username and id to comment proxy
+        //Takes in the users comment and the postid, returns the comment info including the users username and id to comment proxy
+        public async Task<Comments> SendComment(string comment, string postId) 
         {
             return await _commentsProxy.PostComments(new Comments { Uname = MainPage.user.Uname, Comment = comment, PostId = postId, UId = MainPage.user.Id });
         }

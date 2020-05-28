@@ -19,7 +19,8 @@ namespace MyStudyHelper.XAML_Pages
             await Navigation.PushAsync(new AccountPage());
         }
 
-        public void DisplayList() //Method to get popular posts from the backend class
+        //Method to get popular posts from the backend class
+        public void DisplayList() 
         {
             HomeBackend home = new HomeBackend();
             home.GetPostInfo();

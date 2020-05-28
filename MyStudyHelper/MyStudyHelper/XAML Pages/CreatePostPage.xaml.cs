@@ -26,7 +26,8 @@ namespace MyStudyHelper.XAML_Pages
             BeginCreatePost();
         }
 
-        public async void BeginCreatePost() //Creates post and sends it to the database, then returns it back and sends it to the view post page
+        //Creates post and sends it to the database, then returns it back and sends it to the view post page
+        public async void BeginCreatePost() 
         {
             try
             {
