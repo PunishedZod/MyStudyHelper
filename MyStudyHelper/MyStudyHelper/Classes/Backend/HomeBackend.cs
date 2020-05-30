@@ -10,12 +10,7 @@ namespace MyStudyHelper.Classes.Backend
     public class HomeBackend : IHomeBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://localhost:44323/");
-
-        public HomeBackend()
-        {
-            GetPostInfo();
-        }
+        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
 
         public HomeBackend(IPostsProxy postProxy)
         {
@@ -33,7 +28,7 @@ namespace MyStudyHelper.Classes.Backend
             {
                 if (temp.Count > 0)
                 {
-                    var orderedList = temp.OrderByDescending(x => x.UpVoteId.Count()).ToList(); //Orders the records in descending order based on how many upvotes they contain, puts it into a new list
+                    var orderedList = temp.OrderByDescending(x => x.UpVote.Count()).ToList(); //Orders the records in descending order based on how many upvotes they contain, puts it into a new list
 
                     foreach (var item in orderedList)
                     {

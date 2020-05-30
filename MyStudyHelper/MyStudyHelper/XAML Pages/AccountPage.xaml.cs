@@ -35,35 +35,35 @@ namespace MyStudyHelper.XAML_Pages
             //Logout function/method to be programmed here, user is logged out and pages are reset to login page (first page)
         }
 
-        //public async void BeginUpdate()
-        //{
-        //    try
-        //    {
-        //        container = DependancyInjection.Configure();
+        public async void BeginUpdate()
+        {
+            try
+            {
+                container = DependancyInjection.Configure();
 
-        //        using (var scope = container.BeginLifetimeScope())
-        //        {
-        //            var app = scope.Resolve<AccountBackend>();
-        //            var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text);
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<AccountBackend>();
+                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtOldPassword.Text, txtNewPassword.Text);
 
-        //            if (validation == null)
-        //            {
-        //                var user = await app.Update(); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
-        //                if (user != null)
-        //                {
-        //                    await Navigation.PopModalAsync();
-        //                }
-        //                else
-        //                    await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");
-        //            }
-        //            else
-        //                await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
-        //    }
-        //}
+                    if (validation == null)
+                    {
+                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        if (user != null)
+                        {
+                            await Navigation.PopModalAsync();
+                        }
+                        else
+                            await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");
+                    }
+                    else
+                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.Backend;
+using MyStudyHelper.Classes.Backend.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,17 +13,21 @@ namespace MyStudyHelper.XAML_Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPostPage : ContentPage
     {
-        readonly Posts _postInfo;
+        Posts _postInfo;
         private IContainer container;
         public ObservableCollection<IUser> Test = new ObservableCollection<IUser>();
 
         public ViewPostPage(Posts postInfo)
         {
             InitializeComponent();
-            BindingContext = this;
+            _postInfo = postInfo;
             Post(postInfo);
             GetComments();
-            _postInfo = postInfo;
+
+            if (postInfo.UpVote.Contains(MainPage.user.Id))
+            {
+                btnUpVote.IsEnabled = false;
+            }
         }
 
         private void btnUpVote_Clicked(object sender, EventArgs e)
@@ -48,8 +52,8 @@ namespace MyStudyHelper.XAML_Pages
             lblTopic.Text = post.Topic;
             lblPostTitle.Text = post.Title;
             lblPostContent.Text = post.Content;
-            btnUpVote.Text = post.UpVoteId.Count().ToString();
-            btnDownVote.Text = post.DownVoteId.Count().ToString();
+            btnUpVote.Text = post.UpVote.Count().ToString();
+            btnDownVote.Text = post.DownVote.Count().ToString();
         }
 
         //Method which begins the updating process of the upvotes then returns the updated result
@@ -60,15 +64,14 @@ namespace MyStudyHelper.XAML_Pages
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                if (postInfo.UpVoteId.Contains(MainPage.user.Id)) //If upvote array contains the logged in user's id, disable the button
+                if (postInfo.UpVote.Contains(MainPage.user.Id)) //If upvote array contains the logged in user's id, disable the button
                 {
                     btnUpVote.IsEnabled = false;
                 }
-                else if (!postInfo.UpVoteId.Contains(MainPage.user.Id)) //else if upvote array doesn't contain the logged in user's id, send the user's id through to the upvote array then refresh page
+                else if (!postInfo.UpVote.Contains(MainPage.user.Id)) //else if upvote array doesn't contain the logged in user's id, send the user's id through to the upvote array then refresh page
                 {
                     var updatedPost = await app.UpdateUpVote(postInfo);
                     Posts post = (Posts)updatedPost;
-                    await Navigation.PopModalAsync();
                     await Navigation.PushAsync(new ViewPostPage(post));
                 }
             }
@@ -82,11 +85,11 @@ namespace MyStudyHelper.XAML_Pages
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                if (postInfo.DownVoteId.Contains(MainPage.user.Id))
+                if (postInfo.DownVote.Contains(MainPage.user.Id))
                 {
                     btnUpVote.IsEnabled = false;
                 }
-                else if (!postInfo.DownVoteId.Contains(MainPage.user.Id))
+                else if (!postInfo.DownVote.Contains(MainPage.user.Id))
                 {
                     var updatedPost = await app.UpdateDownVote(postInfo);
                     Posts post = (Posts)updatedPost;

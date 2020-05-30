@@ -1,12 +1,8 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend
 {
@@ -19,6 +15,7 @@ namespace MyStudyHelper.Classes.Backend
             _userProxy = userProxy;
         }
 
+        //Validates the username and password entered through the textboxes in the frontend
         public string CheckInfo(string uname, string pword)
         {
             if (String.IsNullOrWhiteSpace(uname) && String.IsNullOrWhiteSpace(pword))
@@ -31,9 +28,10 @@ namespace MyStudyHelper.Classes.Backend
                 return null;
         }
 
+        //Takes in username and password entered and sends it to the userproxy to make a GET call to the API for the user info
         public async Task<IUser> Login(string uname, string pword)
         {
-            return await _userProxy.GetUserInfo(uname, pword);
+            return await _userProxy.GetUserInfo(uname, pword); //Returns the username and password to a method in userproxy
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MyStudyHelper.Classes.API.Proxys.Interfaces
     {
         Task<string> DeleteComment(int id);
         Task<List<Comments>> GetCommentsByPost(string postId);
+        Task<List<Comments>> GetCommentsByUser(string userId);
         Task<Comments> PostComments(Comments comment);
     }
 }

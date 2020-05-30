@@ -1,11 +1,8 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.API.Proxys
 {
@@ -19,7 +16,6 @@ namespace MyStudyHelper.Classes.API.Proxys
         }
 
         //Call when getting user info, takes the username and the password for a user
-        //CAN RETURN NULL IF THE USER DOESNT EXIST OR THERE IS AN ERROR
         public async Task<User> GetUserInfo(string uname, string pword)
         {
             var http = new HttpClient
@@ -32,10 +28,11 @@ namespace MyStudyHelper.Classes.API.Proxys
 
             if (response.IsSuccessStatusCode)
             {
-                var user = response.Content.ReadAsAsync<User>();
+                var user = await response.Content.ReadAsAsync<User>();
+     
                 if (user != null)
                 {
-                    return await user;
+                    return user;
                 }
                 else
                     return null;
@@ -46,21 +43,20 @@ namespace MyStudyHelper.Classes.API.Proxys
 
         //Call when creating a user
         //Returns a string detailing if it was a success or failure
-        public async Task<string> PostUserInfo(User user) //NOTE: UNSURE IF THIS FUNCTION WORKS FULLY OR AT ALL !!!
+        public async Task<string> PostUserInfo(User user)
         {
             HttpClient http = new HttpClient();
             var response = await http.PostAsJsonAsync($"{_baseAddress}api/User", user);
             return await response.Content.ReadAsStringAsync();
         }
 
-        //NOTE: DOES NOT WORK NEEDS PROPER WORK DONE !!!
         //Call when updating a user
         //Returns a string detailing if it was a success or failure
-        //public async Task<string> UpdateUserInfo(User user) //NOTE: UNSURE IF THIS FUNCTION WORKS FULLY OR AT ALL !!!
-        //{
-        //    HttpClient http = new HttpClient();
-        //    var response = await http.PutAsJsonAsync($"{_baseAddress}api/User", user);
-        //    return await response.Content.ReadAsStringAsync();
-        //}
+        public async Task<User> UpdateUserInfo(User user)
+        {
+            HttpClient http = new HttpClient();
+            var response = await http.PutAsJsonAsync($"{_baseAddress}api/User", user);
+            return await response.Content.ReadAsAsync<User>();
+        }
     }
 }

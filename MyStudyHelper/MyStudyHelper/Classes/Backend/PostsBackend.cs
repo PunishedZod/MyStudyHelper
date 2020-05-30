@@ -1,20 +1,15 @@
-﻿using MyStudyHelper.Classes.API.Models.Interfaces;
+﻿using System.Collections.ObjectModel;
 using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
 using MyStudyHelper.Classes.Backend.Interfaces;
-using System.Collections.ObjectModel;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend
 {
     public class PostsBackend : IPostsBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://localhost:44323/");
-
-        public PostsBackend()
-        {
-            GetPostInfo();
-        }
+        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
 
         public PostsBackend(IPostsProxy postProxy)
         {

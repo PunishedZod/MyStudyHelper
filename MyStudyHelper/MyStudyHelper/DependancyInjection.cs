@@ -1,19 +1,21 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
+﻿using Autofac;
 using MyStudyHelper.Classes.Backend;
+using MyStudyHelper.Classes.API.Proxys;
+using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
-using Autofac;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper
 {
+    //Dependency injection class, using this creates a "disconnected" type architecture which allows classes to be more easily swapped out or replaced if or when necessary
     public static class DependancyInjection
     {
         public static Autofac.IContainer Configure()
         {
-            var builder = new ContainerBuilder();
+            var builder = new ContainerBuilder(); //When adding more variables/classes, use this to inject them, examples below
 
+            //Injection helpers, (includes model classes)
             builder.RegisterType<User>().As<IUser>();
             builder.RegisterType<Posts>().As<IPosts>();
             builder.RegisterType<Comments>().As<IComments>();
@@ -26,7 +28,7 @@ namespace MyStudyHelper
             builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();
             builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();
             
-            string baseAddress = "https://localhost:44323/"; //Injects the base address into the proxies
+            string baseAddress = "https://studyhelper.api.labnet.nz/"; //Injects the base address into the proxies
 
             //START OF API PROXIES
 

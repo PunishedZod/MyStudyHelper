@@ -1,9 +1,9 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.API.Proxys
 {
@@ -26,6 +26,32 @@ namespace MyStudyHelper.Classes.API.Proxys
             };
 
             var url = String.Format($"api/Posts");
+            HttpResponseMessage response = http.GetAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var posts = await response.Content.ReadAsAsync<List<Posts>>();
+                if (posts != null)
+                {
+                    return posts;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
+
+        //Gets all posts, Returns a list
+        //CAN RETURN NULL IF THERE ARE NO POSTS
+        public async Task<List<Posts>> GetPostsByUser(string userId)
+        {
+            var http = new HttpClient
+            {
+                BaseAddress = new Uri(_baseAddress)
+            };
+
+            var url = String.Format($"api/Posts/UserId={userId}");
             HttpResponseMessage response = http.GetAsync(url).Result;
 
             if (response.IsSuccessStatusCode)
@@ -67,32 +93,6 @@ namespace MyStudyHelper.Classes.API.Proxys
             else
                 return null;
         }
-
-        //Gets popular posts, Returns a list
-        //CAN RETURN NULL IF THERE ARE NO POSTS
-        //public async Task<List<Posts>> GetPopularPosts()
-        //{
-        //    var http = new HttpClient
-        //    {
-        //        BaseAddress = new Uri(_baseAddress)
-        //    };
-
-        //    var url = String.Format($"api/Posts/PopularPosts");
-        //    HttpResponseMessage response = http.GetAsync(url).Result;
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var posts = await response.Content.ReadAsAsync<List<Posts>>();
-        //        if (posts != null)
-        //        {
-        //            return posts;
-        //        }
-        //        else
-        //            return null;
-        //    }
-        //    else
-        //        return null;
-        //}
 
         //Call when posting a post, Takes in a Post class item
         //Returns a string detailing if it was a success or failure

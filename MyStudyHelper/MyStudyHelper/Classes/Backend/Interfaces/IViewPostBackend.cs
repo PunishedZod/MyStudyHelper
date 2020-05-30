@@ -3,14 +3,14 @@ using MyStudyHelper.Classes.API.Models.Interfaces;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace MyStudyHelper.Classes.Backend
+namespace MyStudyHelper.Classes.Backend.Interfaces
 {
     public interface IViewPostBackend
     {
-        ObservableCollection<Comments> CommentsList { get; set; }
+        ObservableCollection<IComments> CommentsList { get; set; }
 
         void GetCommentsInfo(string id);
-        Task<Comments> SendComment(string comment, string postId);
+        Task<IComments> SendComment(string comment, string postId);
         Task<IPosts> UpdateDownVote(Posts post);
         Task<IPosts> UpdateUpVote(Posts post);
     }

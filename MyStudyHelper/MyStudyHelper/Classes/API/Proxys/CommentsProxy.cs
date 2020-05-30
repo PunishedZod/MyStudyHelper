@@ -1,9 +1,9 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.API.Proxys
 {
@@ -25,7 +25,31 @@ namespace MyStudyHelper.Classes.API.Proxys
                 BaseAddress = new Uri(_baseAddress)
             };
 
-            var url = String.Format($"api/Comments/{postId}");
+            var url = String.Format($"api/Comments/PostId={postId}");
+            HttpResponseMessage response = http.GetAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var comments = await response.Content.ReadAsAsync<List<Comments>>();
+                if (comments != null)
+                {
+                    return comments;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
+
+        public async Task<List<Comments>> GetCommentsByUser(string userId)
+        {
+            var http = new HttpClient
+            {
+                BaseAddress = new Uri(_baseAddress)
+            };
+
+            var url = String.Format($"api/Comments/UserId={userId}");
             HttpResponseMessage response = http.GetAsync(url).Result;
 
             if (response.IsSuccessStatusCode)

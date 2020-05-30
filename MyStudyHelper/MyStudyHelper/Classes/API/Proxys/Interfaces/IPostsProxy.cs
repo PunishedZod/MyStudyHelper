@@ -8,6 +8,7 @@ namespace MyStudyHelper.Classes.API.Proxys.Interfaces
     {
         Task<string> DeletePost(string id);
         Task<List<Posts>> GetAllPosts();
+        Task<List<Posts>> GetPostsByUser(string userId);
         Task<List<Posts>> GetRecentPosts();
         Task<Posts> PostPost(Posts post);
         Task<Posts> UpdatePost(Posts post);

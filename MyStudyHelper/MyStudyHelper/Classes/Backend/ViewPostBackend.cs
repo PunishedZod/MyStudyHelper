@@ -2,6 +2,7 @@
 using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.Backend.Interfaces;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,26 +11,22 @@ namespace MyStudyHelper.Classes.Backend
 {
     public class ViewPostBackend : IViewPostBackend
     {
-        public ObservableCollection<Comments> CommentsList { get; set; } = new ObservableCollection<Comments>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://localhost:44323/");
-        private readonly ICommentsProxy _commentsProxy = new CommentsProxy("https://localhost:44323/");
+        public ObservableCollection<IComments> CommentsList { get; set; } = new ObservableCollection<IComments>();
+        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly ICommentsProxy _commentsProxy = new CommentsProxy("https://studyhelper.api.labnet.nz/");
 
-        public ViewPostBackend(IPostsProxy postsProxy)
+        public ViewPostBackend(IPostsProxy postsProxy, ICommentsProxy commentsProxy)
         {
             _postsProxy = postsProxy;
-        }
-
-        public ViewPostBackend(ICommentsProxy commentsProxy)
-        {
             _commentsProxy = commentsProxy;
         }
 
         //Takes in a Post, adds the users id to the upvoteid, returns post id and post to post proxy
         public async Task<IPosts> UpdateUpVote(Posts post) 
         {
-            var info = post.UpVoteId.ToList();
+            var info = post.UpVote.ToList();
             info.Add(MainPage.user.Id);
-            post.UpVoteId = info.ToArray();
+            post.UpVote = info.ToArray();
 
             return await _postsProxy.UpdatePost(post);
         }
@@ -37,9 +34,9 @@ namespace MyStudyHelper.Classes.Backend
         //Takes in a Post, adds the users id to the downvoteid, returns post id and post to post proxy
         public async Task<IPosts> UpdateDownVote(Posts post) 
         {
-            var info = post.DownVoteId.ToList();
+            var info = post.DownVote.ToList();
             info.Add(MainPage.user.Id);
-            post.DownVoteId = info.ToArray();
+            post.DownVote = info.ToArray();
 
             return await _postsProxy.UpdatePost(post);
         }
@@ -64,9 +61,9 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //Takes in the users comment and the postid, returns the comment info including the users username and id to comment proxy
-        public async Task<Comments> SendComment(string comment, string postId) 
+        public async Task<IComments> SendComment(string comment, string postId) 
         {
-            return await _commentsProxy.PostComments(new Comments { Uname = MainPage.user.Uname, Comment = comment, PostId = postId, UId = MainPage.user.Id });
+            return await _commentsProxy.PostComments(new Comments { Uname = MainPage.user.Uname, Comment = comment, PostId = postId, UserId = MainPage.user.Id });
         }
     }
 }

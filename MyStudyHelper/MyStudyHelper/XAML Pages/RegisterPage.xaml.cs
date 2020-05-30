@@ -1,15 +1,9 @@
-﻿using Autofac;
-using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.Backend;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Autofac;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -21,7 +15,6 @@ namespace MyStudyHelper.XAML_Pages
         public RegisterPage()
         {
             InitializeComponent();
-            lblError.IsVisible = false;
         }
 
         private async void btnBack_Clicked(object sender, EventArgs e)
@@ -47,10 +40,12 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (validation == null)
                     {
-                        var user = await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        var user = await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text);
                         if (user != null)
                         {
-                            await Navigation.PopModalAsync();
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new LoginPage()); //Pushes a new instance of LoginPage into the navigation stack after registering with valid user info
+                            Navigation.RemovePage(previousPage);
                         }
                         else
                             await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");

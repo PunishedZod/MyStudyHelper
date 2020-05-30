@@ -8,6 +8,6 @@ namespace MyStudyHelper.Classes.API.Proxys.Interfaces
     {
         Task<User> GetUserInfo(string uname, string pword);
         Task<string> PostUserInfo(User user);
-        //Task<string> UpdateUserInfo(User user);
+        Task<User> UpdateUserInfo(User user);
     }
 }

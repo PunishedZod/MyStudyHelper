@@ -1,22 +1,20 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.Backend;
+﻿using MyStudyHelper.Classes.Backend.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Autofac;
 
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecentPostsPage : ContentPage
     {
+        private IContainer container;
+
         public RecentPostsPage()
         {
             InitializeComponent();
+            DisplayList();
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
@@ -26,9 +24,13 @@ namespace MyStudyHelper.XAML_Pages
 
         public void DisplayList() //Method to get all recent posts (descending order) from the backend class
         {
-            RecentPostsBackend recentPosts = new RecentPostsBackend();
-            recentPosts.GetPostInfo();
-            lstRecentPosts.ItemsSource = recentPosts.PostsMod;
+            container = DependancyInjection.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IRecentPostsBackend>();
+                lstRecentPosts.ItemsSource = app.PostsMod;
+            }
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend
 {

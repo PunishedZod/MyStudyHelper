@@ -9,7 +9,6 @@ namespace MyStudyHelper
         public App()
         {
             InitializeComponent();
-
             MainPage = new NavigationPage(new XAML_Pages.LoginPage());
         }
 
