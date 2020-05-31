@@ -22,7 +22,7 @@ namespace MyStudyHelper
             builder.RegisterType<HomeBackend>().As<IHomeBackend>();
             builder.RegisterType<PostsBackend>().As<IPostsBackend>();
             builder.RegisterType<LoginBackend>().As<ILoginBackend>();
-            builder.RegisterType<AccountBackend>().As<AccountBackend>();
+            builder.RegisterType<AccountBackend>().As<IAccountBackend>();
             builder.RegisterType<ViewPostBackend>().As<IViewPostBackend>();
             builder.RegisterType<RegisterBackend>().As<IRegisterBackend>();
             builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();

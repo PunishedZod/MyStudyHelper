@@ -41,7 +41,7 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        //Call when creating a user
+        //Call when creating a user, takes in a user class item
         //Returns a string detailing if it was a success or failure
         public async Task<string> PostUserInfo(User user)
         {
@@ -50,8 +50,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             return await response.Content.ReadAsStringAsync();
         }
 
-        //Call when updating a user
-        //Returns a string detailing if it was a success or failure
+        //Call when updating a user, takes in a user class item
         public async Task<User> UpdateUserInfo(User user)
         {
             HttpClient http = new HttpClient();

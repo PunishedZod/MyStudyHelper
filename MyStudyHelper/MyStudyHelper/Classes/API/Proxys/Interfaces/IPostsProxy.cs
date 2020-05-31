@@ -1,6 +1,6 @@
-﻿using MyStudyHelper.Classes.API.Models;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using MyStudyHelper.Classes.API.Models;
 
 namespace MyStudyHelper.Classes.API.Proxys.Interfaces
 {

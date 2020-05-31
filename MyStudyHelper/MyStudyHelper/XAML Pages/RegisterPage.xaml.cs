@@ -32,7 +32,6 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IRegisterBackend>();
@@ -43,6 +42,7 @@ namespace MyStudyHelper.XAML_Pages
                         var user = await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text);
                         if (user != null)
                         {
+                            await DisplayAlert("User Registered", "Account successfully registered, please login via username and password", "Ok");
                             var previousPage = Navigation.NavigationStack.LastOrDefault();
                             await Navigation.PushAsync(new LoginPage()); //Pushes a new instance of LoginPage into the navigation stack after registering with valid user info
                             Navigation.RemovePage(previousPage);

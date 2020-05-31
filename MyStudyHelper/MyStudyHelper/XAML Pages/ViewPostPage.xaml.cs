@@ -1,19 +1,19 @@
-﻿using Autofac;
-using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
+using Autofac;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.ObjectModel;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPostPage : ContentPage
     {
-        Posts _postInfo;
+        readonly Posts _postInfo;
         private IContainer container;
         public ObservableCollection<IUser> Test = new ObservableCollection<IUser>();
 
@@ -46,14 +46,14 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method created to bind the post info to frontend labels for display
-        public void Post(IPosts post) 
+        public void Post(Posts post) 
         {
             lblPageTitle.Text = "Post By: " + post.Uname;
             lblTopic.Text = post.Topic;
             lblPostTitle.Text = post.Title;
             lblPostContent.Text = post.Content;
-            btnUpVote.Text = post.UpVote.Count().ToString();
-            btnDownVote.Text = post.DownVote.Count().ToString();
+            btnUpVote.Text = "+" + post.UpVote.Count().ToString();
+            btnDownVote.Text = "-" + post.DownVote.Count().ToString();
         }
 
         //Method which begins the updating process of the upvotes then returns the updated result
@@ -71,7 +71,7 @@ namespace MyStudyHelper.XAML_Pages
                 else if (!postInfo.UpVote.Contains(MainPage.user.Id)) //else if upvote array doesn't contain the logged in user's id, send the user's id through to the upvote array then refresh page
                 {
                     var updatedPost = await app.UpdateUpVote(postInfo);
-                    Posts post = (Posts)updatedPost;
+                    var post = (Posts)updatedPost;
                     await Navigation.PushAsync(new ViewPostPage(post));
                 }
             }
@@ -92,7 +92,7 @@ namespace MyStudyHelper.XAML_Pages
                 else if (!postInfo.DownVote.Contains(MainPage.user.Id))
                 {
                     var updatedPost = await app.UpdateDownVote(postInfo);
-                    Posts post = (Posts)updatedPost;
+                    var post = (Posts)updatedPost;
                     await Navigation.PopModalAsync();
                     await Navigation.PushAsync(new ViewPostPage(post));
                 }

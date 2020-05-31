@@ -1,8 +1,8 @@
-﻿using Autofac;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
+﻿using System;
+using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {

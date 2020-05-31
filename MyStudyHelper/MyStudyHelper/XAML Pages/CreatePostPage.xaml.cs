@@ -3,6 +3,7 @@ using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -40,9 +41,10 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (validation == null)
                     {
-                        var post = await app.CreatePost(txtTopic.ToString(), txtTitle.Text, txtMessage.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
-                        if (post != null)
+                        var createdPost = await app.CreatePost(txtTopic.ToString(), txtTitle.Text, txtMessage.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        if (createdPost != null)
                         {
+                            var post = (Posts)createdPost;
                             await Navigation.PushAsync(new ViewPostPage(post));
                         }
                         else

@@ -16,7 +16,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             _baseAddress = baseAddress;
         }
 
-        //Gets all posts, Returns a list
+        //Gets all posts, returns a list
         //CAN RETURN NULL IF THERE ARE NO POSTS
         public async Task<List<Posts>> GetAllPosts()
         {
@@ -42,7 +42,7 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        //Gets all posts, Returns a list
+        //Gets all posts by user, pass through the userId
         //CAN RETURN NULL IF THERE ARE NO POSTS
         public async Task<List<Posts>> GetPostsByUser(string userId)
         {
@@ -68,7 +68,7 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        //Gets all posts (most recent by descending order), Returns a list
+        //Gets all posts, (most recent via descending order)
         //CAN RETURN NULL IF THERE ARE NO POSTS
         public async Task<List<Posts>> GetRecentPosts()
         {
@@ -94,8 +94,7 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        //Call when posting a post, Takes in a Post class item
-        //Returns a string detailing if it was a success or failure
+        //Call when posting a post, takes in a post class item
         public async Task<Posts> PostPost(Posts post)
         {
             HttpClient http = new HttpClient();
@@ -103,8 +102,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             return await response.Content.ReadAsAsync<Posts>();
         }
 
-        //Call when updating a post, Takes in a Post class item
-        //Returns a string detailing if it was a success or failure
+        //Call when updating a post, takes in a post class item
         public async Task<Posts> UpdatePost(Posts post)
         {
             HttpClient http = new HttpClient();
@@ -112,7 +110,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             return await response.Content.ReadAsAsync<Posts>();
         }
 
-        //Call when deleting a post, takes the postID
+        //Call when deleting a post, takes in the postId
         //Returns a string detailing if it was a success or failure
         public async Task<string> DeletePost(string id)
         {

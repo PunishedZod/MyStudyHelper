@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MyStudyHelper.Classes.Backend;
-using Autofac;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -20,19 +16,14 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
-        private async void btnBack_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PopAsync();
-        }
-
         private void btnChange_Clicked(object sender, EventArgs e)
         {
-            //BeginUpdate();
+            BeginUpdate();
         }
 
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
-            //Logout function/method to be programmed here, user is logged out and pages are reset to login page (first page)
+            Application.Current.MainPage = new LoginPage();
         }
 
         public async void BeginUpdate()
@@ -40,21 +31,27 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var app = scope.Resolve<AccountBackend>();
-                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtOldPassword.Text, txtNewPassword.Text);
+                    var app = scope.Resolve<IAccountBackend>();
+                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text);
 
                     if (validation == null)
                     {
-                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text);
                         if (user != null)
                         {
-                            await Navigation.PopModalAsync();
+                            await DisplayAlert("User Updated", "Account successfully updated", "Ok");
+                            MainPage.user = user;
+
+                            txtUsername.Text = "";
+                            txtEmail.Text = "";
+                            txtName.Text = "";
+                            txtOldPassword.Text = "";
+                            txtNewPassword.Text = "";
                         }
                         else
-                            await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");
+                            await DisplayAlert("Invalid or Empty Field(s)", "Update unsuccessful, please try again", "Ok");
                     }
                     else
                         await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");

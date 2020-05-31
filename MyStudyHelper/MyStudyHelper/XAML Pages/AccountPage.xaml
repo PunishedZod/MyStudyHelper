@@ -31,11 +31,11 @@
                             <Entry x:Name="txtUsername" Style="{StaticResource txtStyle2}" Placeholder="Username *"/>
                             <Entry x:Name="txtEmail" Style="{StaticResource txtStyle2}" Placeholder="Email Address *"/>
                             <Entry x:Name="txtName" Style="{StaticResource txtStyle2}" Placeholder="Name (Optional)"/>
-                            <Entry x:Name="txtOldPassword" Style="{StaticResource txtStyle2}" Placeholder="Old Password *"/>
-                            <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password *"/>
+                            <Entry x:Name="txtOldPassword" Style="{StaticResource txtStyle2}" Placeholder="Current Password *" IsPassword="True"/>
+                            <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password *" IsPassword="True"/>
 
                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                <Button x:Name="btnBack" Style="{StaticResource btnStyle2}" Text="Back" Clicked="btnBack_Clicked"/>
+                                <Button x:Name="btnBack" Style="{StaticResource btnStyle2}" Text="Back"/>
                                 <Button x:Name="btnChange" Style="{StaticResource btnStyle2}" Text="Change" TextColor="Red" Clicked="btnChange_Clicked"/>
                             </StackLayout>
                         </StackLayout>

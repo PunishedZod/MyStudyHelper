@@ -1,9 +1,10 @@
-﻿using MyStudyHelper.Classes.API.Models;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.API.Proxys;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend
 {
@@ -24,7 +25,7 @@ namespace MyStudyHelper.Classes.Backend
                 return null;
         }
 
-        public async Task<Posts> CreatePost(string topic, string title, string message)
+        public async Task<IPosts> CreatePost(string topic, string title, string message)
         {
             return await _postsProxy.PostPost(new Posts { Topic = topic, Title = title, Content = message, UserId = MainPage.user.Id, Uname = MainPage.user.Uname });
         }

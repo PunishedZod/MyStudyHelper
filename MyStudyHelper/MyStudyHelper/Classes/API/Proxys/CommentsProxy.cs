@@ -16,7 +16,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             _baseAddress = baseAddress;
         }
 
-        //Use when person views post in detail, Pass through the postID
+        //Gets the comments when person views post in detail, pass through the postId
         //CAN RETURN NULL IF THERE ARE NO COMMENTS
         public async Task<List<Comments>> GetCommentsByPost(string postId)
         {
@@ -42,6 +42,8 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
+        //Gets all comments by user, pass through the userId
+        //CAN RETURN NULL IF THERE ARE NO COMMENTS
         public async Task<List<Comments>> GetCommentsByUser(string userId)
         {
             var http = new HttpClient
@@ -66,7 +68,7 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
-        //Called when posting, Takes in a Comment class item
+        //Called when posting, takes in a comment class item
         //Returns a string detailing if it was a success or failure
         public async Task<Comments> PostComments(Comments comment)
         {
@@ -75,7 +77,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             return await response.Content.ReadAsAsync<Comments>();
         }
 
-        //Deleting a post takes in the commentsID
+        //Deleting a post takes in the commentsId
         //Returns a string detailing if it was a success or failure
         public async Task<string> DeleteComment(int id)
         {

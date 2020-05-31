@@ -1,9 +1,9 @@
-﻿using MyStudyHelper.Classes.API.Models.Interfaces;
-using MyStudyHelper.Classes.API.Proxys;
-using MyStudyHelper.Classes.API.Proxys.Interfaces;
-using MyStudyHelper.Classes.Backend.Interfaces;
+﻿using System.Linq;
 using System.Collections.ObjectModel;
-using System.Linq;
+using MyStudyHelper.Classes.API.Proxys;
+using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+using MyStudyHelper.Classes.API.Proxys.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend
 {
