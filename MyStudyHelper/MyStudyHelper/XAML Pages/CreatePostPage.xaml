@@ -28,12 +28,7 @@
                     <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="What's on your mind?"/>
                     <Frame x:Name="frmeContentContainer" Style="{StaticResource frmeMainContainer}" Padding="15" Margin="0,10,0,10">
                         <StackLayout>
-                            <Picker x:Name="txtTopic" Title="Choose Topic *" TextColor="Black" FontSize="15">
-                                <Picker.Items>
-                                    <x:String>Technology</x:String>
-                                    <x:String>Art</x:String>
-                                </Picker.Items>
-                            </Picker>
+                            <Picker x:Name="txtTopic" Title="Choose Topic *" TextColor="Black" FontSize="15"/>
                             <Entry x:Name="txtTitle" Style="{StaticResource txtStyle2}" Placeholder="Title *" FontAttributes="None" FontSize="15"/>
                         </StackLayout>
                     </Frame>

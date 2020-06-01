@@ -1,9 +1,11 @@
 ﻿using System;
 using Autofac;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyStudyHelper.Classes.Backend.Interfaces;
 using MyStudyHelper.Classes.API.Models;
+using System.Collections.Generic;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -15,6 +17,8 @@ namespace MyStudyHelper.XAML_Pages
         public CreatePostPage()
         {
             InitializeComponent();
+            BindingContext = this;
+            TopicList();
         }
 
         private async void btnCancel_Clicked(object sender, EventArgs e)
@@ -37,11 +41,11 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICreatePostBackend>();
-                    var validation = app.CheckInfo(txtTopic.ToString(), txtTitle.Text, txtMessage.Text);
+                    var validation = app.CheckInfo(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
 
                     if (validation == null)
                     {
-                        var createdPost = await app.CreatePost(txtTopic.ToString(), txtTitle.Text, txtMessage.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
                         if (createdPost != null)
                         {
                             var post = (Posts)createdPost;
@@ -58,6 +62,65 @@ namespace MyStudyHelper.XAML_Pages
             {
                 await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
             }
+        }
+
+        public void TopicList()
+        {
+            var topicList = new List<string>();
+            {
+                topicList.Add("Choose Topic *");
+                topicList.Add("Agriculture");
+                topicList.Add("Animal Care");
+                topicList.Add("Architecture");
+                topicList.Add("Art");
+                topicList.Add("Automotive");
+                topicList.Add("Beauty Therapy");
+                topicList.Add("Beekeeping");
+                topicList.Add("Bridging & Foundation Skills");
+                topicList.Add("Business Administration & Technology");
+                topicList.Add("Business Management");
+                topicList.Add("Carpentry & Construction");
+                topicList.Add("Computing & IT");
+                topicList.Add("Creative");
+                topicList.Add("Culinary Arts, Baking & Hospitality");
+                topicList.Add("Educational Pathways");
+                topicList.Add("Electrotechnology & Electrical");
+                topicList.Add("Engineering & Welding");
+                topicList.Add("English Language");
+                topicList.Add("Environment Management");
+                topicList.Add("Fashion");
+                topicList.Add("Forestry");
+                topicList.Add("Graphic Design");
+                topicList.Add("Hairdressing & Barbering");
+                topicList.Add("Health Care");
+                topicList.Add("Horticulture");
+                topicList.Add("Interior Design");
+                topicList.Add("Kaupapa Māori");
+                topicList.Add("Legal Studies");
+                topicList.Add("Marine Studies");
+                topicList.Add("Maritime");
+                topicList.Add("Massage Therapy");
+                topicList.Add("Media Studies");
+                topicList.Add("Music & Performance");
+                topicList.Add("Nursing");
+                topicList.Add("Occupational Health & Safety");
+                topicList.Add("Organics");
+                topicList.Add("Policing & Defence Forces");
+                topicList.Add("Professional Mentoring");
+                topicList.Add("Real Estate");
+                topicList.Add("Retail");
+                topicList.Add("Road Transport, Warehousing & Logistics");
+                topicList.Add("Social Services");
+                topicList.Add("Sport & Recreation");
+                topicList.Add("Surveying");
+                topicList.Add("Teaching");
+                topicList.Add("Tourism & Travel");
+                topicList.Add("Wood Manufacturing");
+                topicList.Add("Youth Guarantee");
+            }
+            
+            txtTopic.ItemsSource = topicList;
+            txtTopic.SelectedItem = topicList.FirstOrDefault();
         }
     }
 }

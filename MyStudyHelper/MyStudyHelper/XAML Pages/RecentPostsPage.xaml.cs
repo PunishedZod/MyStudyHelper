@@ -1,8 +1,9 @@
-﻿using MyStudyHelper.Classes.Backend.Interfaces;
-using System;
+﻿using System;
+using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Autofac;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -20,6 +21,20 @@ namespace MyStudyHelper.XAML_Pages
         private async void btnAccount_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AccountPage());
+        }
+
+        private async void lstRecentPosts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null) return;
+            var itemSelected = (Posts)e.SelectedItem;
+            ((ListView)sender).SelectedItem = null;
+            await Navigation.PushAsync(new ViewPostPage(itemSelected));
+        }
+
+        private void lstRecentPosts_Refreshing(object sender, EventArgs e)
+        {
+            DisplayList();
+            lstRecentPosts.IsRefreshing = false;
         }
 
         public void DisplayList() //Method to get all recent posts (descending order) from the backend class

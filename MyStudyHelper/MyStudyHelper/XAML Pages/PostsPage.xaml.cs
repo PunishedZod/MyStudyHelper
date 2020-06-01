@@ -36,6 +36,12 @@ namespace MyStudyHelper.XAML_Pages
             await Navigation.PushAsync(new ViewPostPage(itemSelected));
         }
 
+        private void lstAllPosts_Refreshing(object sender, EventArgs e)
+        {
+            DisplayList();
+            lstAllPosts.IsRefreshing = false;
+        }
+
         public void DisplayList() //Method to get all recent posts (descending order) from the backend class
         {
             container = DependancyInjection.Configure();

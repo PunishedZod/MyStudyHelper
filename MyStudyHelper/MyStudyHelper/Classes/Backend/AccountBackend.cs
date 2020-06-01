@@ -38,13 +38,13 @@ namespace MyStudyHelper.Classes.Backend
 
         public async Task<IUser> Update(string uname, string email, string name, string pword)
         {
-            if (uname == null)
+            if (uname == null || uname == "") //Series of if statements to ensure any empty fields don't return null or empty to the database resulting in any existing fields stored being overwritten as "null" or "empty"
                 uname = MainPage.user.Uname;
-            if (email == null)
+            if (email == null || email == "")
                 email = MainPage.user.Email;
-            if (name == null)
+            if (name == null || name == "")
                 name = MainPage.user.Name;
-            if (pword == null)
+            if (pword == null || pword == "")
                 pword = MainPage.user.Pword;
 
             return await _userProxy.UpdateUserInfo(new User { Id = MainPage.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
