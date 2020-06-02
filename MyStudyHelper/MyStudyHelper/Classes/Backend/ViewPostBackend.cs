@@ -12,8 +12,8 @@ namespace MyStudyHelper.Classes.Backend
     public class ViewPostBackend : IViewPostBackend
     {
         public ObservableCollection<IComments> CommentsList { get; set; } = new ObservableCollection<IComments>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
         private readonly ICommentsProxy _commentsProxy = new CommentsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
 
         public ViewPostBackend(IPostsProxy postsProxy, ICommentsProxy commentsProxy)
         {
@@ -22,7 +22,7 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //Takes in a Post, adds the users id to the upvoteid, returns post id and post to post proxy
-        public async Task<IPosts> UpdateUpVote(Posts post) 
+        public async Task<IPosts> UpdateUpVote(Posts post)
         {
             var info = post.UpVote.ToList();
             info.Add(MainPage.user.Id);
@@ -31,8 +31,8 @@ namespace MyStudyHelper.Classes.Backend
             return await _postsProxy.UpdatePost(post);
         }
 
-        //Takes in a Post, adds the users id to the downvoteid, returns post id and post to post proxy
-        public async Task<IPosts> UpdateDownVote(Posts post) 
+        //Takes in a post, adds the users id to the downvoteid, returns post id and post to post proxy
+        public async Task<IPosts> UpdateDownVote(Posts post)
         {
             var info = post.DownVote.ToList();
             info.Add(MainPage.user.Id);
@@ -48,7 +48,7 @@ namespace MyStudyHelper.Classes.Backend
 
             if (temp != null)
             {
-                if (temp.Count > 1)
+                if (temp.Count >= 1)
                 {
                     foreach (var item in temp)
                     {

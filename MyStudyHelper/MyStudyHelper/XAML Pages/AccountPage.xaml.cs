@@ -23,7 +23,7 @@ namespace MyStudyHelper.XAML_Pages
 
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new LoginPage();
+            App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage());
         }
 
         public async void BeginUpdate()

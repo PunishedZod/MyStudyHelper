@@ -24,8 +24,8 @@
                 </StackLayout>
                 
                 <StackLayout x:Name="stckFrameContainer" VerticalOptions="CenterAndExpand" Margin="25" Grid.Row="1">
-                    <Label x:Name="lblTitle" Style="{StaticResource lblTitle}" Text="Your Post"/>
-                    <Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="What's on your mind?"/>
+                    <Label x:Name="lblTitle" Style="{StaticResource lblTitle}" Text="What's on Your Mind?"/>
+                    <!--<Label x:Name="lblSubtitle" Style="{StaticResource lblSubtitle}" Text="What's on your mind?"/>-->
                     <Frame x:Name="frmeContentContainer" Style="{StaticResource frmeMainContainer}" Padding="15" Margin="0,10,0,10">
                         <StackLayout>
                             <Picker x:Name="txtTopic" Title="Choose Topic *" TextColor="Black" FontSize="15"/>

@@ -41,7 +41,7 @@
                     <Label x:Name="lblCommentCounter" Style="{StaticResource lblPostTitle}" FontAttributes="Bold, Italic" HorizontalOptions="Center" Margin="0,10,0,0"/>
                     <BoxView HeightRequest="2" Color="{StaticResource bckgroundColor2}" HorizontalOptions="FillAndExpand" Margin="0,0,0,-6"/>
 
-                    <ListView x:Name="lstComments" Style="{StaticResource lstStyle1}" Margin="0" Grid.Row="1">
+                    <ListView x:Name="lstComments" Style="{StaticResource lstStyle1}" SelectionMode="None" Refreshing="lstComments_Refreshing" IsPullToRefreshEnabled="True" Margin="0" Grid.Row="1">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

@@ -35,29 +35,31 @@
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="30"/>
             </Style>
-            
-            <!--Error Style v1-->
-            <Style x:Key="lblErrorMsg" TargetType="Label">
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="TextColor" Value="DarkRed"/>
-                <Setter Property="FontSize" Value="15"/>
-            </Style>
 
             <!--Entry Style v1-->
             <Style x:Key="txtStyle1" TargetType="Entry">
                 <Setter Property="PlaceholderColor" Value="LightGray"/>
-                <Setter Property="FontAttributes" Value="Italic"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
 
             <!--Entry Style v2-->
             <Style x:Key="txtStyle2" TargetType="Entry">
-                <Setter Property="FontAttributes" Value="Italic"/>
+                <Setter Property="PlaceholderColor" Value="LightGray"/>
                 <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
 
+            <!--Main Button Style-->
+            <Style x:Key="btnMainStyle" TargetType="Button">
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="CornerRadius" Value="25"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+            
             <!--Button style v1-->
             <Style x:Key="btnStyle1" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent"/>

@@ -27,6 +27,12 @@ namespace MyStudyHelper.XAML_Pages
             if (postInfo.UpVote.Contains(MainPage.user.Id))
             {
                 btnUpVote.IsEnabled = false;
+                btnDownVote.IsEnabled = false;
+            }
+            if (postInfo.DownVote.Contains(MainPage.user.Id))
+            {
+                btnDownVote.IsEnabled = false;
+                btnUpVote.IsEnabled = false;
             }
         }
 
@@ -43,6 +49,12 @@ namespace MyStudyHelper.XAML_Pages
         private void btnSend_Clicked(object sender, EventArgs e)
         {
             CreateComment();
+        }
+
+        private void lstComments_Refreshing(object sender, EventArgs e)
+        {
+            GetComments();
+            lstComments.IsRefreshing = false;
         }
 
         //Method created to bind the post info to frontend labels for display
@@ -72,7 +84,9 @@ namespace MyStudyHelper.XAML_Pages
                 {
                     var updatedPost = await app.UpdateUpVote(postInfo);
                     var post = (Posts)updatedPost;
+                    var previousPage = Navigation.NavigationStack.LastOrDefault();
                     await Navigation.PushAsync(new ViewPostPage(post));
+                    Navigation.RemovePage(previousPage);
                 }
             }
         }
@@ -93,8 +107,9 @@ namespace MyStudyHelper.XAML_Pages
                 {
                     var updatedPost = await app.UpdateDownVote(postInfo);
                     var post = (Posts)updatedPost;
-                    await Navigation.PopModalAsync();
+                    var previousPage = Navigation.NavigationStack.LastOrDefault();
                     await Navigation.PushAsync(new ViewPostPage(post));
+                    Navigation.RemovePage(previousPage);
                 }
             }
         }
@@ -109,18 +124,27 @@ namespace MyStudyHelper.XAML_Pages
                 var app = scope.Resolve<IViewPostBackend>();
                 app.GetCommentsInfo(postInfo.Id);
                 lstComments.ItemsSource = app.CommentsList; //Sets the commentslist as the listview's (frontend display) itemsource
+
+                if (app.CommentsList.Count == 0)
+                    lblCommentCounter.Text = "No comments have been posted";
+                else
+                    lblCommentCounter.Text = app.CommentsList.Count.ToString() +" Comment(s) have been posted";
             }
         }
 
         //Method which begins the process of sending the comment to the database through the API, (NEEDS WORK TO UPDATE THE LISTVIEW AT THE END !!!)
-        public void CreateComment() 
+        public async void CreateComment() 
         {
             var postInfo = _postInfo;
             container = DependancyInjection.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                app.SendComment(txtComment.Text, postInfo.Id);
+                await app.SendComment(txtComment.Text, postInfo.Id);
+
+                var previousPage = Navigation.NavigationStack.LastOrDefault();
+                await Navigation.PushAsync(new ViewPostPage(postInfo));
+                Navigation.RemovePage(previousPage);
             }
         }
     }

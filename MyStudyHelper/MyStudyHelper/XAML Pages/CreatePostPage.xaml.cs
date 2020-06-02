@@ -45,11 +45,13 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (validation == null)
                     {
-                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //SHOULD BE WORKING ONCE API HAS BEEN HOSTED
+                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
                         if (createdPost != null)
                         {
                             var post = (Posts)createdPost;
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
                             await Navigation.PushAsync(new ViewPostPage(post));
+                            Navigation.RemovePage(previousPage);
                         }
                         else
                             await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");

@@ -38,10 +38,9 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method to get popular posts from the backend class
-        public void DisplayList() 
+        public void DisplayList()
         {
             container = DependancyInjection.Configure();
-
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IHomeBackend>();
