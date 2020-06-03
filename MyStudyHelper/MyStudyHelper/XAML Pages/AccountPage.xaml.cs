@@ -14,6 +14,7 @@ namespace MyStudyHelper.XAML_Pages
         public AccountPage()
         {
             InitializeComponent();
+            AccountDetails();
         }
 
         private void btnChange_Clicked(object sender, EventArgs e)
@@ -24,6 +25,13 @@ namespace MyStudyHelper.XAML_Pages
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage());
+        }
+
+        public void AccountDetails()
+        {
+            txtUsername.Text = MainPage.user.Uname;
+            txtEmail.Text = MainPage.user.Email;
+            txtName.Text = MainPage.user.Name;
         }
 
         public async void BeginUpdate()
@@ -44,9 +52,9 @@ namespace MyStudyHelper.XAML_Pages
                             await DisplayAlert("User Updated", "Account successfully updated", "Ok");
                             MainPage.user = user;
 
-                            txtUsername.Text = "";
-                            txtEmail.Text = "";
-                            txtName.Text = "";
+                            txtUsername.Text = user.Uname;
+                            txtEmail.Text = user.Email;
+                            txtName.Text = user.Name;
                             txtOldPassword.Text = "";
                             txtNewPassword.Text = "";
                         }

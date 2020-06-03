@@ -93,14 +93,6 @@
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
-            
-            <!--Frame Content Container Style-->
-            <Style x:Key="frmeMainContainer" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="CornerRadius" Value="20"/>
-                <Setter Property="HasShadow" Value="False"/>
-                <Setter Property="Padding" Value="0"/>
-            </Style>
                         
             <!--Bottom Tab Style-->
             <Style x:Key="stckBottomContainer" TargetType="StackLayout">
@@ -145,13 +137,22 @@
             
             
             <!--Post Container Style-->
+
+            <!--Frame Content Container Style-->
+            <Style x:Key="frmeViewContainer" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
             <Style x:Key="frmePostContainer" TargetType="Frame">
                 <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
                 <Setter Property="VerticalOptions" Value="StartAndExpand"/>
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="Margin" Value="0,10,0,10"/>
                 <Setter Property="CornerRadius" Value="20"/>
-                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="HasShadow" Value="True"/>
                 <Setter Property="Padding" Value="10"/>
             </Style>
 

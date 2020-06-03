@@ -42,7 +42,7 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //This is where the data will be added from the API to the list
-        public async void GetCommentsInfo(string id) 
+        public async void GetCommentsInfo(string id)
         {
             var temp = await _commentsProxy.GetCommentsByPost(id);
 
@@ -61,7 +61,7 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //Takes in the users comment and the postid, returns the comment info including the users username and id to comment proxy
-        public async Task<IComments> SendComment(string comment, string postId) 
+        public async Task<IComments> SendComment(string comment, string postId)
         {
             return await _commentsProxy.PostComments(new Comments { Uname = MainPage.user.Uname, Comment = comment, PostId = postId, UserId = MainPage.user.Id });
         }

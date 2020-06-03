@@ -19,8 +19,8 @@ namespace MyStudyHelper.Classes.Backend
         {
             var MinLength = 10;
 
-            if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(pword1) || String.IsNullOrWhiteSpace(pword2))
-                return "Please fill in all required field(s) with valid information, cannot be left empty";
+            if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(pword1) || String.IsNullOrWhiteSpace(pword2))
+                return "Please fill in all required fields with valid information, cannot be left empty";
             else if (pword1.Length < MinLength)
                 return "Password length must be a minimum of 10 characters";
             else if (pword1 != pword2)

@@ -23,7 +23,7 @@
                 </StackLayout>
 
                 <StackLayout Margin="10,10,10,0">
-                    <Frame Style="{StaticResource frmePostContainer}" HorizontalOptions="FillAndExpand" Grid.Row="0">
+                    <Frame Style="{StaticResource frmePostContainer}" HasShadow="False" HorizontalOptions="FillAndExpand" Grid.Row="0">
                         <StackLayout>
                             <Frame BackgroundColor="Red" HasShadow="False" HorizontalOptions="StartAndExpand" CornerRadius="5" Padding="5" Margin="0,0,0,5">
                                 <Label x:Name="lblTopic" Style="{StaticResource lblPostTitle}" Text="{Binding Topic}" TextColor="White"/>
@@ -75,10 +75,15 @@
                 </Grid.ColumnDefinitions>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                    <Frame BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="275" CornerRadius="10" Padding="0" Margin="10,10,0,10" Grid.Column="0">
+                    <Frame BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="275" CornerRadius="20" Padding="0" Margin="10,10,0,10" Grid.Column="0">
                         <Editor x:Name="txtComment" Placeholder="Send Message (Max 150 Characters)" MaxLength="150" AutoSize="TextChanges" TextColor="Black" FontSize="15"/>
                     </Frame>
-                    <Button x:Name="btnSend" Style="{StaticResource btnStyle1}" Text="Send" WidthRequest="72" Clicked="btnSend_Clicked"/>
+                    
+                    <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0,0,0,0" Margin="0,0,0,0" Grid.Column="2">
+                        <StackLayout Orientation="Horizontal">
+                            <ImageButton x:Name="btnSend" Source="Send_Icon.xml" BackgroundColor="Transparent" WidthRequest="35" Margin="15,0,10,0" Clicked="btnSend_Clicked"/>
+                        </StackLayout>
+                    </Frame>
                 </StackLayout>
             </Grid>
         </Grid>

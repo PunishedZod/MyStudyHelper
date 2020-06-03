@@ -20,14 +20,12 @@ namespace MyStudyHelper.Classes.Backend
         {
             var MinLength = 10;
 
-            if (String.IsNullOrWhiteSpace(uname) && String.IsNullOrWhiteSpace(email) && String.IsNullOrWhiteSpace(name) && String.IsNullOrWhiteSpace(oldPword) && String.IsNullOrWhiteSpace(newPword))
-                return "All fields are empty, please fill in atleast one field";
+            if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(oldPword))
+                return "Please fill in all required fields with valid information, cannot be left empty";
             else if (String.IsNullOrWhiteSpace(oldPword))
                 return "You must enter your current password to make any changes";
             else if (oldPword != MainPage.user.Pword)
                 return "Current password entered is incorrect, please try again";
-            else if (uname == MainPage.user.Uname || email == MainPage.user.Email || name == MainPage.user.Name)
-                return "One or more field(s) contain old user info, please enter updated info";
             else if (oldPword == newPword)
                 return "New password cannot be the same as the old password";
             else if (!String.IsNullOrWhiteSpace(newPword) && newPword.Length < MinLength)
@@ -38,13 +36,7 @@ namespace MyStudyHelper.Classes.Backend
 
         public async Task<IUser> Update(string uname, string email, string name, string pword)
         {
-            if (uname == null || uname == "") //Series of if statements to ensure any empty fields don't return null or empty to the database resulting in any existing fields stored being overwritten as "null" or "empty"
-                uname = MainPage.user.Uname;
-            if (email == null || email == "")
-                email = MainPage.user.Email;
-            if (name == null || name == "")
-                name = MainPage.user.Name;
-            if (pword == null || pword == "")
+            if (pword == null || pword == "") //If new password is left empty fill it with the old password to ensure it does not return null or empty to the database
                 pword = MainPage.user.Pword;
 
             return await _userProxy.UpdateUserInfo(new User { Id = MainPage.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });

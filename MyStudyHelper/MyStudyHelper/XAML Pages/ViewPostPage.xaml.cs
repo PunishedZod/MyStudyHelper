@@ -48,7 +48,7 @@ namespace MyStudyHelper.XAML_Pages
 
         private void btnSend_Clicked(object sender, EventArgs e)
         {
-            CreateComment();
+            SendComment();
         }
 
         private void lstComments_Refreshing(object sender, EventArgs e)
@@ -72,6 +72,7 @@ namespace MyStudyHelper.XAML_Pages
         public async void UpdateUpVote() 
         {
             var postInfo = _postInfo;
+
             container = DependancyInjection.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
@@ -84,6 +85,7 @@ namespace MyStudyHelper.XAML_Pages
                 {
                     var updatedPost = await app.UpdateUpVote(postInfo);
                     var post = (Posts)updatedPost;
+
                     var previousPage = Navigation.NavigationStack.LastOrDefault();
                     await Navigation.PushAsync(new ViewPostPage(post));
                     Navigation.RemovePage(previousPage);
@@ -95,6 +97,7 @@ namespace MyStudyHelper.XAML_Pages
         public async void UpdateDownVote() 
         {
             var postInfo = _postInfo;
+
             container = DependancyInjection.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
@@ -107,6 +110,7 @@ namespace MyStudyHelper.XAML_Pages
                 {
                     var updatedPost = await app.UpdateDownVote(postInfo);
                     var post = (Posts)updatedPost;
+
                     var previousPage = Navigation.NavigationStack.LastOrDefault();
                     await Navigation.PushAsync(new ViewPostPage(post));
                     Navigation.RemovePage(previousPage);
@@ -118,6 +122,7 @@ namespace MyStudyHelper.XAML_Pages
         public void GetComments() 
         {
             var postInfo = _postInfo;
+
             container = DependancyInjection.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
@@ -125,26 +130,39 @@ namespace MyStudyHelper.XAML_Pages
                 app.GetCommentsInfo(postInfo.Id);
                 lstComments.ItemsSource = app.CommentsList; //Sets the commentslist as the listview's (frontend display) itemsource
 
-                if (app.CommentsList.Count == 0)
+                if (app.CommentsList.Count == 0) //If else statements which displays how much comments are on the current post being viewed
                     lblCommentCounter.Text = "No comments have been posted";
                 else
                     lblCommentCounter.Text = app.CommentsList.Count.ToString() +" Comment(s) have been posted";
             }
         }
 
-        //Method which begins the process of sending the comment to the database through the API, (NEEDS WORK TO UPDATE THE LISTVIEW AT THE END !!!)
-        public async void CreateComment() 
+        //Method which begins the process of sending the comment to the database through the API
+        public async void SendComment() 
         {
-            var postInfo = _postInfo;
-            container = DependancyInjection.Configure();
-            using (var scope = container.BeginLifetimeScope())
+            try
             {
-                var app = scope.Resolve<IViewPostBackend>();
-                await app.SendComment(txtComment.Text, postInfo.Id);
+                var postInfo = _postInfo;
 
-                var previousPage = Navigation.NavigationStack.LastOrDefault();
-                await Navigation.PushAsync(new ViewPostPage(postInfo));
-                Navigation.RemovePage(previousPage);
+                container = DependancyInjection.Configure();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<IViewPostBackend>();
+                    if (!String.IsNullOrWhiteSpace(txtComment.Text))
+                    {
+                            await app.SendComment(txtComment.Text, postInfo.Id);
+
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new ViewPostPage(postInfo));
+                            Navigation.RemovePage(previousPage);
+                    }
+                    else
+                        return;
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
             }
         }
     }

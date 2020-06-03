@@ -15,12 +15,12 @@
             <Label x:Name="lblSubtitle" Style="{StaticResource lblMainSubtitle}" Text="Register" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,15"/>
             <Entry x:Name="txtUsername" Style="{StaticResource txtStyle1}" Placeholder="Username *"/>
             <Entry x:Name="txtEmail" Style="{StaticResource txtStyle1}" Placeholder="Email Address *" Margin="0,-5,0,0"/>
-            <Entry x:Name="txtName" Style="{StaticResource txtStyle1}" Placeholder="Name (Optional)" Margin="0,-5,0,0"/>
+            <Entry x:Name="txtName" Style="{StaticResource txtStyle1}" Placeholder="Name *" Margin="0,-5,0,0"/>
             <Entry x:Name="txtPassword1" Style="{StaticResource txtStyle1}" Placeholder="Password (Min 10 Characters) *" Margin="0,-5,0,0" IsPassword="True"/>
             <Entry x:Name="txtPassword2" Style="{StaticResource txtStyle1}" Placeholder="Re-Enter Password *" Margin="0,-5,0,0" IsPassword="True"/>
             
             <StackLayout x:Name="StckLoginBtn" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0,15,0,0">
-                <Button x:Name="btnBack" Style="{StaticResource btnMainStyle}" Text="Back" BackgroundColor="Red" Clicked="btnBack_Clicked"/>
+                <!--<Button x:Name="btnBack" Style="{StaticResource btnMainStyle}" Text="Back" BackgroundColor="Red" Clicked="btnBack_Clicked"/>-->
                 <Button x:Name="btnSignup" Style="{StaticResource btnMainStyle}" Text="Sign Up" BackgroundColor="LimeGreen" Margin="0,5,0,0" Clicked="btnSignup_Clicked"/>
             </StackLayout>
 

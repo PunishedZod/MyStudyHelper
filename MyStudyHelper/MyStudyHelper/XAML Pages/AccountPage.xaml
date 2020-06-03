@@ -25,13 +25,13 @@
 
                 <StackLayout x:Name="stckFrameContainer" VerticalOptions="FillAndExpand" Margin="25" Grid.Row="1">
                     <Label x:Name="lblTitle" Style="{StaticResource lblTitle}" Text="Change Your Details" HorizontalOptions="Center"/>
-                    <Frame x:Name="frmeContentContainer" Style="{StaticResource frmeMainContainer}" Padding="15,15,15,30" Margin="0,5,0,0">
+                    <Frame x:Name="frmeContentContainer" Style="{StaticResource frmeViewContainer}" Padding="15,15,15,30" Margin="0,5,0,0">
                         <StackLayout>
                             <Entry x:Name="txtUsername" Style="{StaticResource txtStyle2}" Placeholder="Username *"/>
                             <Entry x:Name="txtEmail" Style="{StaticResource txtStyle2}" Placeholder="Email Address *"/>
-                            <Entry x:Name="txtName" Style="{StaticResource txtStyle2}" Placeholder="Name (Optional)"/>
+                            <Entry x:Name="txtName" Style="{StaticResource txtStyle2}" Placeholder="Name *"/>
                             <Entry x:Name="txtOldPassword" Style="{StaticResource txtStyle2}" Placeholder="Current Password *" IsPassword="True"/>
-                            <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password *" IsPassword="True"/>
+                            <Entry x:Name="txtNewPassword" Style="{StaticResource txtStyle2}" Placeholder="New Password (Min 10 Characters)" IsPassword="True"/>
                         </StackLayout>
                     </Frame>
 
@@ -41,18 +41,7 @@
                     </StackLayout>
                 </StackLayout>
 
-                <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" HeightRequest="50">
-                    </StackLayout>
-                </Grid>
-
+                <StackLayout x:Name="stckBottomContainer" BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="50" Grid.Row="2"/>
             </StackLayout>
             
         </Grid>

@@ -46,7 +46,7 @@
                 </ListView>
             </StackLayout>
 
-            <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
+            <Grid BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="55" Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -59,9 +59,11 @@
                     <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White"/>
                 </StackLayout>
 
-                <StackLayout Grid.Column="2">
-                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"/>
-                </StackLayout>
+                <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0" Grid.Column="2">
+                    <StackLayout Orientation="Horizontal">
+                        <ImageButton x:Name="btnAccount" Source="Account_Icon.xml" BackgroundColor="Transparent"  WidthRequest="35" Margin="15,0,15,0" Clicked="btnAccount_Clicked"/>
+                    </StackLayout>
+                </Frame>
             </Grid>
         </Grid>
         

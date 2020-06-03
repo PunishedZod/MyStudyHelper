@@ -20,6 +20,7 @@
             <StackLayout x:Name="stckMainContainer" Spacing="0">
                 <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
                     <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="All Posts - Last 30 Days" Margin="15"/>
+
                 </StackLayout>
 
                 <ListView x:Name="lstAllPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstAllPosts_ItemSelected" Refreshing="lstAllPosts_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
@@ -27,7 +28,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Grid>
-                                    
+
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
@@ -38,27 +39,23 @@
                                             <Label x:Name="lblContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
                                         </StackLayout>
                                     </Frame>
-                                    
+
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackLayout>
 
-            <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2">
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2">
-                    <Button x:Name="btnCreatePost" Style="{StaticResource btnStyle1}" Text="Post" TextColor="Red" WidthRequest="55" Clicked="btnCreatePost_Clicked" />
-                    <Button x:Name="btnAccount" Style="{StaticResource btnStyle1}" Text="Profile" Clicked="btnAccount_Clicked"/>
+                <StackLayout x:Name="stckBottomContainer" BackgroundColor="{StaticResource bckgroundColor2}" Orientation="Horizontal" HorizontalOptions="FillAndExpand" HeightRequest="70" Grid.Row="2">
+                    <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0">
+                        <StackLayout Orientation="Horizontal">
+                            <ImageButton x:Name="btnCreatePost" Source="CreatePost_Icon.xml" BackgroundColor="Transparent" WidthRequest="35" Margin="15,0,15,0" Clicked="btnCreatePost_Clicked"/>
+                            <ImageButton x:Name="btnAccount" Source="Account_Icon.xml" BackgroundColor="Transparent"  WidthRequest="35" Margin="0,0,15,0" Clicked="btnAccount_Clicked"/>
+                        </StackLayout>
+                    </Frame>
                 </StackLayout>
-            </Grid>
+            </StackLayout>
+            
         </Grid>
 
     </ContentPage.Content>
