@@ -3,61 +3,62 @@ using Autofac;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Collections.ObjectModel;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
-using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPostPage : ContentPage
     {
-        readonly Posts _postInfo;
+        readonly Posts _postInfo; //A post used to store the post info for things like API calls, (used for things like upvotes and downvotes, etc)
         private IContainer container;
-        public ObservableCollection<IUser> Test = new ObservableCollection<IUser>();
 
-        public ViewPostPage(Posts postInfo)
+        public ViewPostPage(Posts postInfo) //Takes in a post in the parameters of the constructor to use upon page start up
         {
             InitializeComponent();
-            _postInfo = postInfo;
-            Post(postInfo);
-            GetComments();
+            _postInfo = postInfo; //Stores the post info in a post model
+            Post(postInfo); //Populates the post in the frontend view
+            DisplayComments(); //Populates the listview with all comments related to the post when page is initialized
 
-            if (postInfo.UpVote.Contains(MainPage.user.Id))
+            if (postInfo.UpVote.Contains(MainPage.user.Id)) //If the upvote array contains the logged in user's id, disable button
             {
                 btnUpVote.IsEnabled = false;
                 btnDownVote.IsEnabled = false;
             }
-            if (postInfo.DownVote.Contains(MainPage.user.Id))
+            if (postInfo.DownVote.Contains(MainPage.user.Id)) //If the downvote array contains the logged in user's id, disable button
             {
                 btnDownVote.IsEnabled = false;
                 btnUpVote.IsEnabled = false;
             }
         }
 
+        //Calls the method which begins the upvoting process on button click
         private void btnUpVote_Clicked(object sender, EventArgs e)
         {
             UpdateUpVote();
         }
 
+        //Calls the method which begins the downvoting process on button click
         private void btnDownVote_Clicked(object sender, EventArgs e)
         {
             UpdateDownVote();
         }
 
+        //Calls the method which begins the process of sending a comment to the db on button click
         private void btnSend_Clicked(object sender, EventArgs e)
         {
             SendComment();
         }
 
+        //Repopulates the listview after pulling to refresh, then stops the refresher
         private void lstComments_Refreshing(object sender, EventArgs e)
         {
-            GetComments();
+            DisplayComments();
             lstComments.IsRefreshing = false;
         }
 
-        //Method created to bind the post info to frontend labels for display
+        //Method which binds the post info to frontend labels for display
         public void Post(Posts post) 
         {
             lblPageTitle.Text = "Post By: " + post.Uname;
@@ -69,71 +70,57 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method which begins the updating process of the upvotes then returns the updated result
-        public async void UpdateUpVote() 
+        public async void UpdateUpVote()
         {
             var postInfo = _postInfo;
-
             container = DependancyInjection.Configure();
+
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                if (postInfo.UpVote.Contains(MainPage.user.Id)) //If upvote array contains the logged in user's id, disable the button
-                {
-                    btnUpVote.IsEnabled = false;
-                }
-                else if (!postInfo.UpVote.Contains(MainPage.user.Id)) //else if upvote array doesn't contain the logged in user's id, send the user's id through to the upvote array then refresh page
-                {
-                    var updatedPost = await app.UpdateUpVote(postInfo);
-                    var post = (Posts)updatedPost;
+                var updatedPost = await app.UpdateUpVote(postInfo); //Takes in the post info for use in the backend class
+                var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
 
-                    var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage(post));
-                    Navigation.RemovePage(previousPage);
-                }
+                var previousPage = Navigation.NavigationStack.LastOrDefault();
+                await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                Navigation.RemovePage(previousPage);
             }
         }
 
         //Method which begins the updating process of the downvotes then returns the updated result
-        public async void UpdateDownVote() 
+        public async void UpdateDownVote()
         {
             var postInfo = _postInfo;
-
             container = DependancyInjection.Configure();
+
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                if (postInfo.DownVote.Contains(MainPage.user.Id))
-                {
-                    btnUpVote.IsEnabled = false;
-                }
-                else if (!postInfo.DownVote.Contains(MainPage.user.Id))
-                {
-                    var updatedPost = await app.UpdateDownVote(postInfo);
-                    var post = (Posts)updatedPost;
+                var updatedPost = await app.UpdateDownVote(postInfo); //Takes in the post info for use in the backend class
+                var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
 
-                    var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage(post));
-                    Navigation.RemovePage(previousPage);
-                }
+                var previousPage = Navigation.NavigationStack.LastOrDefault();
+                await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                Navigation.RemovePage(previousPage);
             }
         }
 
-        //Method to get the comments for the post via the post id
-        public void GetComments() 
+        //Method to get all the comments for the post, retrieves them via post id
+        public void DisplayComments() 
         {
             var postInfo = _postInfo;
-
             container = DependancyInjection.Configure();
+
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IViewPostBackend>();
-                app.GetCommentsInfo(postInfo.Id);
-                lstComments.ItemsSource = app.CommentsList; //Sets the commentslist as the listview's (frontend display) itemsource
+                app.GetCommentsInfo(postInfo.Id); //Gets the comments for the post by taking in the post id and making an API call to the db
+                lstComments.ItemsSource = app.CommentsList; //Populates the listviews (frontend display) itemsource with the comments list from the backend
 
-                if (app.CommentsList.Count == 0) //If else statements which displays how much comments are on the current post being viewed
-                    lblCommentCounter.Text = "No comments have been posted";
+                if (app.CommentsList.Count == 0) //If else statements which displays how much comments/replies are on the post to the user
+                    lblCommentCounter.Text = "No replies have been posted yet";
                 else
-                    lblCommentCounter.Text = app.CommentsList.Count.ToString() +" Comment(s) have been posted";
+                    lblCommentCounter.Text = app.CommentsList.Count.ToString() +" Reply(s) to post";
             }
         }
 
@@ -143,21 +130,23 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 var postInfo = _postInfo;
-
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
-                    if (!String.IsNullOrWhiteSpace(txtComment.Text))
-                    {
-                            await app.SendComment(txtComment.Text, postInfo.Id);
 
-                            var previousPage = Navigation.NavigationStack.LastOrDefault();
-                            await Navigation.PushAsync(new ViewPostPage(postInfo));
-                            Navigation.RemovePage(previousPage);
+                    if (!String.IsNullOrWhiteSpace(txtComment.Text)) //If comment box isn't empty, send comment and re-navigate to the view post page
+                    {
+                        btnSend.IsEnabled = false;
+                        await app.SendComment(txtComment.Text, postInfo.Id);
+
+                        var previousPage = Navigation.NavigationStack.LastOrDefault();
+                        await Navigation.PushAsync(new ViewPostPage(postInfo));
+                        Navigation.RemovePage(previousPage);
                     }
                     else
-                        return;
+                        return; //If comment box is empty, do nothing
                 }
             }
             catch

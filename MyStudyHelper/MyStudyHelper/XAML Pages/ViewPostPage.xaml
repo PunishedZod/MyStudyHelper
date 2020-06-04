@@ -71,15 +71,15 @@
             <Grid BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="2" VerticalOptions="EndAndExpand">
                 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                    <Frame BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="275" CornerRadius="20" Padding="0" Margin="10,10,0,10" Grid.Column="0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Frame BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="275" CornerRadius="20" Padding="0" Margin="10,10,10,10" Grid.Column="0">
                         <Editor x:Name="txtComment" Placeholder="Send Message (Max 150 Characters)" MaxLength="150" AutoSize="TextChanges" TextColor="Black" FontSize="15"/>
                     </Frame>
                     
-                    <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0,0,0,0" Margin="0,0,0,0" Grid.Column="2">
+                    <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="20" HeightRequest="40" Padding="0,0,0,0" Margin="0,0,10,0" Grid.Column="2">
                         <StackLayout Orientation="Horizontal">
                             <ImageButton x:Name="btnSend" Source="Send_Icon.xml" BackgroundColor="Transparent" WidthRequest="35" Margin="15,0,10,0" Clicked="btnSend_Clicked"/>
                         </StackLayout>

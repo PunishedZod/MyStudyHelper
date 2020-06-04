@@ -3,9 +3,9 @@ using Autofac;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MyStudyHelper.Classes.Backend.Interfaces;
-using MyStudyHelper.Classes.API.Models;
 using System.Collections.Generic;
+using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -17,15 +17,10 @@ namespace MyStudyHelper.XAML_Pages
         public CreatePostPage()
         {
             InitializeComponent();
-            BindingContext = this;
-            TopicList();
+            TopicList(); //Populates the listview with topics when page is initialized
         }
 
-        private async void btnCancel_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PopAsync();
-        }
-
+        //Calls the method below on button click, begins the process of creating a post
         private void btnPost_Clicked(object sender, EventArgs e)
         {
             BeginCreatePost();
@@ -46,15 +41,11 @@ namespace MyStudyHelper.XAML_Pages
                     if (validation == null)
                     {
                         var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
-                        if (createdPost != null)
-                        {
-                            var post = (Posts)createdPost;
-                            var previousPage = Navigation.NavigationStack.LastOrDefault();
-                            await Navigation.PushAsync(new ViewPostPage(post));
-                            Navigation.RemovePage(previousPage);
-                        }
-                        else
-                            await DisplayAlert("Invalid or Empty Field(s)", "Registration unsuccessful, please try again", "Ok");
+                        var post = (Posts)createdPost;
+
+                        var previousPage = Navigation.NavigationStack.LastOrDefault();
+                        await Navigation.PushAsync(new ViewPostPage(post));
+                        Navigation.RemovePage(previousPage);
                     }
                     else
                         await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
@@ -66,11 +57,12 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
+        //List of topics to use as itemsource for the topic picker
         public void TopicList()
         {
             var topicList = new List<string>();
             {
-                topicList.Add("Choose Topic *");
+                topicList.Add("Choose Topic *"); //Selects this as default topic
                 topicList.Add("Agriculture");
                 topicList.Add("Animal Care");
                 topicList.Add("Architecture");
