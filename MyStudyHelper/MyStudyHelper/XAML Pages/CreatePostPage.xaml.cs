@@ -40,6 +40,7 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (validation == null)
                     {
+                        btnPost.IsEnabled = false;
                         var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
                         var post = (Posts)createdPost;
 

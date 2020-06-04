@@ -61,6 +61,7 @@ namespace MyStudyHelper.XAML_Pages
                         if (user != null)
                         {
                             MainPage.user = user; //Stores user into a static user for use throughout the app
+                            btnSignin.IsEnabled = false;
                             var previousPage = Navigation.NavigationStack.LastOrDefault();
                             await Navigation.PushAsync(new MainPage()); //Pushes a new instance of main page ontop of the navigation stack after logging in with valid user info
                             Navigation.RemovePage(previousPage);
@@ -69,7 +70,7 @@ namespace MyStudyHelper.XAML_Pages
                         else //If user does not exist in the db, returns null, displays error message
                         {
                             actIndicator.IsRunning = false;
-                            await DisplayAlert("Invalid or Empty Field(s)", "Login details are incorrect, please try again", "Ok");
+                            await DisplayAlert("Invalid or Empty Field(s)", "Login details are incorrect, login details are case sensitive, please try again", "Ok");
                         }
                     }
                     else //If details are incorrect, display an error message

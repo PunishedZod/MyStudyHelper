@@ -73,6 +73,7 @@ namespace MyStudyHelper.XAML_Pages
         public async void UpdateUpVote()
         {
             var postInfo = _postInfo;
+            btnUpVote.IsEnabled = false;
             container = DependancyInjection.Configure();
 
             using (var scope = container.BeginLifetimeScope())
@@ -91,6 +92,7 @@ namespace MyStudyHelper.XAML_Pages
         public async void UpdateDownVote()
         {
             var postInfo = _postInfo;
+            btnDownVote.IsEnabled = false;
             container = DependancyInjection.Configure();
 
             using (var scope = container.BeginLifetimeScope())

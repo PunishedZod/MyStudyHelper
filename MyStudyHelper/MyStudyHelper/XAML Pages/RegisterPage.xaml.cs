@@ -37,6 +37,7 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (validation == null)
                     {
+                        btnSignup.IsEnabled = false;
                         await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //Parameters take in the valid user info and inserts it into the db, registering them
                         await DisplayAlert("User Registered", "Account successfully registered, please login via username and password", "Ok");
 
