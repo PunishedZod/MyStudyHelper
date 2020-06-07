@@ -12,9 +12,9 @@ namespace MyStudyHelper.Classes.Backend
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
         private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
 
-        public HomeBackend(IPostsProxy postProxy)
+        public HomeBackend(IPostsProxy postsProxy)
         {
-            _postsProxy = postProxy;
+            _postsProxy = postsProxy;
             GetPostInfo();
         }
 
@@ -33,6 +33,11 @@ namespace MyStudyHelper.Classes.Backend
                     foreach (var item in orderedList)
                     {
                         PostsMod.Add(item);
+
+                        if (PostsMod.Count >= 10) //Limits the amount of posts being added to 10
+                        {
+                            break;
+                        }
                     }
                 }
                 else

@@ -72,57 +72,78 @@ namespace MyStudyHelper.XAML_Pages
         //Method which begins the updating process of the upvotes then returns the updated result
         public async void UpdateUpVote()
         {
-            var postInfo = _postInfo;
-            btnUpVote.IsEnabled = false;
-            container = DependancyInjection.Configure();
-
-            using (var scope = container.BeginLifetimeScope())
+            try
             {
-                var app = scope.Resolve<IViewPostBackend>();
-                var updatedPost = await app.UpdateUpVote(postInfo); //Takes in the post info for use in the backend class
-                var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
+                var postInfo = _postInfo;
+                btnUpVote.IsEnabled = false;
+                container = DependancyInjection.Configure();
 
-                var previousPage = Navigation.NavigationStack.LastOrDefault();
-                await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
-                Navigation.RemovePage(previousPage);
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<IViewPostBackend>();
+                    var updatedPost = await app.UpdateUpVote(postInfo); //Takes in the post info for use in the backend class
+                    var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
+
+                    var previousPage = Navigation.NavigationStack.LastOrDefault();
+                    await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                    Navigation.RemovePage(previousPage);
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, unable to upvote", "Ok");
             }
         }
 
         //Method which begins the updating process of the downvotes then returns the updated result
         public async void UpdateDownVote()
         {
-            var postInfo = _postInfo;
-            btnDownVote.IsEnabled = false;
-            container = DependancyInjection.Configure();
-
-            using (var scope = container.BeginLifetimeScope())
+            try
             {
-                var app = scope.Resolve<IViewPostBackend>();
-                var updatedPost = await app.UpdateDownVote(postInfo); //Takes in the post info for use in the backend class
-                var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
+                var postInfo = _postInfo;
+                btnDownVote.IsEnabled = false;
+                container = DependancyInjection.Configure();
 
-                var previousPage = Navigation.NavigationStack.LastOrDefault();
-                await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
-                Navigation.RemovePage(previousPage);
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<IViewPostBackend>();
+                    var updatedPost = await app.UpdateDownVote(postInfo); //Takes in the post info for use in the backend class
+                    var post = (Posts)updatedPost; //The updatedpost is converted from an interface of a post model into a post model
+
+                    var previousPage = Navigation.NavigationStack.LastOrDefault();
+                    await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                    Navigation.RemovePage(previousPage);
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, unable to downvote", "Ok");
             }
         }
 
         //Method to get all the comments for the post, retrieves them via post id
-        public void DisplayComments() 
+        public async void DisplayComments() 
         {
-            var postInfo = _postInfo;
-            container = DependancyInjection.Configure();
-
-            using (var scope = container.BeginLifetimeScope())
+            try
             {
-                var app = scope.Resolve<IViewPostBackend>();
-                app.GetCommentsInfo(postInfo.Id); //Gets the comments for the post by taking in the post id and making an API call to the db
-                lstComments.ItemsSource = app.CommentsList; //Populates the listviews (frontend display) itemsource with the comments list from the backend
+                var postInfo = _postInfo;
+                container = DependancyInjection.Configure();
 
-                if (app.CommentsList.Count == 0) //If else statements which displays how much comments/replies are on the post to the user
-                    lblCommentCounter.Text = "No replies have been posted yet";
-                else
-                    lblCommentCounter.Text = app.CommentsList.Count.ToString() +" Reply(s) to post";
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<IViewPostBackend>();
+                    app.GetCommentsInfo(postInfo.Id); //Gets the comments for the post by taking in the post id and making an API call to the db
+                    lstComments.ItemsSource = app.CommentsList; //Populates the listviews (frontend display) itemsource with the comments list from the backend
+
+                    if (app.CommentsList.Count == 0) //If else statements which displays how much comments/replies are on the post to the user
+                        lblCommentCounter.Text = "No replies have been posted yet";
+                    else
+                        lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Reply(s) to post";
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, unable to display comments", "Ok");
             }
         }
 
@@ -153,7 +174,7 @@ namespace MyStudyHelper.XAML_Pages
             }
             catch
             {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+                await DisplayAlert("Error", "Something went wrong, unable to send comment", "Ok");
             }
         }
     }

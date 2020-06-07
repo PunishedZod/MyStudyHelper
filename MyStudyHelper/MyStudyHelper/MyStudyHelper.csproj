@@ -31,6 +31,9 @@
     <EmbeddedResource Update="XAML Pages\AccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="XAML Pages\CommentHistoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="XAML Pages\CreatePostPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -40,7 +43,7 @@
     <EmbeddedResource Update="XAML Pages\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="XAML Pages\NewsPage.xaml">
+    <EmbeddedResource Update="XAML Pages\PostHistoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="XAML Pages\PostsPage.xaml">

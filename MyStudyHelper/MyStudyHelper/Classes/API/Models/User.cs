@@ -1,7 +1,4 @@
 ﻿using MyStudyHelper.Classes.API.Models.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyStudyHelper.Classes.API.Models
 {

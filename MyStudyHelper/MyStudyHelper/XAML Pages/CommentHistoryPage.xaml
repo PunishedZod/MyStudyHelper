@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MyStudyHelper.XAML_Pages.CommentHistoryPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Comment History">
+
+    <ContentPage.Content>
+
+        <Grid x:Name="grdMain" RowSpacing="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout x:Name="stckMainContainer" Spacing="0">
+                <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
+                    <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Comment History" Margin="15"/>
+                </StackLayout>
+
+                <ListView x:Name="lstCommentHistory" Style="{StaticResource lstStyle1}" ItemSelected="lstCommentHistory_ItemSelected" Refreshing="lstCommentHistory_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0">
+                                        <StackLayout>
+                                            <Label x:Name="lblTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Uname}"/>
+                                            <Label x:Name="lblContent" Style="{StaticResource lblPostContent}" Text="{Binding Comment}"/>
+                                        </StackLayout>
+                                    </Frame>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <Grid BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="55" Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Style="{StaticResource stckBottomContainer}" Grid.Column="1">
+                    <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White"/>
+                    <StackLayout Style="{StaticResource stckPageIcon}"/>
+                </StackLayout>
+
+                <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0" Grid.Column="2">
+                    <StackLayout Orientation="Horizontal">
+                        <ImageButton x:Name="btnAccount" Source="Account_Icon.xml" BackgroundColor="Transparent"  WidthRequest="35" Margin="15,0,15,0" Clicked="btnAccount_Clicked"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

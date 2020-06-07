@@ -26,8 +26,10 @@ namespace MyStudyHelper
             builder.RegisterType<ViewPostBackend>().As<IViewPostBackend>();
             builder.RegisterType<RegisterBackend>().As<IRegisterBackend>();
             builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();
+            builder.RegisterType<PostHistoryBackend>().As<IPostHistoryBackend>();
             builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();
-            
+            builder.RegisterType<CommentHistoryBackend>().As<ICommentHistoryBackend>();
+
             string baseAddress = "https://studyhelper.api.labnet.nz/"; //Injects the base address into the proxies
 
             //START OF API PROXIES

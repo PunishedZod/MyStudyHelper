@@ -83,7 +83,7 @@ namespace MyStudyHelper.XAML_Pages
             catch //Catches exceptions and displays an error message to prevent app from crashing
             {
                 actIndicator.IsRunning = false;
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+                await DisplayAlert("Error", "Something went wrong, unable to login", "Ok");
             }
         }
     }

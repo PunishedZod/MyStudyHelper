@@ -1,26 +1,27 @@
 ﻿using System.Collections.ObjectModel;
 using MyStudyHelper.Classes.API.Proxys;
 using MyStudyHelper.Classes.Backend.Interfaces;
-using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
+
 
 namespace MyStudyHelper.Classes.Backend
 {
-    public class RecentPostsBackend : IRecentPostsBackend
+    public class PostHistoryBackend : IPostHistoryBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
         private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
 
-        public RecentPostsBackend(IPostsProxy postProxy)
+        public PostHistoryBackend(IPostsProxy postsProxy)
         {
-            _postsProxy = postProxy;
+            _postsProxy = postsProxy;
             GetPostInfo();
         }
 
-        public async void GetPostInfo() //Method to get recent posts (descending order) and display them in a list
+        public async void GetPostInfo()
         {
             PostsMod = new ObservableCollection<IPosts>();
-            var temp = await _postsProxy.GetRecentPosts();
+            var temp = await _postsProxy.GetPostsByUser(MainPage.user.Id);
 
             if (temp != null)
             {
@@ -29,11 +30,6 @@ namespace MyStudyHelper.Classes.Backend
                     foreach (var item in temp)
                     {
                         PostsMod.Add(item);
-
-                        if (PostsMod.Count >= 10) //Limits the amount of posts being added to 10
-                        {
-                            break;
-                        }
                     }
                 }
                 else

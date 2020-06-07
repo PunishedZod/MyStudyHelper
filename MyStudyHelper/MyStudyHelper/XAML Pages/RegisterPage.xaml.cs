@@ -51,7 +51,7 @@ namespace MyStudyHelper.XAML_Pages
             }
             catch
             {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
+                await DisplayAlert("Error", "Something went wrong, unable to register", "Ok");
             }
         }
     }

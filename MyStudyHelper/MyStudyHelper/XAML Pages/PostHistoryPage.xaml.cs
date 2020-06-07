@@ -5,27 +5,26 @@ using Xamarin.Forms.Xaml;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
+
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RecentPostsPage : ContentPage
+    public partial class PostHistoryPage : CarouselPage
     {
         private IContainer container;
 
-        public RecentPostsPage()
+        public PostHistoryPage()
         {
             InitializeComponent();
-            DisplayList(); //Populates the listview with recent posts when page is initialized
+            DisplayList();
         }
 
-        //Navigates to the account page on button click by pushing a new instance of account page ontop of the navigation stack
         private async void btnAccount_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AccountPage());
         }
 
-        //When selecting an item within the listview it will put the data selected into a model than navigate to the viewpost page with the data for viewing
-        private async void lstRecentPosts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void lstPostHistory_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) return;
             var itemSelected = (Posts)e.SelectedItem;
@@ -33,14 +32,12 @@ namespace MyStudyHelper.XAML_Pages
             await Navigation.PushAsync(new ViewPostPage(itemSelected));
         }
 
-        //Repopulates the listview after pulling to refresh, then stops the refresher
-        private void lstRecentPosts_Refreshing(object sender, EventArgs e)
+        private void lstPostHistory_Refreshing(object sender, EventArgs e)
         {
             DisplayList();
-            lstRecentPosts.IsRefreshing = false;
+            lstPostHistory.IsRefreshing = false;
         }
 
-        //Lifetime scope (dependency injection) is created to get recent posts via backend class methods
         public async void DisplayList()
         {
             try
@@ -49,13 +46,13 @@ namespace MyStudyHelper.XAML_Pages
 
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var app = scope.Resolve<IRecentPostsBackend>();
-                    lstRecentPosts.ItemsSource = app.PostsMod;
+                    var app = scope.Resolve<IPostHistoryBackend>();
+                    lstPostHistory.ItemsSource = app.PostsMod;
                 }
             }
             catch
             {
-                await DisplayAlert("Error", "Something went wrong, unable to display recent posts", "Ok");
+                await DisplayAlert("Error", "Something went wrong, unable to display post history", "Ok");
             }
         }
     }

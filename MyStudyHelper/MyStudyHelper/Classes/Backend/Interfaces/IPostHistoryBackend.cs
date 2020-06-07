@@ -3,7 +3,7 @@ using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend.Interfaces
 {
-    public interface IHomeBackend
+    public interface IPostHistoryBackend
     {
         ObservableCollection<IPosts> PostsMod { get; set; }
 

@@ -1,5 +1,5 @@
-﻿using MyStudyHelper.Classes.API.Models.Interfaces;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend.Interfaces
 {

@@ -13,7 +13,7 @@
     <local1:PostsPage>
     </local1:PostsPage>
 
-    <local1:NewsPage>
-    </local1:NewsPage>
+    <local1:PostHistoryPage>
+    </local1:PostHistoryPage>
 
 </TabbedPage>

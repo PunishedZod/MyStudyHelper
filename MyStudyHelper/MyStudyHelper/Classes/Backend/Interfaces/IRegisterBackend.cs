@@ -1,5 +1,4 @@
-﻿using MyStudyHelper.Classes.API.Models.Interfaces;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MyStudyHelper.Classes.Backend.Interfaces
 {

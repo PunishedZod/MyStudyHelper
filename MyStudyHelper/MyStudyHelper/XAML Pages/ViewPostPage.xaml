@@ -53,7 +53,7 @@
 
                                         <Frame Style="{StaticResource frmePostContainer}" Margin="25,5,25,5" Grid.Row="0">
                                             <StackLayout>
-                                                <Label x:Name="lblUsername" Style="{StaticResource lblPostTitle}" Text="{Binding Uname}" FontAttributes="Bold, Italic" TextColor="Red"/>
+                                                <Label x:Name="lblUsername" Style="{StaticResource lblPostTitle}" Text="{Binding Uname}" TextColor="Red"/>
                                                 <Label x:Name="lblComment" Style="{StaticResource lblPostContent}" Text="{Binding Comment}"/>
                                             </StackLayout>
                                         </Frame>

@@ -19,7 +19,7 @@
 
             <StackLayout x:Name="stckMainContainer" Spacing="0">
                 <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
-                    <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="All Posts - Last 30 Days" Margin="15"/>
+                    <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="All Posts" Margin="15"/>
 
                 </StackLayout>
 
@@ -50,7 +50,7 @@
                     <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0">
                         <StackLayout Orientation="Horizontal">
                             <ImageButton x:Name="btnCreatePost" Source="CreatePost_Icon.xml" BackgroundColor="Transparent" WidthRequest="35" Margin="15,0,15,0" Clicked="btnCreatePost_Clicked"/>
-                            <ImageButton x:Name="btnAccount" Source="Account_Icon.xml" BackgroundColor="Transparent"  WidthRequest="35" Margin="0,0,15,0" Clicked="btnAccount_Clicked"/>
+                            <ImageButton x:Name="btnAccount" Source="Account_Icon.xml" BackgroundColor="Transparent" WidthRequest="35" Margin="0,0,15,0" Clicked="btnAccount_Clicked"/>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

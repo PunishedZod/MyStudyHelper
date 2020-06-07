@@ -29,7 +29,6 @@ namespace MyStudyHelper.Classes.API.Proxys
             if (response.IsSuccessStatusCode)
             {
                 var user = await response.Content.ReadAsAsync<User>();
-     
                 if (user != null)
                 {
                     return user;

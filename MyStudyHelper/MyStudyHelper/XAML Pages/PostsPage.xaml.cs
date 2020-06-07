@@ -47,13 +47,20 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Lifetime scope (dependency injection) is created to get all posts via backend class methods
-        public void DisplayList()
+        public async void DisplayList()
         {
-            container = DependancyInjection.Configure();
-            using (var scope = container.BeginLifetimeScope())
+            try
             {
-                var app = scope.Resolve<IPostsBackend>();
-                lstAllPosts.ItemsSource = app.PostsMod;
+                container = DependancyInjection.Configure();
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var app = scope.Resolve<IPostsBackend>();
+                    lstAllPosts.ItemsSource = app.PostsMod;
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Something went wrong, unable to display all posts", "Ok");
             }
         }
     }

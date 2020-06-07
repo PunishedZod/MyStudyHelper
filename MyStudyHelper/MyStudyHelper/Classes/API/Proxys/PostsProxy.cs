@@ -94,6 +94,30 @@ namespace MyStudyHelper.Classes.API.Proxys
                 return null;
         }
 
+        public async Task<Posts> GetPostInfo(string id)
+        {
+            var http = new HttpClient
+            {
+                BaseAddress = new Uri(_baseAddress)
+            };
+
+            var url = String.Format($"api/Posts/{id}");
+            HttpResponseMessage response = http.GetAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var posts = await response.Content.ReadAsAsync<Posts>();
+                if (posts != null)
+                {
+                    return posts;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
+
         //Call when posting a post, takes in a post class item
         public async Task<Posts> PostPost(Posts post)
         {
