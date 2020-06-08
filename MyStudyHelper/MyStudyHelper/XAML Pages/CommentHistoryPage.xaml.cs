@@ -2,7 +2,6 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MyStudyHelper.Classes.Backend;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -16,7 +15,11 @@ namespace MyStudyHelper.XAML_Pages
         public CommentHistoryPage()
         {
             InitializeComponent();
-            DisplayList();
+
+            MessagingCenter.Subscribe<Object>(this, "click_third_tab", (obj) =>
+            {
+                DisplayList(); //Populates the listview with all the logged in users comments when page is initialized
+            });
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
@@ -64,7 +67,7 @@ namespace MyStudyHelper.XAML_Pages
 
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var app = scope.Resolve<CommentHistoryBackend>();
+                    var app = scope.Resolve<ICommentHistoryBackend>();
                     var postInfo = await app.GetPost(commentInfo.PostId);
                     await Navigation.PushAsync(new ViewPostPage(postInfo));
                 }

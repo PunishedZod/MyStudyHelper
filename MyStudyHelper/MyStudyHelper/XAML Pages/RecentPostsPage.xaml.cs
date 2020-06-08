@@ -15,7 +15,11 @@ namespace MyStudyHelper.XAML_Pages
         public RecentPostsPage()
         {
             InitializeComponent();
-            DisplayList(); //Populates the listview with recent posts when page is initialized
+
+            MessagingCenter.Subscribe<Object>(this, "click_first_tab", (obj) =>
+            {
+                DisplayList(); //Populates the listview with recent posts when page is initialized
+            });
         }
 
         //Navigates to the account page on button click by pushing a new instance of account page ontop of the navigation stack

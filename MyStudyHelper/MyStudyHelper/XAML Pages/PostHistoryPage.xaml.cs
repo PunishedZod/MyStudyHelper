@@ -5,7 +5,6 @@ using Xamarin.Forms.Xaml;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
-
 namespace MyStudyHelper.XAML_Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -16,7 +15,11 @@ namespace MyStudyHelper.XAML_Pages
         public PostHistoryPage()
         {
             InitializeComponent();
-            DisplayList();
+
+            MessagingCenter.Subscribe<Object>(this, "click_third_tab", (obj) =>
+            {
+                DisplayList(); //Populates the listview with all the logged in users posts when page is initialized
+            });
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)

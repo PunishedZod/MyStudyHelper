@@ -136,9 +136,11 @@ namespace MyStudyHelper.XAML_Pages
                     lstComments.ItemsSource = app.CommentsList; //Populates the listviews (frontend display) itemsource with the comments list from the backend
 
                     if (app.CommentsList.Count == 0) //If else statements which displays how much comments/replies are on the post to the user
-                        lblCommentCounter.Text = "No replies have been posted yet";
+                        lblCommentCounter.Text = "No Comments Have Been Posted Yet";
+                    else if (app.CommentsList.Count == 1)
+                        lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comment on Post";
                     else
-                        lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Reply(s) to post";
+                        lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comments on Post";
                 }
             }
             catch

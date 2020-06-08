@@ -54,8 +54,8 @@
                 </Grid.ColumnDefinitions>
 
                 <StackLayout Style="{StaticResource stckBottomContainer}" Grid.Column="1">
-                    <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White"/>
                     <StackLayout Style="{StaticResource stckPageIcon}"/>
+                    <StackLayout Style="{StaticResource stckPageIcon}" BackgroundColor="White"/>
                 </StackLayout>
 
                 <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0" Grid.Column="2">

@@ -33,7 +33,7 @@ namespace MyStudyHelper.Classes.Backend
                     }
                 }
                 else
-                    PostsMod.Add(temp[0]);
+                    return;
             }
         }
     }

@@ -15,7 +15,11 @@ namespace MyStudyHelper.XAML_Pages
         public PostsPage()
         {
             InitializeComponent();
-            DisplayList(); //Populates the listview with all posts when page is initialized
+
+            MessagingCenter.Subscribe<Object>(this, "click_second_tab", (obj) =>
+            {
+                DisplayList(); //Populates the listview with all posts when page is initialized
+            });
         }
 
         //Navigates to the create a post page on button click by pushing a new instance of create post page ontop of the navigation stack

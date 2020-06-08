@@ -17,7 +17,8 @@ namespace MyStudyHelper.Classes.Backend
             GetPostInfo();
         }
 
-        public async void GetPostInfo() //Method to get recent posts (descending order) and display them in a list
+        //Method to get all recent posts and display them in a list
+        public async void GetPostInfo() 
         {
             PostsMod = new ObservableCollection<IPosts>();
             var temp = await _postsProxy.GetRecentPosts();
@@ -37,7 +38,7 @@ namespace MyStudyHelper.Classes.Backend
                     }
                 }
                 else
-                    PostsMod.Add(temp[0]);
+                    return;
             }
         }
     }

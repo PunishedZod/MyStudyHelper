@@ -36,7 +36,7 @@ namespace MyStudyHelper.Classes.Backend
                     }
                 }
                 else
-                    CommentsMod.Add(temp[0]);
+                    return;
             }
         }
 
