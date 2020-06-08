@@ -8,8 +8,6 @@ namespace MyStudyHelper
     [DesignTimeVisible(false)]
     public partial class MainPage : TabbedPage
     {
-        public static IUser user = new User(); //A public static user which holds the users info once they've logged in, for use throughout the app
-
         public MainPage()
         {
             InitializeComponent();

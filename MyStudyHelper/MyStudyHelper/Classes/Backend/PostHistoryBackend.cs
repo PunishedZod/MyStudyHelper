@@ -21,7 +21,7 @@ namespace MyStudyHelper.Classes.Backend
         public async void GetPostInfo()
         {
             PostsMod = new ObservableCollection<IPosts>();
-            var temp = await _postsProxy.GetPostsByUser(MainPage.user.Id);
+            var temp = await _postsProxy.GetPostsByUser(App.user.Id);
 
             if (temp != null)
             {

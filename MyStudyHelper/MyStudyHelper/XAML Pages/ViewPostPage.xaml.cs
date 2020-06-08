@@ -21,12 +21,12 @@ namespace MyStudyHelper.XAML_Pages
             Post(postInfo); //Populates the post in the frontend view
             DisplayComments(); //Populates the listview with all comments related to the post when page is initialized
 
-            if (postInfo.UpVote.Contains(MainPage.user.Id)) //If the upvote array contains the logged in user's id, disable button
+            if (postInfo.UpVote.Contains(App.user.Id)) //If the upvote array contains the logged in user's id, disable button
             {
                 btnUpVote.IsEnabled = false;
                 btnDownVote.IsEnabled = false;
             }
-            if (postInfo.DownVote.Contains(MainPage.user.Id)) //If the downvote array contains the logged in user's id, disable button
+            if (postInfo.DownVote.Contains(App.user.Id)) //If the downvote array contains the logged in user's id, disable button
             {
                 btnDownVote.IsEnabled = false;
                 btnUpVote.IsEnabled = false;

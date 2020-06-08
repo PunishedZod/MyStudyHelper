@@ -26,15 +26,15 @@ namespace MyStudyHelper.XAML_Pages
         //Logs the user out of app on button click
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
-            App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage()); //Resets the navigation and sets the current page as the login page
+            StoredData();
         }
 
         //Populates the text box fields with the logged in user's info
         public void DisplayAccountDetails()
         {
-            txtUsername.Text = MainPage.user.Uname;
-            txtEmail.Text = MainPage.user.Email;
-            txtName.Text = MainPage.user.Name;
+            txtUsername.Text = App.user.Uname;
+            txtEmail.Text = App.user.Email;
+            txtName.Text = App.user.Name;
         }
 
         //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
@@ -59,7 +59,7 @@ namespace MyStudyHelper.XAML_Pages
                         txtName.Text = user.Name;
                         txtOldPassword.Text = "";
                         txtNewPassword.Text = "";
-                        MainPage.user = user; //Updates the static user with the updated user info
+                        App.user = user; //Updates the static user with the updated user info
                     }
                     else
                         await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
@@ -69,6 +69,14 @@ namespace MyStudyHelper.XAML_Pages
             {
                 await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
             }
+        }
+
+        public async void StoredData()
+        {
+            await Storage.LocalStorage.WriteTextFileAsync("username.txt", "");
+            await Storage.LocalStorage.WriteTextFileAsync("password.txt", "");
+
+            App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage()); //Resets the navigation and sets the current page as the login page
         }
     }
 }

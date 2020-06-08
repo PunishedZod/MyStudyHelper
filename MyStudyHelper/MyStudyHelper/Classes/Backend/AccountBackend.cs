@@ -24,7 +24,7 @@ namespace MyStudyHelper.Classes.Backend
                 return "Please fill in all required fields with valid information, cannot be left empty";
             else if (String.IsNullOrWhiteSpace(oldPword))
                 return "You must enter your current password to make any changes";
-            else if (oldPword != MainPage.user.Pword)
+            else if (oldPword != App.user.Pword)
                 return "Current password entered is incorrect, please try again";
             else if (oldPword == newPword)
                 return "New password cannot be the same as the old password";
@@ -37,9 +37,9 @@ namespace MyStudyHelper.Classes.Backend
         public async Task<IUser> Update(string uname, string email, string name, string pword)
         {
             if (pword == null || pword == "") //If new password is left empty fill it with the old password to ensure it does not return null or empty to the database
-                pword = MainPage.user.Pword;
+                pword = App.user.Pword;
 
-            return await _userProxy.UpdateUserInfo(new User { Id = MainPage.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
+            return await _userProxy.UpdateUserInfo(new User { Id = App.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
         }
     }
 }

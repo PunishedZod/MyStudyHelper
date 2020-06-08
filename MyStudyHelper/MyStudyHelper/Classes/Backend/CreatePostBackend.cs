@@ -31,7 +31,7 @@ namespace MyStudyHelper.Classes.Backend
         {
             string[] baseVote = new string[] { "BaseVote" };
 
-            return await _postsProxy.PostPost(new Posts { Topic = topic, Title = title, Content = message, UpVote = baseVote, DownVote = baseVote, UserId = MainPage.user.Id, Uname = MainPage.user.Uname });
+            return await _postsProxy.PostPost(new Posts { Topic = topic, Title = title, Content = message, UpVote = baseVote, DownVote = baseVote, UserId = App.user.Id, Uname = App.user.Uname });
         }
     }
 }

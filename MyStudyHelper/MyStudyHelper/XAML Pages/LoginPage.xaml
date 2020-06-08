@@ -17,14 +17,16 @@
             <Entry x:Name="txtPassword" Style="{StaticResource txtStyle1}" Placeholder="Password" Margin="0,-5,0,0" IsPassword="True"/>
 
             <StackLayout x:Name="StckLoginBtn" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0,15,0,0">
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="lblSwitchTitle" Text="Remember Me" TextColor="White"/>
+                    <Switch x:Name="swtchRememberLogin"/>
+                </StackLayout>
                 <Button x:Name="btnSignin" Style="{StaticResource btnMainStyle}" Text="Sign In" BackgroundColor="LimeGreen" Clicked="btnSignin_Clicked"/>
                 <Button x:Name="btnSignup" Style="{StaticResource btnMainStyle}" Text="Register" BackgroundColor="Red" Margin="0,5,0,0" Clicked="btnSignup_Clicked"/>
             </StackLayout>
 
-            <ActivityIndicator x:Name="actIndicator"/>
-
+            <ActivityIndicator x:Name="actIndicator" Margin="0,30,0,0"/>
         </StackLayout>
         
     </ContentPage.Content>
-    
 </ContentPage>

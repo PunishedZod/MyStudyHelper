@@ -24,7 +24,7 @@ namespace MyStudyHelper.Classes.Backend
         public async void GetCommentInfo()
         {
             CommentsMod = new ObservableCollection<IComments>();
-            var temp = await _commentsProxy.GetCommentsByUser(MainPage.user.Id);
+            var temp = await _commentsProxy.GetCommentsByUser(App.user.Id);
 
             if (temp != null)
             {

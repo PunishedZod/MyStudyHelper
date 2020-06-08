@@ -32,6 +32,7 @@ namespace MyStudyHelper.XAML_Pages
         //Calls the method which begins validating and getting user information for login on button click
         private void btnSignin_Clicked(object sender, EventArgs e)
         {
+            actIndicator.IsRunning = true;
             BeginLogin();
         }
 
@@ -60,8 +61,15 @@ namespace MyStudyHelper.XAML_Pages
 
                         if (user != null)
                         {
-                            MainPage.user = user; //Stores user into a static user for use throughout the app
+                            if (swtchRememberLogin.IsToggled == true) //Stores uname and password in localstorage for "Remember Me" function
+                            {
+                                await Storage.LocalStorage.WriteTextFileAsync("username.txt", user.Uname);
+                                await Storage.LocalStorage.WriteTextFileAsync("password.txt", user.Pword);
+                            }
+
+                            App.user = user; //Stores user into a static user for use throughout the app
                             btnSignin.IsEnabled = false;
+
                             var previousPage = Navigation.NavigationStack.LastOrDefault();
                             await Navigation.PushAsync(new MainPage()); //Pushes a new instance of main page ontop of the navigation stack after logging in with valid user info
                             Navigation.RemovePage(previousPage);

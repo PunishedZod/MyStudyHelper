@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyStudyHelper.Classes.Backend;
 using MyStudyHelper.Classes.API.Models;
+using MyStudyHelper.Classes.Backend.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -45,7 +46,7 @@ namespace MyStudyHelper.XAML_Pages
 
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    var app = scope.Resolve<CommentHistoryBackend>();
+                    var app = scope.Resolve<ICommentHistoryBackend>();
                     lstCommentHistory.ItemsSource = app.CommentsMod;
                 }
             }
