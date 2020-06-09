@@ -23,8 +23,7 @@ namespace MyStudyHelper.XAML_Pages
             if (Navigation.NavigationStack.Count > 1)
             {
                 Page page = Navigation.NavigationStack.First();
-                if (page != null && page != this)
-                    Navigation.RemovePage(page);
+                if (page != null && page != this) Navigation.RemovePage(page);
             }
             base.OnAppearing();
         }
@@ -32,7 +31,6 @@ namespace MyStudyHelper.XAML_Pages
         //Calls the method which begins validating and getting user information for login on button click
         private void btnSignin_Clicked(object sender, EventArgs e)
         {
-            actIndicator.IsRunning = true;
             BeginLogin();
         }
 
@@ -43,7 +41,7 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
-        public async void BeginLogin()
+        private async void BeginLogin()
         {
             try //try catch to catch an unexpected error which may crash the app, try catches are used throughout the app to prevent any unexpected crashes from happening
             {
@@ -68,8 +66,8 @@ namespace MyStudyHelper.XAML_Pages
                             }
 
                             App.user = user; //Stores user into a static user for use throughout the app
-                            btnSignin.IsEnabled = false;
 
+                            btnSignin.IsEnabled = false;
                             var previousPage = Navigation.NavigationStack.LastOrDefault();
                             await Navigation.PushAsync(new MainPage()); //Pushes a new instance of main page ontop of the navigation stack after logging in with valid user info
                             Navigation.RemovePage(previousPage);

@@ -15,7 +15,6 @@ namespace MyStudyHelper.XAML_Pages
         public CommentHistoryPage()
         {
             InitializeComponent();
-
             MessagingCenter.Subscribe<Object>(this, "click_third_tab", (obj) =>
             {
                 DisplayList(); //Populates the listview with all the logged in users comments when page is initialized
@@ -41,12 +40,11 @@ namespace MyStudyHelper.XAML_Pages
             lstCommentHistory.IsRefreshing = false;
         }
 
-        public async void DisplayList()
+        private async void DisplayList()
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
@@ -59,12 +57,11 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        public async void GetPost(Comments commentInfo)
+        private async void GetPost(Comments commentInfo)
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();

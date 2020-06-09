@@ -26,11 +26,11 @@ namespace MyStudyHelper.XAML_Pages
         //Logs the user out of app on button click
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
-            StoredData();
+            BeginLogout();
         }
 
         //Populates the text box fields with the logged in user's info
-        public void DisplayAccountDetails()
+        private void DisplayAccountDetails()
         {
             txtUsername.Text = App.user.Uname;
             txtEmail.Text = App.user.Email;
@@ -38,12 +38,11 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
-        public async void BeginUpdate()
+        private async void BeginUpdate()
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IAccountBackend>();
@@ -59,6 +58,7 @@ namespace MyStudyHelper.XAML_Pages
                         txtName.Text = user.Name;
                         txtOldPassword.Text = "";
                         txtNewPassword.Text = "";
+
                         App.user = user; //Updates the static user with the updated user info
                     }
                     else
@@ -71,9 +71,9 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        public async void StoredData()
+        private async void BeginLogout()
         {
-            await Storage.LocalStorage.WriteTextFileAsync("username.txt", "");
+            await Storage.LocalStorage.WriteTextFileAsync("username.txt", ""); //Clears the data stored in local storage
             await Storage.LocalStorage.WriteTextFileAsync("password.txt", "");
 
             App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage()); //Resets the navigation and sets the current page as the login page

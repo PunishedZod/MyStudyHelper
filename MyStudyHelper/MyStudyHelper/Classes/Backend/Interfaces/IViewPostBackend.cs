@@ -10,8 +10,8 @@ namespace MyStudyHelper.Classes.Backend.Interfaces
         ObservableCollection<IComments> CommentsList { get; set; }
 
         void GetCommentsInfo(string id);
-        Task<IComments> SendComment(string comment, string postId);
-        Task<IPosts> UpdateDownVote(Posts post);
-        Task<IPosts> UpdateUpVote(Posts post);
+        Task<IComments> PostComment(string comment, string postId);
+        Task<IPosts> PostDownVote(Posts post);
+        Task<IPosts> PostUpVote(Posts post);
     }
 }

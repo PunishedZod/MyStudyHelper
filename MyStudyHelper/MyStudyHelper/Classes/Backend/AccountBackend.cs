@@ -10,6 +10,7 @@ namespace MyStudyHelper.Classes.Backend
     public class AccountBackend : IAccountBackend
     {
         private readonly IUserProxy _userProxy;
+        private readonly int MinLength = 10;
 
         public AccountBackend(IUserProxy userProxy)
         {
@@ -18,8 +19,6 @@ namespace MyStudyHelper.Classes.Backend
 
         public string CheckInfo(string uname, string email, string name, string oldPword, string newPword)
         {
-            var MinLength = 10;
-
             if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(oldPword))
                 return "Please fill in all required fields with valid information, cannot be left empty";
             else if (String.IsNullOrWhiteSpace(oldPword))
@@ -36,8 +35,7 @@ namespace MyStudyHelper.Classes.Backend
 
         public async Task<IUser> Update(string uname, string email, string name, string pword)
         {
-            if (pword == null || pword == "") //If new password is left empty fill it with the old password to ensure it does not return null or empty to the database
-                pword = App.user.Pword;
+            if (pword == null || pword == "") pword = App.user.Pword; //If new password is left empty fill it with the old password to ensure it does not return null or empty to the database
 
             return await _userProxy.UpdateUserInfo(new User { Id = App.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
         }

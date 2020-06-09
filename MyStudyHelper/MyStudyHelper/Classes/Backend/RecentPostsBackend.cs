@@ -20,7 +20,6 @@ namespace MyStudyHelper.Classes.Backend
         //Method to get all recent posts and display them in a list
         public async void GetPostInfo() 
         {
-            PostsMod = new ObservableCollection<IPosts>();
             var temp = await _postsProxy.GetRecentPosts();
 
             if (temp != null)
@@ -30,15 +29,10 @@ namespace MyStudyHelper.Classes.Backend
                     foreach (var item in temp)
                     {
                         PostsMod.Add(item);
-
-                        if (PostsMod.Count >= 10) //Limits the amount of posts being added to 10
-                        {
-                            break;
-                        }
+                        if (PostsMod.Count >= 10) break; //Limits the amount of posts being added to 10
                     }
                 }
-                else
-                    return;
+                else return;
             }
         }
     }

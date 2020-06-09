@@ -15,7 +15,6 @@ namespace MyStudyHelper.XAML_Pages
         public PostsPage()
         {
             InitializeComponent();
-
             MessagingCenter.Subscribe<Object>(this, "click_second_tab", (obj) =>
             {
                 DisplayList(); //Populates the listview with all posts when page is initialized
@@ -51,7 +50,7 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Lifetime scope (dependency injection) is created to get all posts via backend class methods
-        public async void DisplayList()
+        private async void DisplayList()
         {
             try
             {

@@ -22,7 +22,7 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //Takes in a Post, adds the users id to the upvoteid, returns post id and post to post proxy
-        public async Task<IPosts> UpdateUpVote(Posts post)
+        public async Task<IPosts> PostUpVote(Posts post)
         {
             var info = post.UpVote.ToList();
             info.Add(App.user.Id);
@@ -32,7 +32,7 @@ namespace MyStudyHelper.Classes.Backend
         }
 
         //Takes in a post, adds the users id to the downvoteid, returns post id and post to post proxy
-        public async Task<IPosts> UpdateDownVote(Posts post)
+        public async Task<IPosts> PostDownVote(Posts post)
         {
             var info = post.DownVote.ToList();
             info.Add(App.user.Id);
@@ -55,13 +55,12 @@ namespace MyStudyHelper.Classes.Backend
                         CommentsList.Add(item);
                     }
                 }
-                else
-                    return;
+                else return;
             }
         }
 
         //Takes in the users comment and the postid, returns the comment info including the users username and id to comment proxy
-        public async Task<IComments> SendComment(string comment, string postId)
+        public async Task<IComments> PostComment(string comment, string postId)
         {
             return await _commentsProxy.PostComments(new Comments { Uname = App.user.Uname, Comment = comment, PostId = postId, UserId = App.user.Id });
         }

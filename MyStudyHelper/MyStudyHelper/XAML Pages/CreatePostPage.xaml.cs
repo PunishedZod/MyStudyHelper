@@ -27,7 +27,7 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Creates post and sends it to the database, then returns it back and sends it to the view post page
-        public async void BeginCreatePost() 
+        private async void BeginCreatePost() 
         {
             try
             {
@@ -59,7 +59,7 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //List of topics to use as itemsource for the topic picker
-        public void TopicList()
+        private void TopicList()
         {
             var topicList = new List<string>();
             {

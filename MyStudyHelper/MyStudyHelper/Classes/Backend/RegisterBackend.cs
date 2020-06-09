@@ -9,6 +9,7 @@ namespace MyStudyHelper.Classes.Backend
     public class RegisterBackend : IRegisterBackend
     {
         private readonly IUserProxy _userProxy;
+        private readonly int MinLength = 10;
         
         public RegisterBackend(IUserProxy userProxy)
         {
@@ -17,8 +18,6 @@ namespace MyStudyHelper.Classes.Backend
 
         public string CheckInfo(string uname, string email, string name, string pword1, string pword2)
         {
-            var MinLength = 10;
-
             if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(pword1) || String.IsNullOrWhiteSpace(pword2))
                 return "Please fill in all required fields with valid information, cannot be left empty";
             else if (pword1.Length < MinLength)

@@ -15,7 +15,6 @@ namespace MyStudyHelper.XAML_Pages
         public HomePage()
         {
             InitializeComponent();
-
             MessagingCenter.Subscribe<Object>(this, "click_first_tab", (obj) =>
             {
                 DisplayList(); //Populates the listview with popular posts when page is initialized
@@ -45,12 +44,11 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Lifetime scope (dependency injection) is created to get popular posts via backend class methods
-        public async void DisplayList()
+        private async void DisplayList()
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IHomeBackend>();

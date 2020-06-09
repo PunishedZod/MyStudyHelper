@@ -15,7 +15,6 @@ namespace MyStudyHelper.XAML_Pages
         public PostHistoryPage()
         {
             InitializeComponent();
-
             MessagingCenter.Subscribe<Object>(this, "click_third_tab", (obj) =>
             {
                 DisplayList(); //Populates the listview with all the logged in users posts when page is initialized
@@ -41,12 +40,11 @@ namespace MyStudyHelper.XAML_Pages
             lstPostHistory.IsRefreshing = false;
         }
 
-        public async void DisplayList()
+        private async void DisplayList()
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IPostHistoryBackend>();

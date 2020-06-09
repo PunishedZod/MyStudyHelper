@@ -24,12 +24,11 @@ namespace MyStudyHelper.XAML_Pages
         }
 
         //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
-        public async void BeginRegistration()
+        private async void BeginRegistration()
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IRegisterBackend>();
