@@ -32,5 +32,10 @@ namespace MyStudyHelper
                 MessagingCenter.Send<Object>(this, "click_third_tab");
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }

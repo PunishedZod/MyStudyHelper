@@ -2,6 +2,7 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -19,6 +20,12 @@ namespace MyStudyHelper.XAML_Pages
             {
                 DisplayList(); //Populates the listview with all the logged in users comments when page is initialized
             });
+        }
+
+        protected override void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<Object>(this, "click_third_tab");
+            base.OnDisappearing();
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
@@ -48,7 +55,19 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
-                    lstCommentHistory.ItemsSource = app.CommentsMod;
+
+                    if (lstCommentHistory.ItemsSource != null)
+                    {
+                        var temp = lstCommentHistory.ItemsSource as IList;
+
+                        if (temp.Count != app.CommentsMod.Count)
+                        {
+                            lstCommentHistory.ItemsSource = app.CommentsMod;
+                        }
+                        else return;
+                    }
+                    else
+                        lstCommentHistory.ItemsSource = app.CommentsMod;
                 }
             }
             catch

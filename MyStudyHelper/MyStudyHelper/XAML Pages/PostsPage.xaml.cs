@@ -2,6 +2,7 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -19,6 +20,12 @@ namespace MyStudyHelper.XAML_Pages
             {
                 DisplayList(); //Populates the listview with all posts when page is initialized
             });
+        }
+
+        protected override void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<Object>(this, "click_second_tab");
+            base.OnDisappearing();
         }
 
         //Navigates to the create a post page on button click by pushing a new instance of create post page ontop of the navigation stack
@@ -58,7 +65,19 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IPostsBackend>();
-                    lstAllPosts.ItemsSource = app.PostsMod;
+
+                    if (lstAllPosts.ItemsSource != null)
+                    {
+                        var temp = lstAllPosts.ItemsSource as IList;
+
+                        if (temp.Count != app.PostsMod.Count)
+                        {
+                            lstAllPosts.ItemsSource = app.PostsMod;
+                        }
+                        else return;
+                    }
+                    else
+                        lstAllPosts.ItemsSource = app.PostsMod;
                 }
             }
             catch

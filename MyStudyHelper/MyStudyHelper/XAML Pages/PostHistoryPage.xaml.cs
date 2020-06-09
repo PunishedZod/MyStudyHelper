@@ -2,6 +2,7 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -19,6 +20,12 @@ namespace MyStudyHelper.XAML_Pages
             {
                 DisplayList(); //Populates the listview with all the logged in users posts when page is initialized
             });
+        }
+
+        protected override void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<Object>(this, "click_third_tab");
+            base.OnDisappearing();
         }
 
         private async void btnAccount_Clicked(object sender, EventArgs e)
@@ -48,7 +55,19 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IPostHistoryBackend>();
-                    lstPostHistory.ItemsSource = app.PostsMod;
+
+                    if (lstPostHistory.ItemsSource != null)
+                    {
+                        var temp = lstPostHistory.ItemsSource as IList;
+
+                        if (temp.Count != app.PostsMod.Count)
+                        {
+                            lstPostHistory.ItemsSource = app.PostsMod;
+                        }
+                        else return;
+                    }
+                    else
+                        lstPostHistory.ItemsSource = app.PostsMod;
                 }
             }
             catch

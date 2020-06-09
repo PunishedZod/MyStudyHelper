@@ -2,6 +2,7 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -19,6 +20,12 @@ namespace MyStudyHelper.XAML_Pages
             {
                 DisplayList(); //Populates the listview with popular posts when page is initialized
             });
+        }
+
+        protected override void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<Object>(this, "click_first_tab");
+            base.OnDisappearing();
         }
 
         //Navigates to the account page on button click by pushing a new instance of account page ontop of the navigation stack
@@ -52,7 +59,19 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IHomeBackend>();
-                    lstPopularPosts.ItemsSource = app.PostsMod;
+
+                    if (lstPopularPosts.ItemsSource != null)
+                    {
+                        var temp = lstPopularPosts.ItemsSource as IList;
+
+                        if (temp.Count != app.PostsMod.Count)
+                        {
+                            lstPopularPosts.ItemsSource = app.PostsMod;
+                        }
+                        else return;
+                    }
+                    else
+                        lstPopularPosts.ItemsSource = app.PostsMod;
                 }
             }
             catch

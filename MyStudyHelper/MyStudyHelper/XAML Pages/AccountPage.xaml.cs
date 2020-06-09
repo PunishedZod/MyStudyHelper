@@ -51,13 +51,14 @@ namespace MyStudyHelper.XAML_Pages
                     if (validation == null)
                     {
                         var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //Parameters take in the valid user info and updates it in the db
-                        await DisplayAlert("User Updated", "Account successfully updated", "Ok");
+                        await DisplayAlert("User Updated", "Account successfully updated, please log back in again", "Ok");
+                        BeginLogout();
 
-                        txtUsername.Text = user.Uname; //Repopulates the text box fields with the updated user info
-                        txtEmail.Text = user.Email;
-                        txtName.Text = user.Name;
-                        txtOldPassword.Text = "";
-                        txtNewPassword.Text = "";
+                        //txtUsername.Text = user.Uname; //Repopulates the text box fields with the updated user info
+                        //txtEmail.Text = user.Email;
+                        //txtName.Text = user.Name;
+                        //txtOldPassword.Text = "";
+                        //txtNewPassword.Text = "";
 
                         App.user = user; //Updates the static user with the updated user info
                     }
