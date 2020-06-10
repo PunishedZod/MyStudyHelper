@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="MyStudyHelper.XAML_Pages.RecentPostsPage" BackgroundColor="{StaticResource bckgroundColor}" Title="RecentPosts">
+             x:Class="MyStudyHelper.XAML_Pages.RecentPostsPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Recent Posts">
     
     <!--Recent Posts XAML page frontend-->
     <ContentPage.Content>
