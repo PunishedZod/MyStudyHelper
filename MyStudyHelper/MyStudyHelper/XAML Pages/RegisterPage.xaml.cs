@@ -17,13 +17,13 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
-        //Calls the method which begins validating and registering the user to the db
+        //When button is clicked, call the BeginRegistration method
         private void btnSignup_Clicked(object sender, EventArgs e)
         {
             BeginRegistration();
         }
 
-        //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
+        //Begins the registration process, uses dependency injection via lifetimescope to access methods from the backend
         private async void BeginRegistration()
         {
             try
@@ -32,20 +32,21 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IRegisterBackend>();
-                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text); //Parameters take in user info and validates it in the backend, if info is valid return null
+                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text); //Info sent to backend for validation
 
                     if (validation == null)
                     {
                         btnSignup.IsEnabled = false;
-                        await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //Parameters take in the valid user info and inserts it into the db, registering them
-                        await DisplayAlert("User Registered", "Account successfully registered, please login via username and password", "Ok");
 
+                        await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //Info is sent to backend for API call to register user in the db
+                        await DisplayAlert("Registration Successful", "Account successfully registered, please login", "Ok");
+
+                        //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
                         var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new LoginPage()); //Pushes a new instance of login page ontop of the navigation stack after registering with valid user info
+                        await Navigation.PushAsync(new LoginPage()); //Navigates back to the LoginPage
                         Navigation.RemovePage(previousPage);
                     }
-                    else
-                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
             catch

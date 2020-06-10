@@ -9,7 +9,7 @@ namespace MyStudyHelper.Classes.Backend
     public class RecentPostsBackend : IRecentPostsBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly IPostsProxy _postsProxy;
 
         public RecentPostsBackend(IPostsProxy postProxy)
         {

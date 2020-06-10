@@ -10,7 +10,7 @@ namespace MyStudyHelper.Classes.Backend
     public class PostHistoryBackend : IPostHistoryBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly IPostsProxy _postsProxy;
 
         public PostHistoryBackend(IPostsProxy postsProxy)
         {
@@ -20,7 +20,6 @@ namespace MyStudyHelper.Classes.Backend
 
         public async void GetPostInfo()
         {
-            PostsMod = new ObservableCollection<IPosts>();
             var temp = await _postsProxy.GetPostsByUser(App.user.Id);
 
             if (temp != null)

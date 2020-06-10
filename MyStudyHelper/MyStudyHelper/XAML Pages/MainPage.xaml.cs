@@ -10,16 +10,16 @@ namespace MyStudyHelper
         public MainPage()
         {
             InitializeComponent();
-            Xamarin.Forms.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false); //Disables swiping in the app for tabbed page
+            Xamarin.Forms.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false); //Disables swiping in the app for TabbedPage
         }
 
-        //This will load listview data upon a tabbed page being clicked, it's useful for refreshing the listview data when new posts are added
+        //On current page changed, do the following code below (Used for refreshing the various ListViews within the app)
         protected override void OnCurrentPageChanged()
         {
-            base.OnCurrentPageChanged();
-            var index = Children.IndexOf(CurrentPage); //Gets the index of the current page selected
+            var index = Children.IndexOf(CurrentPage); //Gets the index of the CurrentPage
 
-            if (index == 0) //If else statements to determine what data to load depending on what index is selected
+            //If Else statements which determine what data to load depending on the index of the page selected
+            if (index == 0)
             {
                 MessagingCenter.Send<Object>(this, "click_first_tab");
             }
@@ -27,15 +27,20 @@ namespace MyStudyHelper
             {
                 MessagingCenter.Send<Object>(this, "click_second_tab");
             }
-            else if (index == 2)
+            else if (index == 2) 
             {
                 MessagingCenter.Send<Object>(this, "click_third_tab");
             }
+            base.OnCurrentPageChanged();
         }
 
-        protected override bool OnBackButtonPressed()
-        {
-            return true;
-        }
+        //protected override void OnDisappearing()
+        //{
+        //    MessagingCenter.Unsubscribe<Object>(this, "click_first_tab");
+        //    base.OnDisappearing();
+        //}
+
+        //Disables physical backbutton on device when on the MainPage
+        protected override bool OnBackButtonPressed() { return true; }
     }
 }

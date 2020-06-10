@@ -11,7 +11,7 @@ namespace MyStudyHelper.Classes.Backend
     public class CommentHistoryBackend : ICommentHistoryBackend
     {
         public ObservableCollection<IComments> CommentsMod { get; set; } = new ObservableCollection<IComments>();
-        private readonly ICommentsProxy _commentsProxy = new CommentsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly ICommentsProxy _commentsProxy;
         private readonly IPostsProxy _postsProxy;
 
         public CommentHistoryBackend(ICommentsProxy commentsProxy, IPostsProxy postsProxy)

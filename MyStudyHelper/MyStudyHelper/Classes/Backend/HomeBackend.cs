@@ -10,7 +10,7 @@ namespace MyStudyHelper.Classes.Backend
     public class HomeBackend : IHomeBackend
     {
         public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly IPostsProxy _postsProxy;
 
         public HomeBackend(IPostsProxy postsProxy)
         {

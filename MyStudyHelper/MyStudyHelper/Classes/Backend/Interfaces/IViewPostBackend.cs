@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using MyStudyHelper.Classes.API.Models;
+﻿using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.API.Models.Interfaces;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace MyStudyHelper.Classes.Backend.Interfaces
 {
@@ -9,9 +9,9 @@ namespace MyStudyHelper.Classes.Backend.Interfaces
     {
         ObservableCollection<IComments> CommentsList { get; set; }
 
+        Task<IPosts> DownVote(Posts post);
         void GetCommentsInfo(string id);
         Task<IComments> PostComment(string comment, string postId);
-        Task<IPosts> PostDownVote(Posts post);
-        Task<IPosts> PostUpVote(Posts post);
+        Task<IPosts> UpVote(Posts post);
     }
 }

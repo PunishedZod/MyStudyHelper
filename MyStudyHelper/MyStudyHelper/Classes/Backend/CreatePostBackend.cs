@@ -10,7 +10,7 @@ namespace MyStudyHelper.Classes.Backend
 {
     public class CreatePostBackend : ICreatePostBackend
     {
-        private readonly IPostsProxy _postsProxy = new PostsProxy("https://studyhelper.api.labnet.nz/");
+        private readonly IPostsProxy _postsProxy;
 
         public CreatePostBackend(IPostsProxy postsProxy)
         {

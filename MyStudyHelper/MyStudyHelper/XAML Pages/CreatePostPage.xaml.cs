@@ -17,39 +17,38 @@ namespace MyStudyHelper.XAML_Pages
         public CreatePostPage()
         {
             InitializeComponent();
-            TopicList(); //Populates the listview with topics when page is initialized
+            DisplayList();
         }
 
-        //Calls the method below on button click, begins the process of creating a post
+        //When button is clicked, call the BeginPost method
         private void btnPost_Clicked(object sender, EventArgs e)
         {
-            BeginCreatePost();
+            BeginPost();
         }
 
-        //Creates post and sends it to the database, then returns it back and sends it to the view post page
-        private async void BeginCreatePost() 
+        //Begins the post creation process, post is created via backend methods
+        private async void BeginPost() 
         {
             try
             {
                 container = DependancyInjection.Configure();
-
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICreatePostBackend>();
-                    var validation = app.CheckInfo(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
+                    var validation = app.CheckInfo(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for validation
 
                     if (validation == null)
                     {
                         btnPost.IsEnabled = false;
-                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text);
-                        var post = (Posts)createdPost;
+
+                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for API call to post in db, returns post
+                        var post = (Posts)createdPost; //Converts post from IPost (interface of a model) to a Post (Post model)
 
                         var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new ViewPostPage(post));
+                        await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
                         Navigation.RemovePage(previousPage);
                     }
-                    else
-                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
             catch
@@ -58,12 +57,12 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        //List of topics to use as itemsource for the topic picker
-        private void TopicList()
+        //Displays a list of topics, sets the itemsource of Picker to the list of topics
+        private void DisplayList()
         {
             var topicList = new List<string>();
             {
-                topicList.Add("Choose Topic *"); //Selects this as default topic
+                topicList.Add("Choose Topic *");
                 topicList.Add("Agriculture");
                 topicList.Add("Animal Care");
                 topicList.Add("Architecture");
@@ -115,7 +114,7 @@ namespace MyStudyHelper.XAML_Pages
             }
             
             txtTopic.ItemsSource = topicList;
-            txtTopic.SelectedItem = topicList.FirstOrDefault();
+            txtTopic.SelectedItem = topicList.FirstOrDefault(); //Selects the first element in the list, displays it as default
         }
     }
 }

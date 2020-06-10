@@ -17,78 +17,61 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
-        //Helps with navigation, removes the previous page from the navigation stack
-        protected override void OnAppearing()
-        {
-            if (Navigation.NavigationStack.Count > 1)
-            {
-                Page page = Navigation.NavigationStack.First();
-                if (page != null && page != this) Navigation.RemovePage(page);
-            }
-            base.OnAppearing();
-        }
-
-        //Calls the method which begins validating and getting user information for login on button click
+        //When button is clicked, call the BeginLogin method
         private void btnSignin_Clicked(object sender, EventArgs e)
         {
             BeginLogin();
         }
 
-        //Navigates to the register page on button click by pushing a new instance of register page ontop of the navigation stack
+        //When button is clicked, navigate to RegisterPage
         private async void btnSignup_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage());
         }
 
-        //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
+        //Begins the login process, uses dependency injection via lifetimescope to access methods from the backend
         private async void BeginLogin()
         {
-            try //try catch to catch an unexpected error which may crash the app, try catches are used throughout the app to prevent any unexpected crashes from happening
+            try //Try the following code below
             {
-                actIndicator.IsRunning = true;
                 container = DependancyInjection.Configure();
 
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ILoginBackend>();
-                    string validation = app.CheckInfo(txtUsername.Text, txtPassword.Text); //Parameters take in uname and pword and validates it in the backend, if info is valid return null
+                    string validation = app.CheckInfo(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for validation
 
                     if (validation == null)
                     {
-                        var user = await app.Login(txtUsername.Text, txtPassword.Text); //Parameters take in uname and pword and check if user exists in the db, if they do, return user, if not return null
+                        var user = await app.Login(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for API call to get the user out of the db
 
                         if (user != null)
                         {
-                            if (swtchRememberLogin.IsToggled == true) //Stores uname and password in localstorage for "Remember Me" function
+                            if (swtchRememberLogin.IsToggled == true) //If "Remember Me" button is toggled, store uname and pword for auto login
                             {
                                 await Storage.LocalStorage.WriteTextFileAsync("username.txt", user.Uname);
                                 await Storage.LocalStorage.WriteTextFileAsync("password.txt", user.Pword);
                             }
 
-                            App.user = user; //Stores user into a static user for use throughout the app
-
                             btnSignin.IsEnabled = false;
+                            actIndicator.IsRunning = true;
+
+                            App.user = user; //Stores the user info into a public static IUser to use "globally" throughout the app
+
+                            //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
                             var previousPage = Navigation.NavigationStack.LastOrDefault();
-                            await Navigation.PushAsync(new MainPage()); //Pushes a new instance of main page ontop of the navigation stack after logging in with valid user info
+                            await Navigation.PushAsync(new MainPage()); //Navigates to the MainPage
                             Navigation.RemovePage(previousPage);
+
                             actIndicator.IsRunning = false;
                         }
-                        else //If user does not exist in the db, returns null, displays error message
-                        {
-                            actIndicator.IsRunning = false;
-                            await DisplayAlert("Invalid or Empty Field(s)", "Login details are incorrect, login details are case sensitive, please try again", "Ok");
-                        }
+                        else await DisplayAlert("Login Details Incorrect", "Login details are incorrect, please try again", "Ok"); //Displays alert for incorrect login info
                     }
-                    else //If details are incorrect, display an error message
-                    {
-                        actIndicator.IsRunning = false;
-                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
-                    }
+                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch //Catches exceptions and displays an error message to prevent app from crashing
+            catch //If an exception is thrown, catch it and display an alert (Try Catches prevent the app from crashing when an exception is thrown)
             {
-                actIndicator.IsRunning = false;
                 await DisplayAlert("Error", "Something went wrong, unable to login", "Ok");
             }
         }

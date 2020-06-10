@@ -16,25 +16,30 @@ namespace MyStudyHelper.XAML_Pages
         public PostsPage()
         {
             InitializeComponent();
-            MessagingCenter.Subscribe<Object>(this, "click_second_tab", (obj) =>
-            {
-                DisplayList(); //Populates the listview with all posts when page is initialized
-            });
+            DisplayList();
         }
 
+        //On page appearing, do the following code below
+        protected override void OnAppearing()
+        {
+            MessagingCenter.Subscribe<Object>(this, "click_second_tab", (obj) => DisplayList()); //When page is clicked, call DisplayList (Allows refreshing of data)
+            base.OnAppearing();
+        }
+
+        //On page dissapearing, do the following code below
         protected override void OnDisappearing()
         {
             MessagingCenter.Unsubscribe<Object>(this, "click_second_tab");
             base.OnDisappearing();
         }
 
-        //Navigates to the create a post page on button click by pushing a new instance of create post page ontop of the navigation stack
+        //When button is clicked, navigate to CreatePostPage
         private async void btnCreatePost_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CreatePostPage());
         }
 
-        //Navigates to the account page on button click by pushing a new instance of account page ontop of the navigation stack
+        //When button is clicked, navigate to AccountPage
         private async void btnAccount_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AccountPage());
@@ -43,20 +48,23 @@ namespace MyStudyHelper.XAML_Pages
         //When selecting an item within the listview it will put the data selected into a model than navigate to the viewpost page with the data for viewing
         private async void lstAllPosts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            //These three lines of code are for unselecting an item after no longer needing it
             if (e.SelectedItem == null) return;
             var itemSelected = (Posts)e.SelectedItem;
             ((ListView)sender).SelectedItem = null;
-            await Navigation.PushAsync(new ViewPostPage(itemSelected));
+
+            await Navigation.PushAsync(new ViewPostPage(itemSelected)); //ViewPostPage is pushed onto the stack, takes in the post info
         }
 
-        //Repopulates the listview after pulling to refresh, then stops the refresher
+        //When ListView is refreshing, call the DisplayList method
         private void lstAllPosts_Refreshing(object sender, EventArgs e)
         {
             DisplayList();
             lstAllPosts.IsRefreshing = false;
         }
 
-        //Lifetime scope (dependency injection) is created to get all posts via backend class methods
+        //Gets recent posts via backend methods and displays them in a ListView
+        //it is setup in a way so that if there is no changes, it won't bother with an API call
         private async void DisplayList()
         {
             try
@@ -68,16 +76,15 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (lstAllPosts.ItemsSource != null)
                     {
-                        var temp = lstAllPosts.ItemsSource as IList;
+                        var temp = lstAllPosts.ItemsSource as IList; //Converts ListView into a list
 
-                        if (temp.Count != app.PostsMod.Count)
+                        if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
                         {
-                            lstAllPosts.ItemsSource = app.PostsMod;
+                            lstAllPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
                         }
                         else return;
                     }
-                    else
-                        lstAllPosts.ItemsSource = app.PostsMod;
+                    else lstAllPosts.ItemsSource = app.PostsMod;
                 }
             }
             catch

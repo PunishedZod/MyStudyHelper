@@ -16,41 +16,49 @@ namespace MyStudyHelper.XAML_Pages
         public HomePage()
         {
             InitializeComponent();
-            MessagingCenter.Subscribe<Object>(this, "click_first_tab", (obj) =>
-            {
-                DisplayList(); //Populates the listview with popular posts when page is initialized
-            });
+            DisplayList();
         }
 
+        //On page appearing, do the following code below
+        protected override void OnAppearing()
+        {
+            MessagingCenter.Subscribe<Object>(this, "click_first_tab", (obj) => DisplayList()); //When page is clicked, call DisplayList (Allows refreshing of data)
+            base.OnAppearing();
+        }
+
+        //On page dissapearing, do the following code below
         protected override void OnDisappearing()
         {
             MessagingCenter.Unsubscribe<Object>(this, "click_first_tab");
             base.OnDisappearing();
         }
 
-        //Navigates to the account page on button click by pushing a new instance of account page ontop of the navigation stack
+        //When button is clicked, navigate to AccountPage
         private async void btnAccount_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AccountPage());
         }
 
-        //When selecting an item within the listview it will put the data selected into a model than navigate to the viewpost page with the data for viewing
+        //When item in ListView is selected, navigate to ViewPostPage
         private async void lstPopularPosts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            //These three lines of code are for unselecting an item after no longer needing it
             if (e.SelectedItem == null) return;
             var itemSelected = (Posts)e.SelectedItem;
             ((ListView)sender).SelectedItem = null;
-            await Navigation.PushAsync(new ViewPostPage(itemSelected));
+
+            await Navigation.PushAsync(new ViewPostPage(itemSelected)); //ViewPostPage is pushed onto the stack, takes in the post info
         }
 
-        //Repopulates the listview after pulling to refresh, then stops the refresher
+        //When ListView is refreshing, call the DisplayList method
         private void lstPopularPosts_Refreshing(object sender, EventArgs e)
         {
             DisplayList();
             lstPopularPosts.IsRefreshing = false;
         }
 
-        //Lifetime scope (dependency injection) is created to get popular posts via backend class methods
+        //Gets popular posts via backend methods and displays them in a ListView
+        //it is setup in a way so that if there is no changes, it won't bother with an API call
         private async void DisplayList()
         {
             try
@@ -62,16 +70,15 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (lstPopularPosts.ItemsSource != null)
                     {
-                        var temp = lstPopularPosts.ItemsSource as IList;
+                        var temp = lstPopularPosts.ItemsSource as IList; //Converts ListView into a list
 
-                        if (temp.Count != app.PostsMod.Count)
+                        if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
                         {
-                            lstPopularPosts.ItemsSource = app.PostsMod;
+                            lstPopularPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
                         }
                         else return;
                     }
-                    else
-                        lstPopularPosts.ItemsSource = app.PostsMod;
+                    else lstPopularPosts.ItemsSource = app.PostsMod;
                 }
             }
             catch

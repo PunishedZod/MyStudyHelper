@@ -12,39 +12,39 @@ namespace MyStudyHelper.XAML_Pages
     public partial class ViewPostPage : ContentPage
     {
         private IContainer container;
-        private readonly Posts post; //A post used to store the post info for things like API calls, (used for things like upvotes and downvotes, etc)
+        private readonly Posts post; //Post for storing info received through constructor (Used for upvotes, downvotes, etc)
 
         public ViewPostPage(Posts post) //Takes in a post in the parameters of the constructor to use upon page start up
         {
+            this.post = post; //Stores the post info in a Post
             InitializeComponent();
-            this.post = post; //Stores the post info in a post model
-            DisplayPost(); //Populates the post in the frontend view
-            DisplayComments(); //Populates the listview with all comments related to the post when page is initialized
             DisableButtons();
+            DisplayPost();
+            DisplayList();
         }
 
-        //Calls the method which begins the upvoting process on button click
+        //When button is clicked, call the BeginUpVote method
         private void btnUpVote_Clicked(object sender, EventArgs e)
         {
             BeginUpVote();
         }
 
-        //Calls the method which begins the downvoting process on button click
+        //When button is clicked, call the BeginDownVote method
         private void btnDownVote_Clicked(object sender, EventArgs e)
         {
             BeginDownVote();
         }
 
-        //Calls the method which begins the process of sending a comment to the db on button click
+        //When button is clicked, call the BeginComment method
         private void btnSend_Clicked(object sender, EventArgs e)
         {
             BeginComment();
         }
 
-        //Repopulates the listview after pulling to refresh, then stops the refresher
+        //When ListView is refreshing, call the DisplayList method
         private void lstComments_Refreshing(object sender, EventArgs e)
         {
-            DisplayComments();
+            DisplayList();
             lstComments.IsRefreshing = false;
         }
 
@@ -59,8 +59,8 @@ namespace MyStudyHelper.XAML_Pages
             btnDownVote.Text = "-" + post.DownVote.Count().ToString();
         }
 
-        //Method to get all the comments for the post, retrieves them via post id
-        private async void DisplayComments()
+        //Gets comments for this specific post via backend methods and displays them in a ListView
+        private async void DisplayList()
         {
             try
             {
@@ -68,10 +68,11 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
-                    app.GetCommentsInfo(post.Id); //Gets the comments for the post by taking in the post id and making an API call to the db
-                    lstComments.ItemsSource = app.CommentsList; //Populates the listviews (frontend display) itemsource with the comments list from the backend
+                    app.GetCommentsInfo(post.Id); //Gets the comments for the post by taking in the post id and making API call to the db
+                    lstComments.ItemsSource = app.CommentsList; //Populates ListView itemsource with backend collection
 
-                    if (app.CommentsList.Count == 0) lblCommentCounter.Text = "No Comments Have Been Posted Yet"; //If else statements which displays how much comments/replies are on the post to the user
+                    //If Else statements which display the amount of comments on the post
+                    if (app.CommentsList.Count == 0) lblCommentCounter.Text = "No Comments Have Been Posted Yet";
                     else if (app.CommentsList.Count == 1) lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comment on Post";
                     else lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comments on Post";
                 }
@@ -82,21 +83,23 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
+        //Disables the UpVote and DownVote buttons if user has already upvoted or downvoted the post
         private void DisableButtons()
         {
-            if (post.UpVote.Contains(App.user.Id)) //If the upvote array contains the logged in user's id, disable button
+            //If statements which check if UpVote and/or DownVote array contain the users id, if one of the does, disable the buttons
+            if (post.UpVote.Contains(App.user.Id))
             {
                 btnUpVote.IsEnabled = false;
                 btnDownVote.IsEnabled = false;
             }
-            if (post.DownVote.Contains(App.user.Id)) //If the downvote array contains the logged in user's id, disable button
+            if (post.DownVote.Contains(App.user.Id))
             {
                 btnDownVote.IsEnabled = false;
                 btnUpVote.IsEnabled = false;
-            }
+            }  
         }
 
-        //Method which begins the updating process of the upvotes then returns the updated result
+        //Begins the process of upvoting the post via backend methods, API call is made to update the UpVote array in the db
         private async void BeginUpVote()
         {
             try
@@ -105,11 +108,13 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     btnUpVote.IsEnabled = false;
-                    var app = scope.Resolve<IViewPostBackend>();
-                    var updatedPost = await app.PostUpVote(post); //Takes in the post info for use in the backend class
 
+                    var app = scope.Resolve<IViewPostBackend>();
+                    var updatedPost = await app.UpVote(post); //Post is sent to backend, API call made to update post in db
+
+                    //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
                     var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Converts the updated post from an interface to a post then re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
                     Navigation.RemovePage(previousPage);
                 }
             }
@@ -119,7 +124,7 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        //Method which begins the updating process of the downvotes then returns the updated result
+        //Begins the process of downvoting the post via backend methods, API call is made to update the DownVote array in the db
         private async void BeginDownVote()
         {
             try
@@ -128,11 +133,13 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     btnDownVote.IsEnabled = false;
-                    var app = scope.Resolve<IViewPostBackend>();
-                    var updatedPost = await app.PostDownVote(post); //Takes in the post info for use in the backend class
 
+                    var app = scope.Resolve<IViewPostBackend>();
+                    var updatedPost = await app.DownVote(post); //Post is sent to the backend, API call made to update post in db, returns updatedPost
+
+                    //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
                     var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to the view post page to display the updated info (new upvote and/or downvote count)
+                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
                     Navigation.RemovePage(previousPage);
                 }
             }
@@ -142,7 +149,7 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        //Method which begins the process of sending the comment to the database through the API
+        //Begins the process of sending a comment, API call is made to post the comment to the db
         private async void BeginComment() 
         {
             try
@@ -151,17 +158,18 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
-                    if (!String.IsNullOrWhiteSpace(txtComment.Text)) //If comment box isn't empty, send comment and re-navigate to the view post page
+                    if (!String.IsNullOrWhiteSpace(txtComment.Text))
                     {
                         btnSend.IsEnabled = false;
-                        await app.PostComment(txtComment.Text, post.Id);
 
+                        await app.PostComment(txtComment.Text, post.Id); //Comment is sent to the backend (contains postId to get post when needed), API call made to post comment in db
+
+                        //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
                         var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new ViewPostPage(post));
+                        await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to ViewPostPage with the post (This will refresh the comments)
                         Navigation.RemovePage(previousPage);
                     }
-                    else
-                        return; //If comment box is empty, do nothing
+                    else return;
                 }
             }
             catch

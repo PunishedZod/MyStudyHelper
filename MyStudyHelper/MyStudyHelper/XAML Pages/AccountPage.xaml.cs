@@ -14,30 +14,31 @@ namespace MyStudyHelper.XAML_Pages
         public AccountPage()
         {
             InitializeComponent();
-            DisplayAccountDetails(); //Populates the text boxes with the logged in user's details
+            DisplayUser();
         }
 
-        //Calls the method which begins validating and updating the user in the db
+        //When button is clicked, call the BeginUpdate method
         private void btnChange_Clicked(object sender, EventArgs e)
         {
             BeginUpdate();
         }
 
-        //Logs the user out of app on button click
+        //When button is clicked, call the BeginLogout method
         private void btnLogout_Clicked(object sender, EventArgs e)
         {
             BeginLogout();
         }
 
-        //Populates the text box fields with the logged in user's info
-        private void DisplayAccountDetails()
+        //Populates the Entry fields with users info
+        private void DisplayUser()
         {
+            //Populates the Entry fields with the info stored in the public static User
             txtUsername.Text = App.user.Uname;
             txtEmail.Text = App.user.Email;
             txtName.Text = App.user.Name;
         }
 
-        //Method uses dependency injection which enables the use of methods from the backend class via lifetimescope
+        //Begins the update process, uses dependency injection via lifetimescope to access methods from the backend
         private async void BeginUpdate()
         {
             try
@@ -46,24 +47,16 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IAccountBackend>();
-                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text); //Parameters take in user info and validates it in the backend, if info is valid return null
+                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text); //New info sent to backend for validation
 
                     if (validation == null)
                     {
-                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //Parameters take in the valid user info and updates it in the db
-                        await DisplayAlert("User Updated", "Account successfully updated, please log back in again", "Ok");
+                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //New info sent to backend for API call to update user in db
+                        await DisplayAlert("Update Successful", "Successfully updated, please log back in again", "Ok");
+
                         BeginLogout();
-
-                        //txtUsername.Text = user.Uname; //Repopulates the text box fields with the updated user info
-                        //txtEmail.Text = user.Email;
-                        //txtName.Text = user.Name;
-                        //txtOldPassword.Text = "";
-                        //txtNewPassword.Text = "";
-
-                        App.user = user; //Updates the static user with the updated user info
                     }
-                    else
-                        await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
             catch
@@ -72,12 +65,14 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
+        //Begins the logout process, clears any info stored, then navigates to the LoginPage
         private async void BeginLogout()
         {
-            await Storage.LocalStorage.WriteTextFileAsync("username.txt", ""); //Clears the data stored in local storage
+            //Clears the uname and pword info stored (if any)
+            await Storage.LocalStorage.WriteTextFileAsync("username.txt", "");
             await Storage.LocalStorage.WriteTextFileAsync("password.txt", "");
 
-            App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage()); //Resets the navigation and sets the current page as the login page
+            App.Current.MainPage = new NavigationPage(new XAML_Pages.LoginPage());
         }
     }
 }

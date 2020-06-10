@@ -29,8 +29,7 @@ namespace MyStudyHelper.Classes.Backend
                 return "New password cannot be the same as the old password";
             else if (!String.IsNullOrWhiteSpace(newPword) && newPword.Length < MinLength)
                 return "New password length must be a minimum of 10 characters";
-            else
-                return null;
+            else return null;
         }
 
         public async Task<IUser> Update(string uname, string email, string name, string pword)
