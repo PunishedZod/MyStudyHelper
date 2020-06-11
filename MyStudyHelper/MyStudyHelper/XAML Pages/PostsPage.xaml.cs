@@ -16,20 +16,19 @@ namespace MyStudyHelper.XAML_Pages
         public PostsPage()
         {
             InitializeComponent();
-            DisplayList();
         }
 
         //On page appearing, do the following code below
         protected override void OnAppearing()
         {
-            MessagingCenter.Subscribe<Object>(this, "click_second_tab", (obj) => DisplayList()); //When page is clicked, call DisplayList (Allows refreshing of data)
+            DisplayList();
             base.OnAppearing();
         }
 
         //On page dissapearing, do the following code below
         protected override void OnDisappearing()
         {
-            MessagingCenter.Unsubscribe<Object>(this, "click_second_tab");
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
             base.OnDisappearing();
         }
 
@@ -70,6 +69,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IPostsBackend>();
@@ -87,10 +87,7 @@ namespace MyStudyHelper.XAML_Pages
                     else lstAllPosts.ItemsSource = app.PostsMod;
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to display all posts", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to display all posts", "Ok"); }
         }
     }
 }

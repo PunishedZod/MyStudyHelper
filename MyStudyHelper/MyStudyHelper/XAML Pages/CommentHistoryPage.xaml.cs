@@ -16,20 +16,19 @@ namespace MyStudyHelper.XAML_Pages
         public CommentHistoryPage()
         {
             InitializeComponent();
-            DisplayList();
         }
 
         //On page appearing, do the following code below
         protected override void OnAppearing()
         {
-            MessagingCenter.Subscribe<Object>(this, "click_third_tab", (obj) => DisplayList()); //When page is clicked, call DisplayList (Allows refreshing of data)
+            DisplayList();
             base.OnAppearing();
         }
 
         //On page dissapearing, do the following code below
         protected override void OnDisappearing()
         {
-            MessagingCenter.Unsubscribe<Object>(this, "click_third_tab");
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
             base.OnDisappearing();
         }
 
@@ -47,7 +46,7 @@ namespace MyStudyHelper.XAML_Pages
             var itemSelected = (Comments)e.SelectedItem;
             ((ListView)sender).SelectedItem = null;
 
-            GetPost(itemSelected);
+            GetPost(itemSelected); //Calls the GetPost method which takes in the comment, API call made to get the post via commentId
         }
 
         //When ListView is refreshing, call the DisplayList method
@@ -64,6 +63,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
@@ -81,10 +81,7 @@ namespace MyStudyHelper.XAML_Pages
                     else lstCommentHistory.ItemsSource = app.CommentsMod;
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to display comment history", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to display comment history", "Ok"); }
         }
 
         //Gets the post associated with the comment selected in the ListView via backend methods, API call is made containing the postId stored within the comment
@@ -93,6 +90,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
@@ -101,10 +99,7 @@ namespace MyStudyHelper.XAML_Pages
                     await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to retrieve post info", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to retrieve post info", "Ok"); }
         }
     }
 }

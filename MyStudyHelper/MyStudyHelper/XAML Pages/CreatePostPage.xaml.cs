@@ -17,7 +17,20 @@ namespace MyStudyHelper.XAML_Pages
         public CreatePostPage()
         {
             InitializeComponent();
+        }
+
+        //On page appearing, do the following code below
+        protected override void OnAppearing()
+        {
             DisplayList();
+            base.OnAppearing();
+        }
+
+        //On page dissapearing, do the following code below
+        protected override void OnDisappearing()
+        {
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
+            base.OnDisappearing();
         }
 
         //When button is clicked, call the BeginPost method
@@ -32,6 +45,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICreatePostBackend>();
@@ -42,7 +56,7 @@ namespace MyStudyHelper.XAML_Pages
                         btnPost.IsEnabled = false;
 
                         var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for API call to post in db, returns post
-                        var post = (Posts)createdPost; //Converts post from IPost (interface of a model) to a Post (Post model)
+                        var post = (Posts)createdPost; //Converts post from IPost (Interface of a model) to a Post (Post model)
 
                         var previousPage = Navigation.NavigationStack.LastOrDefault();
                         await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
@@ -51,10 +65,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, please try again", "Ok"); }
         }
 
         //Displays a list of topics, sets the itemsource of Picker to the list of topics

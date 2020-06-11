@@ -14,7 +14,20 @@ namespace MyStudyHelper.XAML_Pages
         public AccountPage()
         {
             InitializeComponent();
+        }
+
+        //On page appearing, do the following code below
+        protected override void OnAppearing()
+        {
             DisplayUser();
+            base.OnAppearing();
+        }
+
+        //On page dissapearing, do the following code below
+        protected override void OnDisappearing()
+        {
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
+            base.OnDisappearing();
         }
 
         //When button is clicked, call the BeginUpdate method
@@ -44,6 +57,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IAccountBackend>();
@@ -59,10 +73,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, please try again", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, please try again", "Ok"); }
         }
 
         //Begins the logout process, clears any info stored, then navigates to the LoginPage

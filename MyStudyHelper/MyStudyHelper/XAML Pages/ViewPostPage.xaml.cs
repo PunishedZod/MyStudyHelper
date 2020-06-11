@@ -16,11 +16,24 @@ namespace MyStudyHelper.XAML_Pages
 
         public ViewPostPage(Posts post) //Takes in a post in the parameters of the constructor to use upon page start up
         {
-            this.post = post; //Stores the post info in a Post
             InitializeComponent();
+            this.post = post; //Stores the post info in a Post
+        }
+
+        //On page appearing, do the following code below
+        protected override void OnAppearing()
+        {
             DisableButtons();
             DisplayPost();
             DisplayList();
+            base.OnAppearing();
+        }
+
+        //On page dissapearing, do the following code below
+        protected override void OnDisappearing()
+        {
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
+            base.OnDisappearing();
         }
 
         //When button is clicked, call the BeginUpVote method
@@ -48,6 +61,23 @@ namespace MyStudyHelper.XAML_Pages
             lstComments.IsRefreshing = false;
         }
 
+        //Disables the UpVote and DownVote buttons if user has already upvoted or downvoted the post
+        private void DisableButtons()
+        {
+            //If statements which check if UpVote and/or DownVote array contain the users id, if one of the does, disable the buttons
+            if (post.UpVote.Contains(App.user.Id))
+            {
+                btnUpVote.IsEnabled = false;
+                btnDownVote.IsEnabled = false;
+            }
+
+            if (post.DownVote.Contains(App.user.Id))
+            {
+                btnDownVote.IsEnabled = false;
+                btnUpVote.IsEnabled = false;
+            }
+        }
+
         //Method which binds the post info to frontend labels for display
         private void DisplayPost() 
         {
@@ -65,6 +95,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
@@ -77,26 +108,7 @@ namespace MyStudyHelper.XAML_Pages
                     else lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comments on Post";
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to display comments", "Ok");
-            }
-        }
-
-        //Disables the UpVote and DownVote buttons if user has already upvoted or downvoted the post
-        private void DisableButtons()
-        {
-            //If statements which check if UpVote and/or DownVote array contain the users id, if one of the does, disable the buttons
-            if (post.UpVote.Contains(App.user.Id))
-            {
-                btnUpVote.IsEnabled = false;
-                btnDownVote.IsEnabled = false;
-            }
-            if (post.DownVote.Contains(App.user.Id))
-            {
-                btnDownVote.IsEnabled = false;
-                btnUpVote.IsEnabled = false;
-            }  
+            catch { await DisplayAlert("Error", "Something went wrong, unable to display comments", "Ok"); }
         }
 
         //Begins the process of upvoting the post via backend methods, API call is made to update the UpVote array in the db
@@ -105,6 +117,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     btnUpVote.IsEnabled = false;
@@ -118,10 +131,7 @@ namespace MyStudyHelper.XAML_Pages
                     Navigation.RemovePage(previousPage);
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to upvote", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to upvote", "Ok"); }
         }
 
         //Begins the process of downvoting the post via backend methods, API call is made to update the DownVote array in the db
@@ -130,6 +140,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     btnDownVote.IsEnabled = false;
@@ -143,10 +154,7 @@ namespace MyStudyHelper.XAML_Pages
                     Navigation.RemovePage(previousPage);
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to downvote", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to downvote", "Ok"); }
         }
 
         //Begins the process of sending a comment, API call is made to post the comment to the db
@@ -155,6 +163,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
@@ -163,19 +172,15 @@ namespace MyStudyHelper.XAML_Pages
                         btnSend.IsEnabled = false;
 
                         await app.PostComment(txtComment.Text, post.Id); //Comment is sent to the backend (contains postId to get post when needed), API call made to post comment in db
+                        lstComments.BeginRefresh(); //Refreshes ListView when new comment has been sent and added
 
-                        //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
-                        var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new ViewPostPage(post)); //Re-navigates to ViewPostPage with the post (This will refresh the comments)
-                        Navigation.RemovePage(previousPage);
+                        txtComment.Text = "";
+                        btnSend.IsEnabled = true;
                     }
                     else return;
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to send comment", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to send comment", "Ok"); }
         }
     }
 }

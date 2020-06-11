@@ -17,6 +17,13 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
+        //On page dissapearing, do the following code below
+        protected override void OnDisappearing()
+        {
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
+            base.OnDisappearing();
+        }
+
         //When button is clicked, call the BeginLogin method
         private void btnSignin_Clicked(object sender, EventArgs e)
         {
@@ -70,10 +77,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch //If an exception is thrown, catch it and display an alert (Try Catches prevent the app from crashing when an exception is thrown)
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to login", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to login", "Ok"); } //If an exception is thrown, catch it and display an alert (Try Catches prevent the app from crashing when an exception is thrown)
         }
     }
 }

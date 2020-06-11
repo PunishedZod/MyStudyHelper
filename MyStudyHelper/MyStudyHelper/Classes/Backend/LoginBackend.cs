@@ -15,7 +15,7 @@ namespace MyStudyHelper.Classes.Backend
             _userProxy = userProxy;
         }
 
-        //Validates the username and password entered through the textboxes in the frontend
+        //Checks the info sent through from XAML.cs, If Else statements determine whether valid or not, if valid return null, if not return error message
         public string CheckInfo(string uname, string pword)
         {
             if (String.IsNullOrWhiteSpace(uname) && String.IsNullOrWhiteSpace(pword))
@@ -24,14 +24,13 @@ namespace MyStudyHelper.Classes.Backend
                 return "Username cannot be left empty";
             else if (String.IsNullOrWhiteSpace(pword))
                 return "Password cannot be left empty";
-            else
-                return null;
+            else return null;
         }
 
-        //Takes in username and password entered and sends it to the userproxy to make a GET call to the API for the user info
+        //An asynchronous Task which takes in the info which is sent to proxy method, API call made to get user in db if exists
         public async Task<IUser> Login(string uname, string pword)
         {
-            return await _userProxy.GetUserInfo(uname, pword); //Returns the username and password to a method in userproxy
+            return await _userProxy.GetUser(uname, pword);
         }
     }
 }

@@ -17,6 +17,13 @@ namespace MyStudyHelper.XAML_Pages
             InitializeComponent();
         }
 
+        //On page dissapearing, do the following code below
+        protected override void OnDisappearing()
+        {
+            if (container != null) container.Dispose(); //Disposes of container (Used for managing resources and memory)
+            base.OnDisappearing();
+        }
+
         //When button is clicked, call the BeginRegistration method
         private void btnSignup_Clicked(object sender, EventArgs e)
         {
@@ -29,6 +36,7 @@ namespace MyStudyHelper.XAML_Pages
             try
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IRegisterBackend>();
@@ -49,10 +57,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch
-            {
-                await DisplayAlert("Error", "Something went wrong, unable to register", "Ok");
-            }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to register", "Ok"); }
         }
     }
 }

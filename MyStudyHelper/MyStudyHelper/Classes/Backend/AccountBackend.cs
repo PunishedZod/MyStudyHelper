@@ -10,13 +10,14 @@ namespace MyStudyHelper.Classes.Backend
     public class AccountBackend : IAccountBackend
     {
         private readonly IUserProxy _userProxy;
-        private readonly int MinLength = 10;
+        private readonly int MinLength = 10; //Sets the password length
 
         public AccountBackend(IUserProxy userProxy)
         {
             _userProxy = userProxy;
         }
 
+        //Checks the info sent through from XAML.cs, If Else statements determine whether valid or not, if valid return null, if not return error message
         public string CheckInfo(string uname, string email, string name, string oldPword, string newPword)
         {
             if (String.IsNullOrWhiteSpace(uname) || String.IsNullOrWhiteSpace(email) || String.IsNullOrWhiteSpace(name) || String.IsNullOrWhiteSpace(oldPword))
@@ -32,11 +33,12 @@ namespace MyStudyHelper.Classes.Backend
             else return null;
         }
 
+        //An asynchronous Task which takes in the info which is sent to proxy method, API call made to update user in db
         public async Task<IUser> Update(string uname, string email, string name, string pword)
         {
-            if (pword == null || pword == "") pword = App.user.Pword; //If new password is left empty fill it with the old password to ensure it does not return null or empty to the database
+            if (String.IsNullOrWhiteSpace(pword)) pword = App.user.Pword; //If new pword is empty fill with old pword, ensures it does not return null or empty to db
 
-            return await _userProxy.UpdateUserInfo(new User { Id = App.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
+            return await _userProxy.UpdateUser(new User { Id = App.user.Id, Uname = uname, Email = email, Name = name, Pword = pword });
         }
     }
 }

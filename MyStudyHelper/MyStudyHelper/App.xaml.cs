@@ -10,43 +10,35 @@ namespace MyStudyHelper
     public partial class App : Application
     {
         private IContainer container;
-        public static IUser user = new User();
+        public static IUser user = new User(); //User info is stored in this public static IUser upon logging in, allows the use of user info throughout the app
 
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new XAML_Pages.LoadingPage()); //This page is set as default to ensure navigation to either the login page or the mainpage if user is logged in is possible
+            MainPage = new NavigationPage(new XAML_Pages.LoadingPage()); //LoadingPage is the first page to load upon startup of app
         }
 
-        //Checks if user details were remembered for automatic login next time app starts up
+        //When up starts up, do the following code below
         protected override async void OnStart()
         {
-            var Uname = await Storage.LocalStorage.ReadTextFileAsync("username.txt"); //Stores uname into local storage for automatic login
-            var Pword = await Storage.LocalStorage.ReadTextFileAsync("password.txt"); //Stores pword into local storage for automatic login
+            //If a uname and pword exist within LocalStorage, store into vars
+            var uname = await Storage.LocalStorage.ReadTextFileAsync("username.txt");
+            var pword = await Storage.LocalStorage.ReadTextFileAsync("password.txt");
 
-            if (String.IsNullOrWhiteSpace(Uname) && String.IsNullOrWhiteSpace(Pword)) //If else statement which decides which page to navigate to depending on if user was logged in or not
-            {
-                MainPage = new NavigationPage(new XAML_Pages.LoginPage());
-            }
-            else
+            //If Else statements which determine what actions to take on startup, if uname and pword exist, make an API call and log user in, else navigate to LoginPage
+            if (!String.IsNullOrWhiteSpace(uname) && !String.IsNullOrWhiteSpace(pword))
             {
                 container = DependancyInjection.Configure();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ILoginBackend>();
-                    user = await app.Login(Uname, Pword);
+                    user = await app.Login(uname, pword); //Uname and pword sent to backend for API call to get the user out of the db
 
                     MainPage = new NavigationPage(new MainPage());
                 }
             }
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            else MainPage = new NavigationPage(new XAML_Pages.LoginPage());
         }
     }
 }

@@ -15,8 +15,8 @@ namespace MyStudyHelper.Classes.API.Proxys
             _baseAddress = baseAddress;
         }
 
-        //Call when getting user info, takes the username and the password for a user
-        public async Task<User> GetUserInfo(string uname, string pword)
+        //Gets a user, pass through uname and pword, returns null if user doesn't exist
+        public async Task<User> GetUser(string uname, string pword)
         {
             var http = new HttpClient
             {
@@ -29,28 +29,26 @@ namespace MyStudyHelper.Classes.API.Proxys
             if (response.IsSuccessStatusCode)
             {
                 var user = await response.Content.ReadAsAsync<User>();
+
                 if (user != null)
                 {
                     return user;
                 }
-                else
-                    return null;
+                else return null;
             }
-            else
-                return null;
+            else return null;
         }
 
-        //Call when creating a user, takes in a user class item
-        //Returns a string detailing if it was a success or failure
-        public async Task<string> PostUserInfo(User user)
+        //Call when posting a user, takes in a user class item, returns a string detailing if it was a success or failure
+        public async Task<string> PostUser(User user)
         {
             HttpClient http = new HttpClient();
             var response = await http.PostAsJsonAsync($"{_baseAddress}api/User", user);
             return await response.Content.ReadAsStringAsync();
         }
 
-        //Call when updating a user, takes in a user class item
-        public async Task<User> UpdateUserInfo(User user)
+        //Call when updating a user, takes in a user class item, returns the user
+        public async Task<User> UpdateUser(User user)
         {
             HttpClient http = new HttpClient();
             var response = await http.PutAsJsonAsync($"{_baseAddress}api/User", user);
