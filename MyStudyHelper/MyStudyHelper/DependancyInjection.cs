@@ -30,7 +30,7 @@ namespace MyStudyHelper
             builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();
             builder.RegisterType<CommentHistoryBackend>().As<ICommentHistoryBackend>();
 
-            string baseAddress = "https://studyhelper.api.labnet.nz/"; //Injects the base address into the proxies
+            string baseAddress = "https://studyhelper.api.labnet.nz/"; //Injects the base address of the API into the proxies
 
             //START OF API PROXIES
 
