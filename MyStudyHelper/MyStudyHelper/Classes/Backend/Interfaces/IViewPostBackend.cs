@@ -11,6 +11,7 @@ namespace MyStudyHelper.Classes.Backend.Interfaces
 
         Task<IPosts> DownVote(Posts post);
         void GetCommentsInfo(string postId);
+        Task<Posts> GetPost(string postId);
         Task<IComments> PostComment(string comment, string postId);
         Task<IPosts> UpVote(Posts post);
     }

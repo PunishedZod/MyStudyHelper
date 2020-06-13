@@ -12,7 +12,7 @@ namespace MyStudyHelper.XAML_Pages
     public partial class ViewPostPage : ContentPage
     {
         private IContainer container;
-        private readonly Posts post; //Post for storing info received through constructor (Used for upvotes, downvotes, etc)
+        private Posts post; //Post for storing info received through constructor (Used for upvotes, downvotes, etc)
 
         public ViewPostPage(Posts post) //Takes in a post in the parameters of the constructor to use upon page start up
         {
@@ -23,9 +23,8 @@ namespace MyStudyHelper.XAML_Pages
         //On page appearing, do the following code below
         protected override void OnAppearing()
         {
-            DisableButtons();
-            DisplayPost();
             DisplayList();
+            DisableButtons();
             base.OnAppearing();
         }
 
@@ -78,18 +77,7 @@ namespace MyStudyHelper.XAML_Pages
             }
         }
 
-        //Method which binds the post info to frontend labels for display
-        private void DisplayPost() 
-        {
-            lblPageTitle.Text = "Post By: " + post.Uname;
-            lblTopic.Text = post.Topic;
-            lblPostTitle.Text = post.Title;
-            lblPostContent.Text = post.Content;
-            btnUpVote.Text = "+" + post.UpVote.Count().ToString();
-            btnDownVote.Text = "-" + post.DownVote.Count().ToString();
-        }
-
-        //Gets comments for this specific post via backend methods and displays them in a ListView
+        //Gets post and the comments for this specific post via backend methods and displays them in a ListView
         private async void DisplayList()
         {
             try
@@ -99,6 +87,16 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
+                    post = await app.GetPost(post.Id); //API call made from backend to get the post from the db via postId
+
+                    //Binds the post info to frontend labels for display
+                    lblPageTitle.Text = "Post By: " + post.Uname;
+                    lblTopic.Text = post.Topic;
+                    lblPostTitle.Text = post.Title;
+                    lblPostContent.Text = post.Content;
+                    btnUpVote.Text = "+" + post.UpVote.Count().ToString();
+                    btnDownVote.Text = "-" + post.DownVote.Count().ToString();
+
                     app.GetCommentsInfo(post.Id); //Gets the comments for the post by taking in the post id and making API call to the db
                     lstComments.ItemsSource = app.CommentsList; //Populates ListView itemsource with backend collection
 

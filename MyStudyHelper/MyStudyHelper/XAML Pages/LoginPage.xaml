@@ -18,7 +18,7 @@
 
             <StackLayout x:Name="StckLoginBtn" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0,15,0,0">
                 <StackLayout Orientation="Horizontal">
-                    <Label x:Name="lblSwitchTitle" Text="Remember Me" TextColor="White"/>
+                    <Label x:Name="lblSwitchTitle" Margin="0,4,0,0" Text="Remember Me" TextColor="White"/>
                     <Switch x:Name="swtchRememberLogin"/>
                 </StackLayout>
                 <Button x:Name="btnSignin" Style="{StaticResource btnMainStyle}" Text="Sign In" BackgroundColor="LimeGreen" Clicked="btnSignin_Clicked"/>

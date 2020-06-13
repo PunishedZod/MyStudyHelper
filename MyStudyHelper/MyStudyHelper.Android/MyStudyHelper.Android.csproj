@@ -122,18 +122,15 @@
     <AndroidResource Include="Resources\drawable\History_Icon.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\MyStudyLogo.png" />
+    <AndroidResource Include="Resources\drawable\Launcher_Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-anydpi-v26\MyStudyLogo.png">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\MyStudyHelper_Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionMyStudyHelperAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionMyStudyHelperAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionMyStudyHelperAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionMyStudyHelperAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

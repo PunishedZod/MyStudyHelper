@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.HomePage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="Home_Icon.xml" Title="Home">
 
-    <!--Home XAML page frontend, This is a CarouselPage to enable other page(s) to be nested inside of it, In homepage the "popular" XAML page is nested-->
+    <!--Home XAML page frontend, displays popular posts, this is a CarouselPage to enable other pages to be nested inside of it, in the Home page the "Recent Posts" XAML page is nested-->
     <ContentPage>
         <ContentPage.Content>
 
@@ -25,7 +25,7 @@
                         <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Popular Posts" Margin="15"/>
                     </StackLayout>
 
-                    <ListView x:Name="lstPopularPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstPopularPosts_ItemSelected" Refreshing="lstPopularPosts_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
+                    <ListView x:Name="lstPopularPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstPopularPosts_ItemSelected" Refreshing="lstPopularPosts_Refreshing" Grid.Row="1">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

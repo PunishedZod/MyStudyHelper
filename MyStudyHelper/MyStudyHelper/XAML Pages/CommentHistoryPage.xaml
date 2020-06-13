@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.CommentHistoryPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Comment History">
 
+    <!--User Comment History XAML page frontend-->
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">

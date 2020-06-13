@@ -7,10 +7,13 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.LoadingPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Loading">
 
+    <!--Loading XAML page frontend, this page is simply used as a way to display loading within the app, this page loads first then the app decides where to navigate next-->
     <ContentPage.Content>
+        
         <StackLayout VerticalOptions="Center">
-            <Image Source="MyStudyLogo.png"/>
+            <Image Source="MyStudyHelper_Logo.png"/>
             <ActivityIndicator IsRunning="True"/>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

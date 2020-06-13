@@ -1,14 +1,12 @@
-﻿using System;
-using Android.OS;
+﻿using Android.OS;
 using Android.App;
-using Android.Views;
-using Android.Widget;
 using Android.Runtime;
 using Android.Content.PM;
 
 namespace MyStudyHelper.Droid
 {
-    [Activity(Label = "MyStudyHelper", Icon = "@drawable/MyStudyLogo", Theme = "@style/MainTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    //Here I can change things like the launcher icon, theme of the app, screen orientation, etc
+    [Activity(Label = "MyStudyHelper", Icon = "@drawable/Launcher_Logo", Theme = "@style/MainTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

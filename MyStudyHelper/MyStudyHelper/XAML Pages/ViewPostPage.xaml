@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.ViewPostPage" BackgroundColor="{StaticResource bckgroundColor}" Title="ViewPost">
 
-    <!--View a post XAML page frontend-->
+    <!--View a Post XAML page frontend-->
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">
@@ -32,8 +32,8 @@
                             <Label x:Name="lblPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
                             <Label x:Name="lblPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
                             <StackLayout Orientation="Horizontal">
-                                <Button x:Name="btnUpVote" Text="+1" WidthRequest="40" Clicked="btnUpVote_Clicked"/>
-                                <Button x:Name="btnDownVote" Text="-1" WidthRequest="40" Clicked="btnDownVote_Clicked"/>
+                                <Button x:Name="btnUpVote" Text="+0" HorizontalOptions="Start" Clicked="btnUpVote_Clicked"/>
+                                <Button x:Name="btnDownVote" Text="-0" HorizontalOptions="Start" Clicked="btnDownVote_Clicked"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

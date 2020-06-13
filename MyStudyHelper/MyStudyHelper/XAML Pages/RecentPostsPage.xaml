@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.RecentPostsPage" BackgroundColor="{StaticResource bckgroundColor}" Title="Recent Posts">
     
-    <!--Recent Posts XAML page frontend-->
+    <!--Recent Posts XAML page frontend, displays most recent posts-->
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">

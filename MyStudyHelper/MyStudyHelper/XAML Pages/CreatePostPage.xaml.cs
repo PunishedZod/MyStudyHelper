@@ -65,7 +65,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch { await DisplayAlert("Error", "Something went wrong, please try again", "Ok"); }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to create post, please try again", "Ok"); }
         }
 
         //Displays a list of topics, sets the itemsource of Picker to the list of topics

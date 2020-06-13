@@ -88,7 +88,7 @@ namespace MyStudyHelper.Classes.API.Proxys
             else return null;
         }
 
-        //Gets a post, pass through the userId, returns null if no post
+        //Gets a post, pass through the postId, returns null if no post
         public async Task<Posts> GetPost(string postId)
         {
             var http = new HttpClient

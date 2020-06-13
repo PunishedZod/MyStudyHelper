@@ -73,7 +73,7 @@ namespace MyStudyHelper.XAML_Pages
                     else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                 }
             }
-            catch { await DisplayAlert("Error", "Something went wrong, please try again", "Ok"); }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to update info", "Ok"); }
         }
 
         //Begins the logout process, clears any info stored, then navigates to the LoginPage

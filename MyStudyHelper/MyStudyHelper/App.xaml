@@ -111,18 +111,6 @@
                 <Setter Property="Margin" Value="0"/>
             </Style>
             
-            <!--Profile Button Style-->
-            <Style x:Key="btnProfile22" TargetType="Button">
-                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="WidthRequest" Value="100"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="15"/>
-            </Style>
-            
             
             
             <!--GENERAL STYLES FOR ENTIRE APP - END-->
@@ -133,11 +121,9 @@
             
             
             <!--POST RELATED STYLES - START-->
-
             
             
-            <!--Post Container Style-->
-
+            
             <!--Frame Content Container Style-->
             <Style x:Key="frmeViewContainer" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="White"/>
@@ -146,6 +132,7 @@
                 <Setter Property="Padding" Value="0"/>
             </Style>
 
+            <!--Post Container Style-->
             <Style x:Key="frmePostContainer" TargetType="Frame">
                 <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
                 <Setter Property="VerticalOptions" Value="StartAndExpand"/>
@@ -159,6 +146,7 @@
             <!--Listview Style-->
             <Style x:Key="lstStyle1" TargetType="ListView">
                 <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+                <Setter Property="IsPullToRefreshEnabled" Value="True"/>
                 <Setter Property="SeparatorVisibility" Value="None"/>
                 <Setter Property="VerticalOptions" Value="Start"/>
                 <Setter Property="SelectionMode" Value="Single"/>
@@ -182,7 +170,9 @@
             
             
             <!--POST RELATED STYLES - END-->
-
+            
+            
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

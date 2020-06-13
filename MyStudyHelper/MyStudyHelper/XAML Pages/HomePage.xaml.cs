@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections;
@@ -72,7 +73,7 @@ namespace MyStudyHelper.XAML_Pages
                     {
                         var temp = lstPopularPosts.ItemsSource as IList; //Converts ListView into a list
 
-                        if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                        if (temp.Count != app.PostsMod.Count()) //Compares the count of the list and collection, if not equal, set itemsource to collection
                         {
                             lstPopularPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
                         }

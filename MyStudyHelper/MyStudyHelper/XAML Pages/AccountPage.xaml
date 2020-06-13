@@ -9,9 +9,9 @@
     
     <!--Account XAML page frontend-->
     <ContentPage.Content>
-
+        
         <Grid x:Name="grdMain" RowSpacing="0">
-
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="Auto"/>
@@ -19,6 +19,7 @@
             </Grid.RowDefinitions>
 
             <StackLayout x:Name="stckMainContainer" Spacing="0">
+                
                 <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
                     <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Account Settings" Margin="15"/>
                 </StackLayout>
@@ -43,8 +44,7 @@
 
                 <StackLayout x:Name="stckBottomContainer" BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="50" Grid.Row="2"/>
             </StackLayout>
-            
         </Grid>
-
+        
     </ContentPage.Content>
 </ContentPage>

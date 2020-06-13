@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.PostsPage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="Posts_Icon.xml" Title="Posts">
 
-    <!--Posts XAML page frontend-->
+    <!--Posts XAML page frontend, displays all posts-->
     <ContentPage.Content>
 
         <Grid x:Name="grdMain" RowSpacing="0">

@@ -21,6 +21,24 @@ namespace MyStudyHelper.Classes.Backend
             _postsProxy = postsProxy;
         }
 
+        //Gets all the posts comments, postId sent to proxy method, API call made to get all comments with the postId from db
+        public async void GetCommentsInfo(string postId)
+        {
+            var temp = await _commentsProxy.GetCommentsByPost(postId); //Makes the API call in the proxy
+
+            if (temp != null)
+            {
+                if (temp.Count >= 1)
+                {
+                    foreach (var item in temp) //Foreach loop used to put each item from temp (List) into ObservableCollection
+                    {
+                        CommentsList.Add(item);
+                    }
+                }
+                else return; //If temp is null, exit the method
+            }
+        }
+
         //Updates post, specifically UpVote, a Post is sent to proxy method, API call made to update the post in db (Adds userId into UpVote array)
         public async Task<IPosts> UpVote(Posts post)
         {
@@ -41,22 +59,10 @@ namespace MyStudyHelper.Classes.Backend
             return await _postsProxy.UpdatePost(post);
         }
 
-        //Gets all the posts comments, postId sent to proxy method, API call made to get all comments with the postId from db
-        public async void GetCommentsInfo(string postId)
+        //An asynchronous Task which takes in the id which is sent to proxy method, API call made to get post from db
+        public async Task<Posts> GetPost(string postId)
         {
-            var temp = await _commentsProxy.GetCommentsByPost(postId); //Makes the API call in the proxy
-
-            if (temp != null)
-            {
-                if (temp.Count >= 1)
-                {
-                    foreach (var item in temp) //Foreach loop used to put each item from temp (List) into ObservableCollection
-                    {
-                        CommentsList.Add(item);
-                    }
-                }
-                else return; //If temp is null, exit the method
-            }
+            return await _postsProxy.GetPost(postId);
         }
 
         //An asynchronous Task which takes in the info which is sent to proxy method, API call made to post comment in db

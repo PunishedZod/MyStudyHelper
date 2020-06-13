@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.CreatePostPage" BackgroundColor="{StaticResource bckgroundColor}" Title="CreatePost">
 
-    <!--Create a post XAML page frontend-->
+    <!--Create a Post XAML page frontend-->
     <ContentPage.Content>
         
         <Grid x:Name="grdMain" RowSpacing="0">

@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="MyStudyHelper.XAML_Pages.PostHistoryPage" BackgroundColor="{StaticResource bckgroundColor}" IconImageSource="History_Icon.xml" Title="Post History">
     
-     <!--History XAML page frontend, This is a CarouselPage to enable other page(s) to be nested inside of it, In post history page the "comment history" XAML page is nested-->
+     <!--User Post History XAML page frontend, this is a CarouselPage to enable other page(s) to be nested inside of it, In the Post History page the "Comment History" XAML page is nested-->
     <ContentPage>
         <ContentPage.Content>
 
