@@ -49,20 +49,26 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICreatePostBackend>();
-                    var validation = app.CheckInfo(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for validation
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (validation == null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        btnPost.IsEnabled = false;
+                        var validation = app.CheckInfo(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for validation
 
-                        var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for API call to post in db, returns post
-                        var post = (Posts)createdPost; //Converts post from IPost (Interface of a model) to a Post (Post model)
+                        if (validation == null)
+                        {
+                            btnPost.IsEnabled = false;
 
-                        var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
-                        Navigation.RemovePage(previousPage);
+                            var createdPost = await app.CreatePost(txtTopic.SelectedItem.ToString(), txtTitle.Text, txtMessage.Text); //Post sent to backend for API call to post in db, returns post
+                            var post = (Posts)createdPost; //Converts post from IPost (Interface of a model) to a Post (Post model)
+
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
+                            Navigation.RemovePage(previousPage);
+                        }
+                        else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                     }
-                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to create post, please try again", "Ok"); }

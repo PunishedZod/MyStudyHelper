@@ -25,6 +25,7 @@ namespace MyStudyHelper
             builder.RegisterType<AccountBackend>().As<IAccountBackend>();
             builder.RegisterType<ViewPostBackend>().As<IViewPostBackend>();
             builder.RegisterType<RegisterBackend>().As<IRegisterBackend>();
+            builder.RegisterType<ConnectionBackend>().As<IConnectionBackend>();
             builder.RegisterType<CreatePostBackend>().As<ICreatePostBackend>();
             builder.RegisterType<PostHistoryBackend>().As<IPostHistoryBackend>();
             builder.RegisterType<RecentPostsBackend>().As<IRecentPostsBackend>();

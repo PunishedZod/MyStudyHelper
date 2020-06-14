@@ -32,8 +32,8 @@
                             <Label x:Name="lblPostTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Title}"/>
                             <Label x:Name="lblPostContent" Style="{StaticResource lblPostContent}" Text="{Binding Content}"/>
                             <StackLayout Orientation="Horizontal">
-                                <Button x:Name="btnUpVote" Text="+0" HorizontalOptions="Start" Clicked="btnUpVote_Clicked"/>
-                                <Button x:Name="btnDownVote" Text="-0" HorizontalOptions="Start" Clicked="btnDownVote_Clicked"/>
+                                <Button x:Name="btnUpVote" Text="+0" HorizontalOptions="Start" Clicked="UpdatePost"/>
+                                <Button x:Name="btnDownVote" Text="-0" HorizontalOptions="Start" Clicked="UpdatePost"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

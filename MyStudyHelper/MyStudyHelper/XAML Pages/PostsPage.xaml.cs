@@ -73,18 +73,23 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IPostsBackend>();
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (lstAllPosts.ItemsSource != null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        var temp = lstAllPosts.ItemsSource as IList; //Converts ListView into a list
-
-                        if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                        if (lstAllPosts.ItemsSource != null)
                         {
-                            lstAllPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
+                            var temp = lstAllPosts.ItemsSource as IList; //Converts ListView into a list
+
+                            if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                            {
+                                lstAllPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
+                            }
+                            else return;
                         }
-                        else return;
+                        else lstAllPosts.ItemsSource = app.PostsMod;
                     }
-                    else lstAllPosts.ItemsSource = app.PostsMod;
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to display all posts", "Ok"); }

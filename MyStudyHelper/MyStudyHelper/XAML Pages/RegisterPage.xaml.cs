@@ -40,21 +40,27 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IRegisterBackend>();
-                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text); //Info sent to backend for validation
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (validation == null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        btnSignup.IsEnabled = false;
+                        var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword1.Text, txtPassword2.Text); //Info sent to backend for validation
 
-                        await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //Info is sent to backend for API call to register user in the db
-                        await DisplayAlert("Registration Successful", "Account successfully registered, please login", "Ok");
+                        if (validation == null)
+                        {
+                            btnSignup.IsEnabled = false;
 
-                        //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
-                        var previousPage = Navigation.NavigationStack.LastOrDefault();
-                        await Navigation.PushAsync(new LoginPage()); //Navigates back to the LoginPage
-                        Navigation.RemovePage(previousPage);
+                            await app.Register(txtUsername.Text, txtEmail.Text, txtName.Text, txtPassword2.Text); //Info is sent to backend for API call to register user in the db
+                            await DisplayAlert("Registration Successful", "Account successfully registered, please login", "Ok");
+
+                            //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new LoginPage()); //Navigates back to the LoginPage
+                            Navigation.RemovePage(previousPage);
+                        }
+                        else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                     }
-                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to register", "Ok"); }

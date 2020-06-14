@@ -46,35 +46,41 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ILoginBackend>();
-                    string validation = app.CheckInfo(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for validation
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (validation == null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        var user = await app.Login(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for API call to get the user out of the db
+                        var validation = app.CheckInfo(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for validation
 
-                        if (user != null)
+                        if (validation == null)
                         {
-                            if (swtchRememberLogin.IsToggled == true) //If "Remember Me" button is toggled, store uname and pword for auto login
+                            var user = await app.Login(txtUsername.Text, txtPassword.Text); //Uname and pword sent to backend for API call to get the user out of the db
+
+                            if (user != null)
                             {
-                                await Storage.LocalStorage.WriteTextFileAsync("username.txt", user.Uname);
-                                await Storage.LocalStorage.WriteTextFileAsync("password.txt", user.Pword);
+                                if (swtchRememberLogin.IsToggled == true) //If "Remember Me" button is toggled, store uname and pword for auto login
+                                {
+                                    await Storage.LocalStorage.WriteTextFileAsync("username.txt", user.Uname);
+                                    await Storage.LocalStorage.WriteTextFileAsync("password.txt", user.Pword);
+                                }
+
+                                btnSignin.IsEnabled = false;
+                                actIndicator.IsRunning = true;
+
+                                App.user = user; //Stores the user info into a public static IUser to use "globally" throughout the app
+
+                                //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
+                                var previousPage = Navigation.NavigationStack.LastOrDefault();
+                                await Navigation.PushAsync(new MainPage()); //Navigates to the MainPage
+                                Navigation.RemovePage(previousPage);
+
+                                actIndicator.IsRunning = false;
                             }
-
-                            btnSignin.IsEnabled = false;
-                            actIndicator.IsRunning = true;
-
-                            App.user = user; //Stores the user info into a public static IUser to use "globally" throughout the app
-
-                            //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
-                            var previousPage = Navigation.NavigationStack.LastOrDefault();
-                            await Navigation.PushAsync(new MainPage()); //Navigates to the MainPage
-                            Navigation.RemovePage(previousPage);
-
-                            actIndicator.IsRunning = false;
+                            else await DisplayAlert("Login Details Incorrect", "Login details are incorrect, please try again", "Ok"); //Displays alert for incorrect login info
                         }
-                        else await DisplayAlert("Login Details Incorrect", "Login details are incorrect, please try again", "Ok"); //Displays alert for incorrect login info
+                        else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                     }
-                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to login", "Ok"); } //If an exception is thrown, catch it and display an alert (Try Catches prevent the app from crashing when an exception is thrown)

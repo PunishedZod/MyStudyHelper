@@ -35,18 +35,6 @@ namespace MyStudyHelper.XAML_Pages
             base.OnDisappearing();
         }
 
-        //When button is clicked, call the BeginUpVote method
-        private void btnUpVote_Clicked(object sender, EventArgs e)
-        {
-            BeginUpVote();
-        }
-
-        //When button is clicked, call the BeginDownVote method
-        private void btnDownVote_Clicked(object sender, EventArgs e)
-        {
-            BeginDownVote();
-        }
-
         //When button is clicked, call the BeginComment method
         private void btnSend_Clicked(object sender, EventArgs e)
         {
@@ -87,30 +75,36 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
-                    post = await app.GetPost(post.Id); //API call made from backend to get the post from the db via postId
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    //Binds the post info to frontend labels for display
-                    lblPageTitle.Text = "Post By: " + post.Uname;
-                    lblTopic.Text = post.Topic;
-                    lblPostTitle.Text = post.Title;
-                    lblPostContent.Text = post.Content;
-                    btnUpVote.Text = "+" + post.UpVote.Count().ToString();
-                    btnDownVote.Text = "-" + post.DownVote.Count().ToString();
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
+                    {
+                        post = await app.GetPost(post.Id); //API call made from backend to get the post from the db via postId
 
-                    app.GetCommentsInfo(post.Id); //Gets the comments for the post by taking in the post id and making API call to the db
-                    lstComments.ItemsSource = app.CommentsList; //Populates ListView itemsource with backend collection
+                        //Binds the post info to frontend labels for display
+                        lblPageTitle.Text = "Post By: " + post.Uname;
+                        lblTopic.Text = post.Topic;
+                        lblPostTitle.Text = post.Title;
+                        lblPostContent.Text = post.Content;
+                        btnUpVote.Text = "+" + post.UpVote.Count().ToString();
+                        btnDownVote.Text = "-" + post.DownVote.Count().ToString();
 
-                    //If Else statements which display the amount of comments on the post
-                    if (app.CommentsList.Count == 0) lblCommentCounter.Text = "No Comments Have Been Posted Yet";
-                    else if (app.CommentsList.Count == 1) lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comment on Post";
-                    else lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comments on Post";
+                        app.GetCommentsInfo(post.Id); //Gets the comments for the post by taking in the post id and making API call to the db
+                        lstComments.ItemsSource = app.CommentsList; //Populates ListView itemsource with backend collection
+
+                        //If Else statements which display the amount of comments on the post
+                        if (app.CommentsList.Count == 0) lblCommentCounter.Text = "No Comments Have Been Posted Yet";
+                        else if (app.CommentsList.Count == 1) lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comment on Post";
+                        else lblCommentCounter.Text = app.CommentsList.Count.ToString() + " Comments on Post";
+                    }
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to display comments", "Ok"); }
         }
 
-        //Begins the process of upvoting the post via backend methods, API call is made to update the UpVote array in the db
-        private async void BeginUpVote()
+        //Event handler method which updates the post upon clicking either UpVote or DownVote button via backend methods, returns the updated post
+        private async void UpdatePost(object sender, EventArgs e)
         {
             try
             {
@@ -118,41 +112,41 @@ namespace MyStudyHelper.XAML_Pages
 
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    btnUpVote.IsEnabled = false;
-
                     var app = scope.Resolve<IViewPostBackend>();
-                    var updatedPost = await app.UpVote(post); //Post is sent to backend, API call made to update post in db
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
-                    var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
-                    Navigation.RemovePage(previousPage);
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
+                    {
+                        var btn = (Button)sender; //Stores the button info into the var
+
+                        //If Else statements which determine what code to do based on which button was pressed
+                        if (btn == btnUpVote)
+                        {
+                            btnUpVote.IsEnabled = false;
+
+                            var updatedPost = await app.UpVote(post); //Post is sent to backend, API call made to update post in db, returns the updated post
+
+                            //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
+                            Navigation.RemovePage(previousPage);
+                        }
+                        else if (btn == btnDownVote)
+                        {
+                            btnDownVote.IsEnabled = false;
+
+                            var updatedPost = await app.DownVote(post); //Post is sent to the backend, API call made to update post in db, returns the updated post
+
+                            //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
+                            var previousPage = Navigation.NavigationStack.LastOrDefault();
+                            await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
+                            Navigation.RemovePage(previousPage);
+                        }
+                    }
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
-            catch { await DisplayAlert("Error", "Something went wrong, unable to upvote", "Ok"); }
-        }
-
-        //Begins the process of downvoting the post via backend methods, API call is made to update the DownVote array in the db
-        private async void BeginDownVote()
-        {
-            try
-            {
-                container = DependancyInjection.Configure();
-
-                using (var scope = container.BeginLifetimeScope())
-                {
-                    btnDownVote.IsEnabled = false;
-
-                    var app = scope.Resolve<IViewPostBackend>();
-                    var updatedPost = await app.DownVote(post); //Post is sent to the backend, API call made to update post in db, returns updatedPost
-
-                    //These three lines of code are for pushing a new instance of a page ontop of the nav stack then removing the previous page in the stack
-                    var previousPage = Navigation.NavigationStack.LastOrDefault();
-                    await Navigation.PushAsync(new ViewPostPage((Posts)updatedPost)); //Re-navigates to ViewPostPage with the updatedPost (Converted from an IPost to a Post)
-                    Navigation.RemovePage(previousPage);
-                }
-            }
-            catch { await DisplayAlert("Error", "Something went wrong, unable to downvote", "Ok"); }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to upvote or downvote", "Ok"); }
         }
 
         //Begins the process of sending a comment, API call is made to post the comment to the db
@@ -165,17 +159,23 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IViewPostBackend>();
-                    if (!String.IsNullOrWhiteSpace(txtComment.Text))
+                    var network = scope.Resolve<IConnectionBackend>();
+
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        btnSend.IsEnabled = false;
+                        if (!String.IsNullOrWhiteSpace(txtComment.Text))
+                        {
+                            btnSend.IsEnabled = false;
 
-                        await app.PostComment(txtComment.Text, post.Id); //Comment is sent to the backend (contains postId to get post when needed), API call made to post comment in db
-                        lstComments.BeginRefresh(); //Refreshes ListView when new comment has been sent and added
+                            await app.PostComment(txtComment.Text, post.Id); //Comment is sent to the backend (contains postId to get post when needed), API call made to post comment in db
+                            lstComments.BeginRefresh(); //Refreshes ListView when new comment has been sent and added
 
-                        txtComment.Text = "";
-                        btnSend.IsEnabled = true;
+                            txtComment.Text = "";
+                            btnSend.IsEnabled = true;
+                        }
+                        else return;
                     }
-                    else return;
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to send comment", "Ok"); }

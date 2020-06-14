@@ -67,18 +67,23 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (lstCommentHistory.ItemsSource != null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        var temp = lstCommentHistory.ItemsSource as IList; //Converts ListView into a list
-
-                        if (temp.Count != app.CommentsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                        if (lstCommentHistory.ItemsSource != null)
                         {
-                            lstCommentHistory.ItemsSource = app.CommentsMod; //ListView itemsource set to collection from backend
+                            var temp = lstCommentHistory.ItemsSource as IList; //Converts ListView into a list
+
+                            if (temp.Count != app.CommentsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                            {
+                                lstCommentHistory.ItemsSource = app.CommentsMod; //ListView itemsource set to collection from backend
+                            }
+                            else return;
                         }
-                        else return;
+                        else lstCommentHistory.ItemsSource = app.CommentsMod;
                     }
-                    else lstCommentHistory.ItemsSource = app.CommentsMod;
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to display comment history", "Ok"); }
@@ -94,9 +99,14 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ICommentHistoryBackend>();
-                    var post = await app.GetPost(commentInfo.PostId);
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
+                    {
+                        var post = await app.GetPost(commentInfo.PostId);
+                        await Navigation.PushAsync(new ViewPostPage(post)); //ViewPostPage is pushed onto the stack, takes in the post info
+                    }
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to retrieve post info", "Ok"); }

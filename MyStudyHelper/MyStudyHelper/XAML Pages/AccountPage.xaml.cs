@@ -61,16 +61,22 @@ namespace MyStudyHelper.XAML_Pages
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<IAccountBackend>();
-                    var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text); //New info sent to backend for validation
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    if (validation == null)
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //New info sent to backend for API call to update user in db
-                        await DisplayAlert("Update Successful", "Successfully updated, please log back in again", "Ok");
+                        var validation = app.CheckInfo(txtUsername.Text, txtEmail.Text, txtName.Text, txtOldPassword.Text, txtNewPassword.Text); //New info sent to backend for validation
 
-                        BeginLogout();
+                        if (validation == null)
+                        {
+                            var user = await app.Update(txtUsername.Text, txtEmail.Text, txtName.Text, txtNewPassword.Text); //New info sent to backend for API call to update user in db
+                            await DisplayAlert("Update Successful", "Successfully updated, please log back in again", "Ok");
+
+                            BeginLogout();
+                        }
+                        else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
                     }
-                    else await DisplayAlert("Invalid or Empty Field(s)", $"{validation}", "Ok");
+                    else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }
             }
             catch { await DisplayAlert("Error", "Something went wrong, unable to update info", "Ok"); }

@@ -33,9 +33,14 @@ namespace MyStudyHelper
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var app = scope.Resolve<ILoginBackend>();
-                    user = await app.Login(uname, pword); //Uname and pword sent to backend for API call to get the user out of the db
+                    var network = scope.Resolve<IConnectionBackend>();
 
-                    MainPage = new NavigationPage(new MainPage());
+                    if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
+                    {
+                        user = await app.Login(uname, pword); //Uname and pword sent to backend for API call to get the user out of the db
+                        MainPage = new NavigationPage(new MainPage());
+                    }
+                    else await MainPage.DisplayAlert("No Internet Access", "Connection to network not found, please restart the app", "Ok");
                 }
             }
             else MainPage = new NavigationPage(new XAML_Pages.LoginPage());
