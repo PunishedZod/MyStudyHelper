@@ -22,6 +22,8 @@
                     <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Recent Posts" Margin="15"/>
                 </StackLayout>
 
+                <Label x:Name="lblSubTitle" Style="{StaticResource lblPostTitle}" Text="No posts yet, empty... very empty..." HorizontalOptions="Center" Margin="0,25,0,0" IsVisible="false"/>
+
                 <ListView x:Name="lstRecentPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstRecentPosts_ItemSelected" Refreshing="lstRecentPosts_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>

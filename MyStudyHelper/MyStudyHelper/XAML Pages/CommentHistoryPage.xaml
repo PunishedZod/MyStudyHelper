@@ -22,7 +22,9 @@
                     <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Comment History" Margin="15"/>
                 </StackLayout>
 
-                <ListView x:Name="lstCommentHistory" Style="{StaticResource lstStyle1}" ItemSelected="lstCommentHistory_ItemSelected" Refreshing="lstCommentHistory_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
+                <Label x:Name="lblSubTitle" Style="{StaticResource lblPostTitle}" Text="No comments posted yet, empty... very empty..." HorizontalOptions="Center" Margin="0,25,0,0" IsVisible="false"/>
+
+                <ListView x:Name="lstCommentHistory" Style="{StaticResource lstStyle1}" ItemAppearing="lstCommentHistory_ItemAppearing" ItemSelected="lstCommentHistory_ItemSelected" Refreshing="lstCommentHistory_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -34,7 +36,7 @@
 
                                     <Frame Style="{StaticResource frmePostContainer}" Grid.Row="0">
                                         <StackLayout>
-                                            <Label x:Name="lblTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Uname}"/>
+                                            <Label x:Name="lblTitle" Style="{StaticResource lblPostTitle}" Text="{Binding Uname}" TextColor="Red"/>
                                             <Label x:Name="lblContent" Style="{StaticResource lblPostContent}" Text="{Binding Comment}"/>
                                         </StackLayout>
                                     </Frame>
@@ -44,6 +46,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <ActivityIndicator x:Name="actIndicator" IsVisible="false"/>
             </StackLayout>
 
             <Grid BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="55" Grid.Row="2">

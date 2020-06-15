@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using MyStudyHelper.Classes.Backend.Interfaces;
 using MyStudyHelper.Classes.API.Models.Interfaces;
 using MyStudyHelper.Classes.API.Proxys.Interfaces;
@@ -7,8 +7,8 @@ namespace MyStudyHelper.Classes.Backend
 {
     public class PostsBackend : IPostsBackend
     {
-        //ObservableCollection, works like a List but the UI is automatically updated when changes are made
-        public ObservableCollection<IPosts> PostsMod { get; set; } = new ObservableCollection<IPosts>();
+        //List of IPosts, used to store the items being grabbed from db
+        public List<IPosts> PostsMod { get; set; } = new List<IPosts>();
         private readonly IPostsProxy _postsProxy;
 
         public PostsBackend(IPostsProxy postProxy)

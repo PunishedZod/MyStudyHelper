@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 using MyStudyHelper.Classes.API.Models.Interfaces;
@@ -9,8 +9,8 @@ namespace MyStudyHelper.Classes.Backend
 {
     public class CommentHistoryBackend : ICommentHistoryBackend
     {
-        //ObservableCollection, works like a List but the UI is automatically updated when changes are made
-        public ObservableCollection<IComments> CommentsMod { get; set; } = new ObservableCollection<IComments>();
+        //List of IComments, used to store the items being grabbed from db
+        public List<IComments> CommentsMod { get; set; } = new List<IComments>();
         private readonly ICommentsProxy _commentsProxy;
         private readonly IPostsProxy _postsProxy;
 

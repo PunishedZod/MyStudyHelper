@@ -20,10 +20,11 @@
             <StackLayout x:Name="stckMainContainer" Spacing="0">
                 <StackLayout x:Name="stckTopContainer" BackgroundColor="{StaticResource bckgroundColor2}" Grid.Row="0">
                     <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="All Posts" Margin="15"/>
-
                 </StackLayout>
 
-                <ListView x:Name="lstAllPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstAllPosts_ItemSelected" Refreshing="lstAllPosts_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
+                <Label x:Name="lblSubTitle" Style="{StaticResource lblPostTitle}" Text="No posts yet, empty... very empty..." HorizontalOptions="Center" Margin="0,25,0,0" IsVisible="false"/>
+                
+                <ListView x:Name="lstAllPosts" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemAppearing="lstAllPosts_ItemAppearing" ItemSelected="lstAllPosts_ItemSelected" Refreshing="lstAllPosts_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -45,6 +46,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <ActivityIndicator x:Name="actIndicator" IsVisible="false"/>
 
                 <StackLayout x:Name="stckBottomContainer" BackgroundColor="{StaticResource bckgroundColor2}" Orientation="Horizontal" HorizontalOptions="FillAndExpand" HeightRequest="70" Grid.Row="2">
                     <Frame BackgroundColor="{StaticResource bckgroundColor}" HorizontalOptions="EndAndExpand" VerticalOptions="Center" CornerRadius="20" HeightRequest="35" Padding="0" Margin="0,0,15,0">

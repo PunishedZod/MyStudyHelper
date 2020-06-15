@@ -2,9 +2,11 @@
 using Autofac;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
+using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.XAML_Pages
 {
@@ -12,6 +14,12 @@ namespace MyStudyHelper.XAML_Pages
     public partial class PostHistoryPage : CarouselPage
     {
         private IContainer container;
+        private List<IPosts> Posts = new List<IPosts>();
+        private readonly ObservableCollection<IPosts> PostsMod = new ObservableCollection<IPosts>();
+
+        //minItems and maxItems ints used for loading items on scrolling
+        private int minItems;
+        private int maxItems;
 
         public PostHistoryPage()
         {
@@ -21,6 +29,12 @@ namespace MyStudyHelper.XAML_Pages
         //On page appearing, do the following code below
         protected override void OnAppearing()
         {
+            //sets the necessary variables and resets and clears the necessary variables and lists/collections
+            minItems = 0;
+            maxItems = 10;
+            Posts.Clear();
+            PostsMod.Clear();
+
             DisplayList();
             base.OnAppearing();
         }
@@ -52,16 +66,45 @@ namespace MyStudyHelper.XAML_Pages
         //When ListView is refreshing, call the DisplayList method
         private void lstPostHistory_Refreshing(object sender, EventArgs e)
         {
+            minItems = 0;
+            maxItems = 10;
+            Posts.Clear();
+            PostsMod.Clear();
+
             DisplayList();
             lstPostHistory.IsRefreshing = false;
         }
 
-        //Gets all of the users posts via backend methods and displays them in a ListView
-        //it is setup in a way so that if there is no changes, it won't bother with an API call
+        //Called when scrolling down the ListView and an item appears, it'll add to the observable collection in increments of 10
+        //This method is useful because it means not all data loads at once, it gets it in increments of 10, useful if alot of items are stored
+        private void lstPostHistory_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            if (actIndicator.IsRunning || PostsMod.Count == 0) return;
+
+            if ((IPosts)e.Item == PostsMod[PostsMod.Count - 1])
+            {
+                actIndicator.IsRunning = true;
+
+                //min and max increased, for example, the ObservableCollection could only hold 10, now it can hold 20
+                minItems += 10;
+                maxItems += 10;
+
+                for (int i = minItems; i < maxItems && i < Posts.Count; i++) //min and max increased, can add an extra +10 items now
+                {
+                    PostsMod.Add(Posts[i]);
+                }
+
+                actIndicator.IsRunning = false;
+            }
+        }
+
+        //Gets all posts by user via backend methods and displays them in a ListView
         private async void DisplayList()
         {
             try
             {
+                actIndicator.IsRunning = true;
+
                 container = DependancyInjection.Configure();
 
                 using (var scope = container.BeginLifetimeScope())
@@ -71,22 +114,37 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        if (lstPostHistory.ItemsSource != null)
+                        if (app.PostsMod.Count != 0)
                         {
-                            var temp = lstPostHistory.ItemsSource as IList; //Converts ListView into a list
+                            lblSubTitle.IsVisible = false;
 
-                            if (temp.Count != app.PostsMod.Count) //Compares the count of the list and collection, if not equal, set itemsource to collection
+                            Posts = app.PostsMod; //List is set to collection from the backend
+
+                            if (Posts.Count >= 10) //If Else statements which limit how much items are displayed, if more than 10, limit to 10, if not then put them into collection
                             {
-                                lstPostHistory.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
+                                for (int i = minItems; i < maxItems; i++) //For loop allows adding items to a limit of 10
+                                {
+                                    PostsMod.Add(app.PostsMod[i]);
+                                }
                             }
-                            else return;
+                            else
+                            {
+                                foreach (var item in app.PostsMod) //If less than or equal to 10, it'll just put the items into the collection
+                                {
+                                    PostsMod.Add(item);
+                                }
+                            }
+
+                            lstPostHistory.ItemsSource = PostsMod; //ListView itemsource set to collection
                         }
-                        else lstPostHistory.ItemsSource = app.PostsMod;
+                        else lblSubTitle.IsVisible = true; //If no items, display an "empty" message
                     }
                     else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
+
+                    actIndicator.IsRunning = false;
                 }
             }
-            catch { await DisplayAlert("Error", "Something went wrong, unable to display post history", "Ok"); }
+            catch { await DisplayAlert("Error", "Something went wrong, unable to display user post history", "Ok"); }
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
 using Autofac;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Collections;
 using MyStudyHelper.Classes.API.Models;
 using MyStudyHelper.Classes.Backend.Interfaces;
 
@@ -72,17 +70,12 @@ namespace MyStudyHelper.XAML_Pages
 
                     if (network.HasConnection()) //If Else statements which determine if you have internet connection, if you do then continue, if you don't then display an alert
                     {
-                        if (lstPopularPosts.ItemsSource != null)
+                        if (app.PostsMod.Count != 0)
                         {
-                            var temp = lstPopularPosts.ItemsSource as IList; //Converts ListView into a list
-
-                            if (temp.Count != app.PostsMod.Count()) //Compares the count of the list and collection, if not equal, set itemsource to collection
-                            {
-                                lstPopularPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
-                            }
-                            else return;
+                            lblSubTitle.IsVisible = false;
+                            lstPopularPosts.ItemsSource = app.PostsMod; //ListView itemsource set to collection from backend
                         }
-                        else lstPopularPosts.ItemsSource = app.PostsMod;
+                        else lblSubTitle.IsVisible = true; //If no items, display an "empty" message
                     }
                     else await DisplayAlert("No Internet Access", "Connection to network not found, please try again", "Ok");
                 }

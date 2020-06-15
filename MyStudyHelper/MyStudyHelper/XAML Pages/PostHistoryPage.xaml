@@ -25,7 +25,9 @@
                         <Label x:Name="lblPageTitle" Style="{StaticResource lblSubtitle}" Text="Post History" Margin="15"/>
                     </StackLayout>
 
-                    <ListView x:Name="lstPostHistory" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemSelected="lstPostHistory_ItemSelected" Refreshing="lstPostHistory_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
+                    <Label x:Name="lblSubTitle" Style="{StaticResource lblPostTitle}" Text="No posts yet, empty... very empty..." HorizontalOptions="Center" Margin="0,25,0,0" IsVisible="false"/>
+                    
+                    <ListView x:Name="lstPostHistory" Style="{StaticResource lstStyle1}" ItemsSource="{Binding PostMod}" ItemAppearing="lstPostHistory_ItemAppearing" ItemSelected="lstPostHistory_ItemSelected" Refreshing="lstPostHistory_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -47,6 +49,8 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+
+                    <ActivityIndicator x:Name="actIndicator" IsVisible="false"/>
                 </StackLayout>
 
                 <Grid BackgroundColor="{StaticResource bckgroundColor2}" HeightRequest="55" Grid.Row="2">

@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using MyStudyHelper.Classes.API.Models.Interfaces;
 
 namespace MyStudyHelper.Classes.Backend.Interfaces
 {
     public interface IPostsBackend
     {
-        ObservableCollection<IPosts> PostsMod { get; set; }
+        List<IPosts> PostsMod { get; set; }
 
         void GetPostInfo();
     }
